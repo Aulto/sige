@@ -40,7 +40,7 @@ public class Sige implements ISige {
 	}
 
 	@Override
-	public boolean adicionarProfessorAdm(int tipo, String nome, String senha,
+	public boolean adicionarProfessorAdm(Class<?> tipo, String nome, String senha,
 			String sexo, String estadoCivil, String dataNascimento,
 			String email, String telefone, String rua, String bairro,
 			String cidade, String uf, String complemento, String cep,
@@ -48,26 +48,19 @@ public class Sige implements ISige {
 		if (Autenticacao.runlevel().equals("Aluno") || Autenticacao.runlevel().equals("Professor")) {
 			return false;
 		}
-		Pessoa pessoa;
-		switch (tipo) {
-		case 0:
+		Pessoa pessoa = null;
+		if (tipo == Professor.class){
 			pessoa = new Professor(nome, senha, sexo, estadoCivil,
 					dataNascimento, email, telefone, rua, bairro, cidade, uf,
 					complemento, cep, numero, pais);
-			break;
-		case 1:
+		} else if (tipo == Administrador.class) {
 			pessoa = new Administrador(nome, senha, sexo, estadoCivil,
 					dataNascimento, email, telefone, rua, bairro, cidade, uf,
 					complemento, cep, numero, pais);
-			break;
-		case 2:
+		} else if (tipo == ProfessorAdministrador.class) {
 			pessoa = new ProfessorAdministrador(nome, senha, sexo, estadoCivil,
 					dataNascimento, email, telefone, rua, bairro, cidade, uf,
 					complemento, cep, numero, pais);
-			break;
-		default:
-			pessoa = null;
-			break;
 		}
 		if (pessoa != null) {
 			repositorio.adicionar(pessoa);
