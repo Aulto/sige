@@ -166,8 +166,7 @@ public class Repositorio implements IRepositorio {
 
 	@Override
 	public ArrayList<Pessoa> buscarPessoas() {
-		// TODO Auto-generated method stub
-		return null;
+		return buscarSQL("SELECT * FROM pessoas");
 	}
 
 	@Override
