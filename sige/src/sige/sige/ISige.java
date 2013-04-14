@@ -2,9 +2,11 @@ package sige.sige;
 
 import java.util.ArrayList;
 
-public interface ISige {
+import sige.repositorio.RepositorioException;
 
-	ArrayList<Pessoa> buscarCpf(String cpf);
+public interface ISige {
+	
+	ArrayList<Pessoa> buscarCpf(String cpf) throws RepositorioException;
 
 	ArrayList<Pessoa> buscarId(int id);
 	

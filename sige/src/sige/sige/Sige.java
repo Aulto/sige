@@ -10,11 +10,16 @@ public class Sige implements ISige {
 	private static ISige instance;
 
 	public Sige() throws InicializacaoSistemaException {
-		this.repositorio = new Repositorio("jdbc:mysql://localhost:3306/sige",
-					"root", "");
+		try {
+			this.repositorio = new Repositorio(
+					"jdbc:mysql://localhost:3306/sige", "root", "");
+		} catch (RepositorioException e) {
+			throw new InicializacaoSistemaException();
+		}
+
 	}
-	
-	public static ISige getInstance() throws InicializacaoSistemaException{
+
+	public static ISige getInstance() throws InicializacaoSistemaException {
 		if (Sige.instance == null) {
 			try {
 				Sige.instance = new Sige();
@@ -27,11 +32,15 @@ public class Sige implements ISige {
 	}
 
 	@Override
-	public ArrayList<Pessoa> buscarCpf(String cpf) {
-		return repositorio.buscarPessoaCpf(cpf);
+	public ArrayList<Pessoa> buscarCpf(String cpf) throws RepositorioException {
+		try {
+			return repositorio.buscarPessoaCpf(cpf);
+		} catch (RepositorioException e) {
+			throw new RepositorioException();
+		}
 	}
-	
-	public boolean autenticarSistema(){
+
+	public boolean autenticarSistema() {
 		return Autenticacao.AdministradorExists(this.repositorio);
 	}
 
@@ -53,16 +62,17 @@ public class Sige implements ISige {
 	}
 
 	@Override
-	public boolean adicionarProfessorAdm(Class<?> tipo, String nome, String senha,
-			String sexo, String estadoCivil, String dataNascimento,
-			String email, String telefone, String rua, String bairro,
-			String cidade, String uf, String complemento, String cep,
-			String numero, String pais) {
-		if (Autenticacao.runlevel().equals("Aluno") || Autenticacao.runlevel().equals("Professor")) {
+	public boolean adicionarProfessorAdm(Class<?> tipo, String nome,
+			String senha, String sexo, String estadoCivil,
+			String dataNascimento, String email, String telefone, String rua,
+			String bairro, String cidade, String uf, String complemento,
+			String cep, String numero, String pais) {
+		if (Autenticacao.runlevel().equals("Aluno")
+				|| Autenticacao.runlevel().equals("Professor")) {
 			return false;
 		}
 		Pessoa pessoa = null;
-		if (tipo == Professor.class){
+		if (tipo == Professor.class) {
 			pessoa = new Professor(nome, senha, sexo, estadoCivil,
 					dataNascimento, email, telefone, rua, bairro, cidade, uf,
 					complemento, cep, numero, pais);
@@ -83,26 +93,30 @@ public class Sige implements ISige {
 
 	@Override
 	public ArrayList<Pessoa> buscarAdm() {
-		if (Autenticacao.runlevel().equals("Aluno") || Autenticacao.runlevel().equals("Professor")) {
+		if (Autenticacao.runlevel().equals("Aluno")
+				|| Autenticacao.runlevel().equals("Professor")) {
 			return null;
 		}
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
 		for (Pessoa elemento : repositorio.recuperarPessoas()) {
-			if (elemento instanceof Administrador || elemento instanceof ProfessorAdministrador) {
+			if (elemento instanceof Administrador
+					|| elemento instanceof ProfessorAdministrador) {
 				pessoas.add(elemento);
 			}
 		}
 		return pessoas;
 	}
-	
+
 	@Override
 	public ArrayList<Pessoa> buscarAdmNome(String nome) {
-		if (Autenticacao.runlevel().equals("Aluno") || Autenticacao.runlevel().equals("Professor")) {
+		if (Autenticacao.runlevel().equals("Aluno")
+				|| Autenticacao.runlevel().equals("Professor")) {
 			return null;
 		}
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
 		for (Pessoa elemento : repositorio.buscarPessoaNome(nome)) {
-			if (elemento instanceof Administrador || elemento instanceof ProfessorAdministrador) {
+			if (elemento instanceof Administrador
+					|| elemento instanceof ProfessorAdministrador) {
 				pessoas.add(elemento);
 			}
 		}
@@ -111,26 +125,30 @@ public class Sige implements ISige {
 
 	@Override
 	public ArrayList<Pessoa> buscarAdmCpf(String cpf) {
-		if (Autenticacao.runlevel().equals("Aluno") || Autenticacao.runlevel().equals("Professor")) {
+		if (Autenticacao.runlevel().equals("Aluno")
+				|| Autenticacao.runlevel().equals("Professor")) {
 			return null;
 		}
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
 		for (Pessoa elemento : repositorio.buscarPessoaCpf(cpf)) {
-			if (elemento instanceof Administrador || elemento instanceof ProfessorAdministrador) {
+			if (elemento instanceof Administrador
+					|| elemento instanceof ProfessorAdministrador) {
 				pessoas.add(elemento);
 			}
 		}
 		return pessoas;
 	}
-	
+
 	@Override
 	public ArrayList<Pessoa> buscarAdmId(int id) {
-		if (Autenticacao.runlevel().equals("Aluno") || Autenticacao.runlevel().equals("Professor")) {
+		if (Autenticacao.runlevel().equals("Aluno")
+				|| Autenticacao.runlevel().equals("Professor")) {
 			return null;
 		}
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
 		for (Pessoa elemento : repositorio.buscarPessoaId(id)) {
-			if (elemento instanceof Administrador || elemento instanceof ProfessorAdministrador) {
+			if (elemento instanceof Administrador
+					|| elemento instanceof ProfessorAdministrador) {
 				pessoas.add(elemento);
 			}
 		}
@@ -139,26 +157,30 @@ public class Sige implements ISige {
 
 	@Override
 	public ArrayList<Pessoa> buscaProfessor() {
-		if (Autenticacao.runlevel().equals("Aluno") || Autenticacao.runlevel().equals("Professor")) {
+		if (Autenticacao.runlevel().equals("Aluno")
+				|| Autenticacao.runlevel().equals("Professor")) {
 			return null;
 		}
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
 		for (Pessoa elemento : repositorio.recuperarPessoas()) {
-			if (elemento instanceof Professor || elemento instanceof ProfessorAdministrador) {
+			if (elemento instanceof Professor
+					|| elemento instanceof ProfessorAdministrador) {
 				pessoas.add(elemento);
 			}
 		}
 		return pessoas;
 	}
-	
+
 	@Override
 	public ArrayList<Pessoa> buscaProfessorNome(String nome) {
-		if (Autenticacao.runlevel().equals("Aluno") || Autenticacao.runlevel().equals("Professor")) {
+		if (Autenticacao.runlevel().equals("Aluno")
+				|| Autenticacao.runlevel().equals("Professor")) {
 			return null;
 		}
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
 		for (Pessoa elemento : repositorio.buscarPessoaNome(nome)) {
-			if (elemento instanceof Professor || elemento instanceof ProfessorAdministrador) {
+			if (elemento instanceof Professor
+					|| elemento instanceof ProfessorAdministrador) {
 				pessoas.add(elemento);
 			}
 		}
@@ -167,32 +189,36 @@ public class Sige implements ISige {
 
 	@Override
 	public ArrayList<Pessoa> buscaProfessorCpf(String cpf) {
-		if (Autenticacao.runlevel().equals("Aluno") || Autenticacao.runlevel().equals("Professor")) {
+		if (Autenticacao.runlevel().equals("Aluno")
+				|| Autenticacao.runlevel().equals("Professor")) {
 			return null;
 		}
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
 		for (Pessoa elemento : repositorio.buscarPessoaCpf(cpf)) {
-			if (elemento instanceof Professor || elemento instanceof ProfessorAdministrador) {
+			if (elemento instanceof Professor
+					|| elemento instanceof ProfessorAdministrador) {
 				pessoas.add(elemento);
 			}
 		}
 		return pessoas;
 	}
-	
+
 	@Override
 	public ArrayList<Pessoa> buscaProfessorId(int id) {
-		if (Autenticacao.runlevel().equals("Aluno") || Autenticacao.runlevel().equals("Professor")) {
+		if (Autenticacao.runlevel().equals("Aluno")
+				|| Autenticacao.runlevel().equals("Professor")) {
 			return null;
 		}
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
 		for (Pessoa elemento : repositorio.buscarPessoaId(id)) {
-			if (elemento instanceof Professor || elemento instanceof ProfessorAdministrador) {
+			if (elemento instanceof Professor
+					|| elemento instanceof ProfessorAdministrador) {
 				pessoas.add(elemento);
 			}
 		}
 		return pessoas;
 	}
-	
+
 	@Override
 	public ArrayList<Pessoa> buscaAluno() {
 		if (Autenticacao.runlevel().equals("Aluno")) {
@@ -234,39 +260,10 @@ public class Sige implements ISige {
 		}
 		return pessoas;
 	}
-	
-//	@Override
-//	public ArrayList<Pessoa> buscaAlunoMatricula(int matricula) {
-//		if (Autenticacao.runlevel().equals("Aluno")) {
-//			return null;
-//		}
-//		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
-//		for (Pessoa elemento : repositorio.buscarMatricula(matricula)) {
-//			if (elemento instanceof Aluno) {
-//				pessoas.add(elemento);
-//			}
-//		}
-//		return pessoas;
-//	}
 
 	@Override
 	public boolean removerAluno(int id) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-
-	/*
-	@Override
-	public boolean removerAluno(int id) {
-		if (Autenticacao.runlevel().equals("Aluno")) {
-			return false;
-		}
-		Pessoa pessoa = repositorio.buscarId(id).get(0);
-		for (Materia materia : pessoa.get) {
-			
-		}
-		return true;
-	}
-	*/
 }
