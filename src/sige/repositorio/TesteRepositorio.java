@@ -14,10 +14,9 @@ public class TesteRepositorio {
 //		}
 		
 		ResultSet rs = r.stm.executeQuery("SELECT * FROM pessoas ORDER BY id DESC");
-		//while(rs.next()){
-		rs.first();
+		while(rs.next()){
 			System.out.println(rs.getInt("id"));
-		//}
+		}
 		
 	}
 }
