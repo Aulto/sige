@@ -11,8 +11,8 @@ public class Pergunta {
 		this.pergunta = pergunta;
 		this.alternativas = alternativas;
 	}
-	
-	//perguntas separadas por |
+
+	// perguntas delimitadas por | no parametro str
 	public static ArrayList<Pergunta> stringToPerguntas(String str) {
 		String[] perguntas = str.split("\\|");
 		ArrayList<Pergunta> res = new ArrayList<Pergunta>();
@@ -31,7 +31,7 @@ public class Pergunta {
 		return res;
 	}
 
-	// retornar perguntas em json
+	// retornar pergunta em formato string "pergunta,a,b,c,d,e"
 	@Override
 	public String toString() {
 		String res = "";
