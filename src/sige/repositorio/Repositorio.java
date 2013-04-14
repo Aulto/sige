@@ -7,6 +7,7 @@ import sige.sige.Administrador;
 import sige.sige.Aluno;
 import sige.sige.Atividade;
 import sige.sige.Materia;
+import sige.sige.Pergunta;
 import sige.sige.Pessoa;
 import sige.sige.Professor;
 import sige.sige.ProfessorAdministrador;
@@ -17,7 +18,6 @@ public class Repositorio implements IRepositorio {
 	ResultSet rs;
 
 	public Repositorio(String host, String user, String pass) {
-
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(host, user, pass);
@@ -86,7 +86,7 @@ public class Repositorio implements IRepositorio {
 	}
 
 	@Override
-	public boolean adicionar(Pessoa pessoa) {
+	public boolean adicionarPessoa(Pessoa pessoa) {
 		try {
 			stm.executeUpdate("INSERT INTO pessoas (id, nome, cpf, senha, rg, sexo, estadoCivil, dataNascimento, email, telefone, endereco, tipo) VALUES"
 					+ "('"
@@ -121,7 +121,7 @@ public class Repositorio implements IRepositorio {
 	}
 
 	@Override
-	public boolean remover(int id) {
+	public boolean removerPessoa(int id) {
 		try {
 			stm.executeUpdate("REMOVE * FROM pessoas WHERE id Like '" + id
 					+ "'");
@@ -132,7 +132,7 @@ public class Repositorio implements IRepositorio {
 	}
 
 	@Override
-	public boolean atualizar(int id, Pessoa pessoa) {
+	public boolean atualizarPessoa(int id, Pessoa pessoa) {
 		try {
 			stm.executeUpdate("UPDATE pessoas SET nome=" + pessoa.getNome()
 					+ ", cpf=" + pessoa.getCpf() + ", senha="
@@ -150,32 +150,36 @@ public class Repositorio implements IRepositorio {
 	}
 
 	@Override
-	public ArrayList<Pessoa> buscarNome(String nome) {
-		return buscarSQL("SELECT * FROM pessoas WHERE nome LIKE '" + nome + "'");
+	public ArrayList<Pessoa> recuperarPessoas() {
+		return buscarSQL("SELECT * FROM pessoas");
 	}
 
 	@Override
-	public ArrayList<Pessoa> buscarCpf(String cpf) {
-		return buscarSQL("SELECT * FROM pessoas WHERE cpf LIKE '" + cpf + "'");
-	}
-
-	@Override
-	public ArrayList<Pessoa> buscarId(int id) {
+	public ArrayList<Pessoa> buscarPessoaId(int id) {
 		return buscarSQL("SELECT * FROM pessoas WHERE id LIKE '" + id + "'");
 	}
 
 	@Override
-	public ArrayList<Pessoa> buscarPessoas() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Pessoa> buscarPessoaNome(String nome) {
+		return buscarSQL("SELECT * FROM pessoas WHERE nome LIKE '" + nome + "'");
+	}
+
+	@Override
+	public ArrayList<Pessoa> buscarPessoaCpf(String cpf) {
+		return buscarSQL("SELECT * FROM pessoas WHERE cpf LIKE '" + cpf + "'");
 	}
 
 	@Override
 	public boolean adicionarMateria(Materia materia) {
 		try {
-			rs = stm.executeQuery("INSERT INTO materias (id)");
+			stm.executeUpdate("INSERT INTO materias (id, nome, idProfessor) VALUES ('"
+					+ materia.getIdMateria()
+					+ "', '"
+					+ materia.getNome()
+					+ "', '" + materia.getIdProfessor() + "')");
 			return true;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -183,83 +187,136 @@ public class Repositorio implements IRepositorio {
 	@Override
 	public boolean removerMateria(int id) {
 		try {
-			rs = stm.executeQuery("REMOVE * FROM materias WHERE id LIKE '" + id
+			stm.executeUpdate("REMOTE * FROM materias WHERE id LIKE '" + id
 					+ "'");
 			return true;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
 
 	@Override
 	public boolean atualizarMateria(int id, Materia materia) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			stm.executeUpdate("UPDATE materias SET nome='" + materia.getNome()
+					+ "', idProfessor='" + materia.getIdProfessor()
+					+ "' WHERE id LIKE '" + id + "'");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
-	public ArrayList<Materia> buscarMateriaNome(String chave) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Materia> recuperarMaterias() {
+		ArrayList<Materia> res = new ArrayList<Materia>();
+		try {
+			rs = stm.executeQuery("SELECT * FROM materias");
+			while (rs.next()) {
+				res.add(new Materia(rs.getString("nome"), rs
+						.getInt("idProfessor")));
+			}
+			return res;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
-	public ArrayList<Materia> buscarMateriaId(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Materia> buscarMateriaId(int id) {
+		ArrayList<Materia> res = new ArrayList<Materia>();
+		for (Materia m : this.recuperarMaterias()) {
+			if (m.getIdMateria() == id) {
+				res.add(m);
+			}
+		}
+		return res;
 	}
 
 	@Override
-	public ArrayList<Materia> buscarMateriaProfessor(String idProfessor) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<Materia> buscarMateria() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Materia> buscarMateriaNome(String nome) {
+		ArrayList<Materia> res = new ArrayList<Materia>();
+		for (Materia m : this.recuperarMaterias()) {
+			if (m.getNome().equals(nome)) {
+				res.add(m);
+			}
+		}
+		return res;
 	}
 
 	@Override
 	public boolean adicionarAtividade(Atividade atividade) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			stm.executeUpdate("INSERT INTO atividades (id, nome, materiaId, perguntas) VALUES ('"
+					+ atividade.getIdAtividade()
+					+ "', '"
+					+ atividade.getNome()
+					+ "' ,'"
+					+ atividade.getIdMateria()
+					+ "', '"
+					+ atividade.getPerguntas() + "')");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
 	public boolean removerAtividade(int id) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			stm.executeUpdate("REMOVE * FROM atividades WHERE id LIKE '" + id
+					+ "'");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
 	public boolean atualizarAtividade(int id, Atividade atividade) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			stm.executeUpdate("UPDATE atividades SET nome='"
+					+ atividade.getNome() + "', materiaId='"
+					+ atividade.getIdMateria() + "', perguntas='"
+					+ atividade.getPerguntas() + "' WHERE id LIKE '" + id + "'");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
-	public ArrayList<Atividade> buscarAtividadeId(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Atividade> recuperarAtividades() {
+		ArrayList<Atividade> res = new ArrayList<Atividade>();
+		try {
+			rs = stm.executeQuery("SELECT * FROM atividades");
+			while (rs.next()) {
+				res.add(new Atividade(rs.getString("nome"), rs
+						.getInt("materiaId"), Pergunta.jsonToPerguntas(rs
+						.getString("perguntas"))));
+			}
+			return res;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
-	public ArrayList<Atividade> buscarAtividadeMateria(String idMateria) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Atividade> buscarAtividadeId(int id) {
+		ArrayList<Atividade> res = new ArrayList<Atividade>();
+		for(Atividade atividade : this.recuperarAtividades()){
+			if(atividade.getIdAtividade() == id){
+				res.add(atividade);
+			}
+		}
+		return res;
 	}
 
-	@Override
-	public ArrayList<Atividade> buscarAtividade() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<Pessoa> buscarMatricula(int matricula) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

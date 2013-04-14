@@ -5,45 +5,45 @@ import sige.sige.*;
 
 public interface IRepositorio {
 	
-	boolean adicionar(Pessoa pessoa);
+	//métodos para gerenciar pessoas (Alunos, profs, adms, admprofs)
+	boolean adicionarPessoa(Pessoa pessoa);
 	
-	boolean remover(int id);
+	boolean removerPessoa(int id);
 	
-	boolean atualizar(int id, Pessoa pessoa);
+	boolean atualizarPessoa(int id, Pessoa pessoa);
 	
-	ArrayList<Pessoa> buscarNome(String nome);
+	//métodos para buscar pessoas
+	ArrayList<Pessoa> recuperarPessoas();
 	
-	ArrayList<Pessoa> buscarCpf(String cpf);
+	ArrayList<Pessoa> buscarPessoaId(int id);
 	
-	ArrayList<Pessoa> buscarId(int id);
+	ArrayList<Pessoa> buscarPessoaNome(String nome);
 	
-	ArrayList<Pessoa> buscarPessoas();
+	ArrayList<Pessoa> buscarPessoaCpf(String cpf);
 	
-	ArrayList<Pessoa> buscarMatricula(int matricula);
-	
+	//métodos para gerenciar matérias
 	boolean adicionarMateria(Materia materia);
 	
 	boolean removerMateria(int id);
 	
 	boolean atualizarMateria(int id, Materia materia);
 	
-	ArrayList<Materia> buscarMateriaNome(String chave);
+	//métodos para buscar matérias
+	ArrayList<Materia> recuperarMaterias();
 	
-	ArrayList<Materia> buscarMateriaId(String id);
+	ArrayList<Materia> buscarMateriaId(int id);
 	
-	ArrayList<Materia> buscarMateriaProfessor(String idProfessor);
+	ArrayList<Materia> buscarMateriaNome(String nome);
 	
-	ArrayList<Materia> buscarMateria();
-	
+	//métodos para gerenciar atividades
 	boolean adicionarAtividade(Atividade atividade);
 	
 	boolean removerAtividade(int id);
 	
 	boolean atualizarAtividade(int id, Atividade atividade);
 	
-	ArrayList<Atividade> buscarAtividadeId(String id);
+	//métodos para buscar atividades
+	ArrayList<Atividade> recuperarAtividades();
 	
-	ArrayList<Atividade> buscarAtividadeMateria(String idMateria);
-		
-	ArrayList<Atividade> buscarAtividade();
+	ArrayList<Atividade> buscarAtividadeId(int id);
 }

@@ -44,7 +44,7 @@ public interface ISige {
 	
 	ArrayList<Pessoa> buscaAlunoId(int id);
 	
-	ArrayList<Pessoa> buscaAlunoMatricula(int matricula);
+//	ArrayList<Pessoa> buscaAlunoMatricula(int matricula);
 	
 	boolean removerAluno(int id);
 }
