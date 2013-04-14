@@ -7,10 +7,23 @@ import sige.repositorio.*;
 public class Sige implements ISige {
 
 	private Repositorio repositorio;
+	private static ISige instance;
 
-	public Sige() {
+	public Sige() throws InicializacaoSistemaException {
 		this.repositorio = new Repositorio("jdbc:mysql://localhost:3306/sige",
-				"root", "");
+					"root", "");
+	}
+	
+	public static ISige getInstance() throws InicializacaoSistemaException{
+		if (Sige.instance == null) {
+			try {
+				Sige.instance = new Sige();
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new InicializacaoSistemaException();
+			}
+		}
+		return Sige.instance;
 	}
 
 	@Override

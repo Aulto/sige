@@ -3,6 +3,7 @@ package sige.sige;
 import java.util.ArrayList;
 
 import sige.repositorio.Repositorio;
+import sige.repositorio.RepositorioException;
 
 public class Autenticacao {
 
