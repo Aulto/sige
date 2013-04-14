@@ -6,7 +6,7 @@ public class Materia {
 	
 	private static int numeroMaterias = 0;
 	
-	private final int idMaterias;
+	private final int idMateria;
 	private String nome;
 	private int idProfessor;
 	private ArrayList<Nota> notas;
@@ -17,7 +17,7 @@ public class Materia {
 	public Materia(String nome, int idProfessor){
 		this.setNome(nome);
 		this.setIdProfessor(idProfessor);
-		this.idMaterias= Materia.numeroMaterias++;
+		this.idMateria = Materia.numeroMaterias++;
 		this.notas = new ArrayList<Nota>();
 		this.atividades = new ArrayList<Atividade>();
 		this.idAlunosPendentes = new ArrayList<Integer>();
@@ -39,8 +39,8 @@ public class Materia {
 		return resutado;
 	}		
 
-	public int getIdMaterias() {
-		return idMaterias;
+	public int getIdMateria() {
+		return idMateria;
 	}
 
 	public ArrayList<Nota> getNotas() {
