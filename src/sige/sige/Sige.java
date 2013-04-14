@@ -15,7 +15,7 @@ public class Sige implements ISige {
 
 	@Override
 	public ArrayList<Pessoa> buscarCpf(String cpf) {
-		return repositorio.buscarCpf(cpf);
+		return repositorio.buscarPessoaCpf(cpf);
 	}
 	
 	public boolean autenticarSistema(){
@@ -24,7 +24,7 @@ public class Sige implements ISige {
 
 	@Override
 	public ArrayList<Pessoa> buscarId(int id) {
-		return repositorio.buscarId(id);
+		return repositorio.buscarPessoaId(id);
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class Sige implements ISige {
 		Aluno aluno = new Aluno(nome, senha, sexo, estadoCivil, dataNascimento,
 				email, telefone, rua, bairro, cidade, uf, complemento, cep,
 				numero, pais);
-		return repositorio.adicionar(aluno);
+		return repositorio.adicionarPessoa(aluno);
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class Sige implements ISige {
 			break;
 		}
 		if (pessoa != null) {
-			repositorio.adicionar(pessoa);
+			repositorio.adicionarPessoa(pessoa);
 		}
 		return true;
 	}
@@ -81,7 +81,7 @@ public class Sige implements ISige {
 			return null;
 		}
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
-		for (Pessoa elemento : repositorio.buscarPessoas()) {
+		for (Pessoa elemento : repositorio.recuperarPessoas()) {
 			if (elemento instanceof Administrador || elemento instanceof ProfessorAdministrador) {
 				pessoas.add(elemento);
 			}
@@ -95,7 +95,7 @@ public class Sige implements ISige {
 			return null;
 		}
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
-		for (Pessoa elemento : repositorio.buscarNome(nome)) {
+		for (Pessoa elemento : repositorio.buscarPessoaNome(nome)) {
 			if (elemento instanceof Administrador || elemento instanceof ProfessorAdministrador) {
 				pessoas.add(elemento);
 			}
@@ -109,7 +109,7 @@ public class Sige implements ISige {
 			return null;
 		}
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
-		for (Pessoa elemento : repositorio.buscarCpf(cpf)) {
+		for (Pessoa elemento : repositorio.buscarPessoaCpf(cpf)) {
 			if (elemento instanceof Administrador || elemento instanceof ProfessorAdministrador) {
 				pessoas.add(elemento);
 			}
@@ -123,7 +123,7 @@ public class Sige implements ISige {
 			return null;
 		}
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
-		for (Pessoa elemento : repositorio.buscarId(id)) {
+		for (Pessoa elemento : repositorio.buscarPessoaId(id)) {
 			if (elemento instanceof Administrador || elemento instanceof ProfessorAdministrador) {
 				pessoas.add(elemento);
 			}
@@ -137,7 +137,7 @@ public class Sige implements ISige {
 			return null;
 		}
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
-		for (Pessoa elemento : repositorio.buscarPessoas()) {
+		for (Pessoa elemento : repositorio.recuperarPessoas()) {
 			if (elemento instanceof Professor || elemento instanceof ProfessorAdministrador) {
 				pessoas.add(elemento);
 			}
@@ -151,7 +151,7 @@ public class Sige implements ISige {
 			return null;
 		}
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
-		for (Pessoa elemento : repositorio.buscarNome(nome)) {
+		for (Pessoa elemento : repositorio.buscarPessoaNome(nome)) {
 			if (elemento instanceof Professor || elemento instanceof ProfessorAdministrador) {
 				pessoas.add(elemento);
 			}
@@ -165,7 +165,7 @@ public class Sige implements ISige {
 			return null;
 		}
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
-		for (Pessoa elemento : repositorio.buscarCpf(cpf)) {
+		for (Pessoa elemento : repositorio.buscarPessoaCpf(cpf)) {
 			if (elemento instanceof Professor || elemento instanceof ProfessorAdministrador) {
 				pessoas.add(elemento);
 			}
@@ -179,7 +179,7 @@ public class Sige implements ISige {
 			return null;
 		}
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
-		for (Pessoa elemento : repositorio.buscarId(id)) {
+		for (Pessoa elemento : repositorio.buscarPessoaId(id)) {
 			if (elemento instanceof Professor || elemento instanceof ProfessorAdministrador) {
 				pessoas.add(elemento);
 			}
@@ -193,7 +193,7 @@ public class Sige implements ISige {
 			return null;
 		}
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
-		for (Pessoa elemento : repositorio.buscarPessoas()) {
+		for (Pessoa elemento : repositorio.recuperarPessoas()) {
 			if (elemento instanceof Aluno) {
 				pessoas.add(elemento);
 			}
@@ -207,7 +207,7 @@ public class Sige implements ISige {
 			return null;
 		}
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
-		for (Pessoa elemento : repositorio.buscarNome(nome)) {
+		for (Pessoa elemento : repositorio.buscarPessoaNome(nome)) {
 			if (elemento instanceof Aluno) {
 				pessoas.add(elemento);
 			}
@@ -221,7 +221,7 @@ public class Sige implements ISige {
 			return null;
 		}
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
-		for (Pessoa elemento : repositorio.buscarId(id)) {
+		for (Pessoa elemento : repositorio.buscarPessoaId(id)) {
 			if (elemento instanceof Aluno) {
 				pessoas.add(elemento);
 			}
@@ -229,19 +229,19 @@ public class Sige implements ISige {
 		return pessoas;
 	}
 	
-	@Override
-	public ArrayList<Pessoa> buscaAlunoMatricula(int matricula) {
-		if (Autenticacao.runlevel().equals("Aluno")) {
-			return null;
-		}
-		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
-		for (Pessoa elemento : repositorio.buscarMatricula(matricula)) {
-			if (elemento instanceof Aluno) {
-				pessoas.add(elemento);
-			}
-		}
-		return pessoas;
-	}
+//	@Override
+//	public ArrayList<Pessoa> buscaAlunoMatricula(int matricula) {
+//		if (Autenticacao.runlevel().equals("Aluno")) {
+//			return null;
+//		}
+//		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
+//		for (Pessoa elemento : repositorio.buscarMatricula(matricula)) {
+//			if (elemento instanceof Aluno) {
+//				pessoas.add(elemento);
+//			}
+//		}
+//		return pessoas;
+//	}
 
 	@Override
 	public boolean removerAluno(int id) {

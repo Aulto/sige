@@ -10,7 +10,7 @@ public class Autenticacao {
 	private static Repositorio repo = new Repositorio("jdbc:mysql://localhost:3306/sige", "root", "");
 	
 	public static boolean AdministradorExists(Repositorio repositorio) {
-		for (Pessoa elemento : repositorio.buscarPessoas()) {
+		for (Pessoa elemento : repositorio.recuperarPessoas()) {
 			if (elemento instanceof Administrador
 					|| elemento instanceof ProfessorAdministrador) {
 				return true;
@@ -20,7 +20,7 @@ public class Autenticacao {
 	}
 	
 	public static boolean logado(String user, String pass){
-		ArrayList<Pessoa> pessoas = repo.buscarCpf(user);
+		ArrayList<Pessoa> pessoas = repo.buscarPessoaCpf(user);
 		if(!pessoas.isEmpty()){
 			pessoa = pessoas.get(0);
 			return pessoa.senha.equals(pass);

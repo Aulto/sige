@@ -31,9 +31,9 @@ public interface IRepositorio {
 	//métodos para buscar matérias
 	ArrayList<Materia> recuperarMaterias();
 	
-	ArrayList<Materia> buscarMateriaId();
+	ArrayList<Materia> buscarMateriaId(int id);
 	
-	ArrayList<Materia> buscarMateriaNome();
+	ArrayList<Materia> buscarMateriaNome(String nome);
 	
 	//métodos para gerenciar atividades
 	boolean adicionarAtividade(Atividade atividade);
@@ -45,5 +45,5 @@ public interface IRepositorio {
 	//métodos para buscar atividades
 	ArrayList<Atividade> recuperarAtividades();
 	
-	ArrayList<Atividade> buscarAtividadeId();
+	ArrayList<Atividade> buscarAtividadeId(int id);
 }
