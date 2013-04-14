@@ -298,7 +298,7 @@ public class Repositorio implements IRepositorio {
 			rs = stm.executeQuery("SELECT * FROM atividades");
 			while (rs.next()) {
 				res.add(new Atividade(rs.getString("nome"), rs
-						.getInt("materiaId"), Pergunta.jsonToPerguntas(rs
+						.getInt("materiaId"), Pergunta.stringToPerguntas(rs
 						.getString("perguntas"))));
 			}
 			return res;
@@ -311,8 +311,8 @@ public class Repositorio implements IRepositorio {
 	@Override
 	public ArrayList<Atividade> buscarAtividadeId(int id) {
 		ArrayList<Atividade> res = new ArrayList<Atividade>();
-		for(Atividade atividade : this.recuperarAtividades()){
-			if(atividade.getIdAtividade() == id){
+		for (Atividade atividade : this.recuperarAtividades()) {
+			if (atividade.getIdAtividade() == id) {
 				res.add(atividade);
 			}
 		}
