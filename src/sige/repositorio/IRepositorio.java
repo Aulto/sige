@@ -6,44 +6,44 @@ import sige.sige.*;
 public interface IRepositorio {
 	
 	//métodos para gerenciar pessoas (Alunos, profs, adms, admprofs)
-	boolean adicionarPessoa(Pessoa pessoa);
+	void adicionarPessoa(Pessoa pessoa) throws RepositorioException;
 	
-	boolean removerPessoa(int id);
+	void removerPessoa(int id) throws RepositorioException;
 	
-	boolean atualizarPessoa(int id, Pessoa pessoa);
+	void atualizarPessoa(int id, Pessoa pessoa) throws RepositorioException;
 	
 	//métodos para buscar pessoas
-	ArrayList<Pessoa> recuperarPessoas();
+	ArrayList<Pessoa> recuperarPessoas() throws RepositorioException;
 	
-	ArrayList<Pessoa> buscarPessoaId(int id);
+	ArrayList<Pessoa> buscarPessoaId(int id) throws RepositorioException;
 	
-	ArrayList<Pessoa> buscarPessoaNome(String nome);
+	ArrayList<Pessoa> buscarPessoaNome(String nome) throws RepositorioException;
 	
-	ArrayList<Pessoa> buscarPessoaCpf(String cpf);
+	ArrayList<Pessoa> buscarPessoaCpf(String cpf) throws RepositorioException;
 	
 	//métodos para gerenciar matérias
-	boolean adicionarMateria(Materia materia);
+	void adicionarMateria(Materia materia) throws RepositorioException;
 	
-	boolean removerMateria(int id);
+	void removerMateria(int id) throws RepositorioException;
 	
-	boolean atualizarMateria(int id, Materia materia);
+	void atualizarMateria(int id, Materia materia) throws RepositorioException;
 	
 	//métodos para buscar matérias
-	ArrayList<Materia> recuperarMaterias();
+	ArrayList<Materia> recuperarMaterias() throws RepositorioException;
 	
-	ArrayList<Materia> buscarMateriaId(int id);
+	ArrayList<Materia> buscarMateriaId(int id) throws RepositorioException;
 	
-	ArrayList<Materia> buscarMateriaNome(String nome);
+	ArrayList<Materia> buscarMateriaNome(String nome) throws RepositorioException;
 	
 	//métodos para gerenciar atividades
-	boolean adicionarAtividade(Atividade atividade);
+	void adicionarAtividade(Atividade atividade) throws RepositorioException;
 	
-	boolean removerAtividade(int id);
+	void removerAtividade(int id) throws RepositorioException;
 	
-	boolean atualizarAtividade(int id, Atividade atividade);
+	void atualizarAtividade(int id, Atividade atividade) throws RepositorioException;
 	
 	//métodos para buscar atividades
-	ArrayList<Atividade> recuperarAtividades();
+	ArrayList<Atividade> recuperarAtividades() throws RepositorioException;
 	
-	ArrayList<Atividade> buscarAtividadeId(int id);
+	ArrayList<Atividade> buscarAtividadeId(int id) throws RepositorioException;
 }

@@ -17,17 +17,19 @@ public class Repositorio implements IRepositorio {
 	Statement stm;
 	ResultSet rs;
 
-	public Repositorio(String host, String user, String pass) {
+	public Repositorio(String host, String user, String pass)
+			throws RepositorioException {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(host, user, pass);
 			stm = conn.createStatement();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RepositorioException();
 		}
 	}
 
-	private ArrayList<Pessoa> buscarSQL(String query) {
+	private ArrayList<Pessoa> buscarSQL(String query)
+			throws RepositorioException {
 		ArrayList<Pessoa> res = new ArrayList<Pessoa>();
 		try {
 			rs = stm.executeQuery(query);
@@ -81,12 +83,12 @@ public class Repositorio implements IRepositorio {
 			}
 			return res;
 		} catch (SQLException e) {
-			return null;
+			throw new RepositorioException();
 		}
 	}
 
 	@Override
-	public boolean adicionarPessoa(Pessoa pessoa) {
+	public void adicionarPessoa(Pessoa pessoa) throws RepositorioException {
 		try {
 			stm.executeUpdate("INSERT INTO pessoas (id, nome, cpf, senha, rg, sexo, estadoCivil, dataNascimento, email, telefone, endereco, tipo) VALUES"
 					+ "('"
@@ -113,26 +115,24 @@ public class Repositorio implements IRepositorio {
 					+ pessoa.getEndereço()
 					+ "', '"
 					+ pessoa.getClass().getSimpleName() + "')");
-			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
+			throw new RepositorioException();
 		}
 	}
 
 	@Override
-	public boolean removerPessoa(int id) {
+	public void removerPessoa(int id) throws RepositorioException {
 		try {
 			stm.executeUpdate("REMOVE * FROM pessoas WHERE id Like '" + id
 					+ "'");
-			return true;
 		} catch (SQLException e) {
-			return false;
+			throw new RepositorioException();
 		}
 	}
 
 	@Override
-	public boolean atualizarPessoa(int id, Pessoa pessoa) {
+	public void atualizarPessoa(int id, Pessoa pessoa)
+			throws RepositorioException {
 		try {
 			stm.executeUpdate("UPDATE pessoas SET nome=" + pessoa.getNome()
 					+ ", cpf=" + pessoa.getCpf() + ", senha="
@@ -143,74 +143,70 @@ public class Repositorio implements IRepositorio {
 					+ pessoa.getEmail() + ", telefone=" + pessoa.getTelefone()
 					+ ", endereço=" + pessoa.getEndereço() + " WHERE id Like '"
 					+ id + "'");
-			return true;
 		} catch (SQLException e) {
-			return false;
+			throw new RepositorioException();
 		}
 	}
 
 	@Override
-	public ArrayList<Pessoa> recuperarPessoas() {
+	public ArrayList<Pessoa> recuperarPessoas() throws RepositorioException {
 		return buscarSQL("SELECT * FROM pessoas");
 	}
 
 	@Override
-	public ArrayList<Pessoa> buscarPessoaId(int id) {
+	public ArrayList<Pessoa> buscarPessoaId(int id) throws RepositorioException {
 		return buscarSQL("SELECT * FROM pessoas WHERE id LIKE '" + id + "'");
 	}
 
 	@Override
-	public ArrayList<Pessoa> buscarPessoaNome(String nome) {
+	public ArrayList<Pessoa> buscarPessoaNome(String nome)
+			throws RepositorioException {
 		return buscarSQL("SELECT * FROM pessoas WHERE nome LIKE '" + nome + "'");
 	}
 
 	@Override
-	public ArrayList<Pessoa> buscarPessoaCpf(String cpf) {
+	public ArrayList<Pessoa> buscarPessoaCpf(String cpf)
+			throws RepositorioException {
 		return buscarSQL("SELECT * FROM pessoas WHERE cpf LIKE '" + cpf + "'");
 	}
 
 	@Override
-	public boolean adicionarMateria(Materia materia) {
+	public void adicionarMateria(Materia materia) throws RepositorioException {
 		try {
 			stm.executeUpdate("INSERT INTO materias (id, nome, idProfessor) VALUES ('"
 					+ materia.getIdMateria()
 					+ "', '"
 					+ materia.getNome()
 					+ "', '" + materia.getIdProfessor() + "')");
-			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
+			throw new RepositorioException();
 		}
 	}
 
 	@Override
-	public boolean removerMateria(int id) {
+	public void removerMateria(int id) throws RepositorioException {
 		try {
 			stm.executeUpdate("REMOTE * FROM materias WHERE id LIKE '" + id
 					+ "'");
-			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
+			throw new RepositorioException();
 		}
 	}
 
 	@Override
-	public boolean atualizarMateria(int id, Materia materia) {
+	public void atualizarMateria(int id, Materia materia)
+			throws RepositorioException {
 		try {
 			stm.executeUpdate("UPDATE materias SET nome='" + materia.getNome()
 					+ "', idProfessor='" + materia.getIdProfessor()
 					+ "' WHERE id LIKE '" + id + "'");
-			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
+			throw new RepositorioException();
 		}
 	}
 
 	@Override
-	public ArrayList<Materia> recuperarMaterias() {
+	public ArrayList<Materia> recuperarMaterias() throws RepositorioException {
 		ArrayList<Materia> res = new ArrayList<Materia>();
 		try {
 			rs = stm.executeQuery("SELECT * FROM materias");
@@ -220,13 +216,13 @@ public class Repositorio implements IRepositorio {
 			}
 			return res;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+			throw new RepositorioException();
 		}
 	}
 
 	@Override
-	public ArrayList<Materia> buscarMateriaId(int id) {
+	public ArrayList<Materia> buscarMateriaId(int id)
+			throws RepositorioException {
 		ArrayList<Materia> res = new ArrayList<Materia>();
 		for (Materia m : this.recuperarMaterias()) {
 			if (m.getIdMateria() == id) {
@@ -237,7 +233,8 @@ public class Repositorio implements IRepositorio {
 	}
 
 	@Override
-	public ArrayList<Materia> buscarMateriaNome(String nome) {
+	public ArrayList<Materia> buscarMateriaNome(String nome)
+			throws RepositorioException {
 		ArrayList<Materia> res = new ArrayList<Materia>();
 		for (Materia m : this.recuperarMaterias()) {
 			if (m.getNome().equals(nome)) {
@@ -248,7 +245,8 @@ public class Repositorio implements IRepositorio {
 	}
 
 	@Override
-	public boolean adicionarAtividade(Atividade atividade) {
+	public void adicionarAtividade(Atividade atividade)
+			throws RepositorioException {
 		try {
 			stm.executeUpdate("INSERT INTO atividades (id, nome, materiaId, perguntas) VALUES ('"
 					+ atividade.getIdAtividade()
@@ -258,41 +256,37 @@ public class Repositorio implements IRepositorio {
 					+ atividade.getIdMateria()
 					+ "', '"
 					+ atividade.getPerguntas() + "')");
-			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
+			throw new RepositorioException();
 		}
 	}
 
 	@Override
-	public boolean removerAtividade(int id) {
+	public void removerAtividade(int id) throws RepositorioException {
 		try {
 			stm.executeUpdate("REMOVE * FROM atividades WHERE id LIKE '" + id
 					+ "'");
-			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
+			throw new RepositorioException();
 		}
 	}
 
 	@Override
-	public boolean atualizarAtividade(int id, Atividade atividade) {
+	public void atualizarAtividade(int id, Atividade atividade)
+			throws RepositorioException {
 		try {
 			stm.executeUpdate("UPDATE atividades SET nome='"
 					+ atividade.getNome() + "', materiaId='"
 					+ atividade.getIdMateria() + "', perguntas='"
 					+ atividade.getPerguntas() + "' WHERE id LIKE '" + id + "'");
-			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
+			throw new RepositorioException();
 		}
 	}
 
 	@Override
-	public ArrayList<Atividade> recuperarAtividades() {
+	public ArrayList<Atividade> recuperarAtividades()
+			throws RepositorioException {
 		ArrayList<Atividade> res = new ArrayList<Atividade>();
 		try {
 			rs = stm.executeQuery("SELECT * FROM atividades");
@@ -309,7 +303,8 @@ public class Repositorio implements IRepositorio {
 	}
 
 	@Override
-	public ArrayList<Atividade> buscarAtividadeId(int id) {
+	public ArrayList<Atividade> buscarAtividadeId(int id)
+			throws RepositorioException {
 		ArrayList<Atividade> res = new ArrayList<Atividade>();
 		for (Atividade atividade : this.recuperarAtividades()) {
 			if (atividade.getIdAtividade() == id) {
