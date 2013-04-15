@@ -18,6 +18,7 @@ public class Main{
 	public void sistema(){
 		cadastrar.setVisible(true);
 		login.setVisible(true);
+		fachadaAdm.setVisible(true);
 	}
 	
 	private void init(){
