@@ -13,6 +13,7 @@ import sige.sistema.Professor;
 import sige.sistema.ProfessorAdministrador;
 
 public class Repositorio implements IRepositorio {
+	// variaveis da conexao
 	Connection conn;
 	Statement stm;
 	ResultSet rs;
@@ -41,8 +42,9 @@ public class Repositorio implements IRepositorio {
 							.getString("estadoCivil"), rs
 							.getString("dataNascimento"),
 							rs.getString("email"), rs.getString("telefone"), rs
-									.getString("rua"), rs.getString("bairro"),
-							rs.getString("cidade"), rs.getString("uf"), rs
+									.getString("celular"), rs.getString("rua"),
+							rs.getString("bairro"), rs.getString("cidade"), rs
+									.getString("uf"), rs
 									.getString("complemento"), rs
 									.getString("cep"), rs.getString("numero"),
 							rs.getString("pais")));
@@ -52,8 +54,9 @@ public class Repositorio implements IRepositorio {
 							.getString("estadoCivil"), rs
 							.getString("dataNascimento"),
 							rs.getString("email"), rs.getString("telefone"), rs
-									.getString("rua"), rs.getString("bairro"),
-							rs.getString("cidade"), rs.getString("uf"), rs
+									.getString("celular"), rs.getString("rua"),
+							rs.getString("bairro"), rs.getString("cidade"), rs
+									.getString("uf"), rs
 									.getString("complemento"), rs
 									.getString("cep"), rs.getString("numero"),
 							rs.getString("pais")));
@@ -63,8 +66,9 @@ public class Repositorio implements IRepositorio {
 							.getString("estadoCivil"), rs
 							.getString("dataNascimento"),
 							rs.getString("email"), rs.getString("telefone"), rs
-									.getString("rua"), rs.getString("bairro"),
-							rs.getString("cidade"), rs.getString("uf"), rs
+									.getString("celular"), rs.getString("rua"),
+							rs.getString("bairro"), rs.getString("cidade"), rs
+									.getString("uf"), rs
 									.getString("complemento"), rs
 									.getString("cep"), rs.getString("numero"),
 							rs.getString("pais")));
@@ -74,8 +78,9 @@ public class Repositorio implements IRepositorio {
 							.getString("estadoCivil"), rs
 							.getString("dataNascimento"),
 							rs.getString("email"), rs.getString("telefone"), rs
-									.getString("rua"), rs.getString("bairro"),
-							rs.getString("cidade"), rs.getString("uf"), rs
+									.getString("celular"), rs.getString("rua"),
+							rs.getString("bairro"), rs.getString("cidade"), rs
+									.getString("uf"), rs
 									.getString("complemento"), rs
 									.getString("cep"), rs.getString("numero"),
 							rs.getString("pais")));
