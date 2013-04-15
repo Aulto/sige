@@ -1,7 +1,8 @@
 package sige.repositorio;
 
 import java.util.ArrayList;
-import sige.sige.*;
+
+import sige.sistema.*;
 
 public interface IRepositorio {
 	

@@ -3,14 +3,14 @@ package sige.repositorio;
 import java.sql.*;
 import java.util.ArrayList;
 
-import sige.sige.Administrador;
-import sige.sige.Aluno;
-import sige.sige.Atividade;
-import sige.sige.Materia;
-import sige.sige.Pergunta;
-import sige.sige.Pessoa;
-import sige.sige.Professor;
-import sige.sige.ProfessorAdministrador;
+import sige.sistema.Administrador;
+import sige.sistema.Aluno;
+import sige.sistema.Atividade;
+import sige.sistema.Materia;
+import sige.sistema.Pergunta;
+import sige.sistema.Pessoa;
+import sige.sistema.Professor;
+import sige.sistema.ProfessorAdministrador;
 
 public class Repositorio implements IRepositorio {
 	Connection conn;
