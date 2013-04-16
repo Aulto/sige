@@ -55,7 +55,7 @@ public class FachadaAdm extends JFrame {
 		setTitle("SIGE");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 401);
+		setBounds(100, 100, 600, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -251,7 +251,7 @@ public class FachadaAdm extends JFrame {
 		panelBuscaProfessor.add(txtBuscarProf);
 		txtBuscarProf.setColumns(10);
 		
-		JLabel lblPorProf = new JLabel("Por");
+		JLabel lblPorProf = new JLabel("Por:");
 		lblPorProf.setBounds(359, 14, 39, 14);
 		panelBuscaProfessor.add(lblPorProf);
 		
