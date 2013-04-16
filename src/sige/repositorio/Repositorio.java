@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import sige.sistema.Administrador;
 import sige.sistema.Aluno;
 import sige.sistema.Atividade;
+import sige.sistema.Endereço;
 import sige.sistema.Materia;
 import sige.sistema.Pergunta;
 import sige.sistema.Pessoa;
@@ -34,7 +35,8 @@ public class Repositorio implements IRepositorio {
 		ArrayList<Pessoa> res = new ArrayList<Pessoa>();
 		try {
 			rs = stm.executeQuery(query);
-			String tipo = rs.getString("tipo");
+			// String tipo = rs.getString("tipo");
+			String tipo = "Aluno";
 			while (rs.next()) {
 				if (tipo.equals("Aluno")) {
 					res.add(new Aluno(rs.getString("nome"), rs
@@ -42,52 +44,37 @@ public class Repositorio implements IRepositorio {
 							.getString("estadoCivil"), rs
 							.getString("dataNascimento"),
 							rs.getString("email"), rs.getString("telefone"), rs
-									.getString("celular"), rs.getString("rua"),
-							rs.getString("bairro"), rs.getString("cidade"), rs
-									.getString("uf"), rs
-									.getString("complemento"), rs
-									.getString("cep"), rs.getString("numero"),
-							rs.getString("pais")));
+									.getString("celular"), Endereço
+									.getEndereço(rs.getString("endereco"))));
 				} else if (tipo.equals("Professor")) {
 					res.add(new Professor(rs.getString("nome"), rs
 							.getString("senha"), rs.getString("sexo"), rs
 							.getString("estadoCivil"), rs
 							.getString("dataNascimento"),
 							rs.getString("email"), rs.getString("telefone"), rs
-									.getString("celular"), rs.getString("rua"),
-							rs.getString("bairro"), rs.getString("cidade"), rs
-									.getString("uf"), rs
-									.getString("complemento"), rs
-									.getString("cep"), rs.getString("numero"),
-							rs.getString("pais")));
+									.getString("celular"), Endereço
+									.getEndereço(rs.getString("endereco"))));
 				} else if (tipo.equals("Administrador")) {
 					res.add(new Administrador(rs.getString("nome"), rs
 							.getString("senha"), rs.getString("sexo"), rs
 							.getString("estadoCivil"), rs
 							.getString("dataNascimento"),
 							rs.getString("email"), rs.getString("telefone"), rs
-									.getString("celular"), rs.getString("rua"),
-							rs.getString("bairro"), rs.getString("cidade"), rs
-									.getString("uf"), rs
-									.getString("complemento"), rs
-									.getString("cep"), rs.getString("numero"),
-							rs.getString("pais")));
+									.getString("celular"), Endereço
+									.getEndereço(rs.getString("endereco"))));
 				} else if (tipo.equals("ProfessorAdministrador")) {
 					res.add(new ProfessorAdministrador(rs.getString("nome"), rs
 							.getString("senha"), rs.getString("sexo"), rs
 							.getString("estadoCivil"), rs
 							.getString("dataNascimento"),
 							rs.getString("email"), rs.getString("telefone"), rs
-									.getString("celular"), rs.getString("rua"),
-							rs.getString("bairro"), rs.getString("cidade"), rs
-									.getString("uf"), rs
-									.getString("complemento"), rs
-									.getString("cep"), rs.getString("numero"),
-							rs.getString("pais")));
+									.getString("celular"), Endereço
+									.getEndereço(rs.getString("endereco"))));
 				}
 			}
 			return res;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new RepositorioException();
 		}
 	}

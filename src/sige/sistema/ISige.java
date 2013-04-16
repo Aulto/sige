@@ -2,13 +2,15 @@ package sige.sistema;
 
 import java.util.ArrayList;
 
+import sige.repositorio.RepositorioException;
+
 public interface ISige {
 
 	ArrayList<Pessoa> buscarCpf(String cpf) throws ProblemaInterno;
 
 	ArrayList<Pessoa> buscarId(int id) throws ProblemaInterno;
 
-	boolean autenticarSistema() throws AutenticacaoException;
+	boolean autenticarSistema() throws RepositorioException;
 
 	void adicionarAluno(String nome, String senha, String sexo,
 			String estadoCivil, String dataNascimento, String email,

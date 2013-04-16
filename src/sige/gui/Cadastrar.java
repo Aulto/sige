@@ -2,6 +2,7 @@ package sige.gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Panel;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -26,6 +27,7 @@ import javax.swing.JCheckBox;
 public class Cadastrar extends JFrame {
 
 	private JPanel contentPane;
+	private  JPanel panel;
 	private JTextField txtNome;
 	private JTextField txtCpf;
 	private JTextField txtRg;
@@ -125,6 +127,11 @@ public class Cadastrar extends JFrame {
 		txtEmail.setColumns(10);
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
 		btnCadastrar.setBounds(224, 237, 100, 23);
 		contentPane.add(btnCadastrar);
 		
@@ -259,7 +266,7 @@ public class Cadastrar extends JFrame {
 		contentPane.add(txtCelular);
 		txtCelular.setColumns(10);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBounds(10, 237, 203, 23);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -272,5 +279,12 @@ public class Cadastrar extends JFrame {
 		JCheckBox chckbxAdministrador = new JCheckBox("Administrador");
 		chckbxAdministrador.setBounds(90, 0, 120, 23);
 		panel.add(chckbxAdministrador);
+	}
+	
+	public void primeiroCadastro() {
+		panel.setVisible(true);
+		JCheckBox cp = (JCheckBox) panel.getComponent(1);
+		cp.setSelected(true);
+		cp.setEnabled(false);		
 	}
 }

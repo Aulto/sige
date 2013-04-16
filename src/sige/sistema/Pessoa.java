@@ -21,9 +21,7 @@ public abstract class Pessoa {
 
 	public Pessoa(String nome, String senha, String sexo, String estadoCivil,
 			String dataNascimento, String email, String telefone,
-			String celular, String rua, String bairro, String cidade,
-			String uf, String complemento, String cep, String numero,
-			String pais) {
+			String celular, Endereço endereco) {
 
 		this.nome = nome;
 		this.senha = senha;
@@ -32,9 +30,12 @@ public abstract class Pessoa {
 		this.dataNascimento = dataNascimento;
 		this.email = email;
 		this.telefone = telefone;
-		this.endereço = new Endereço(rua, bairro, cidade, uf, complemento, cep,
-				numero, pais);
-
+		this.endereço = endereco; 
+				 /*String rua, String bairro, String cidade,
+				String uf, String complemento, String cep, String numero,
+				String pais
+				//;
+*/
 		this.idPessoa = Pessoa.numeroPessoa++;
 	}
 
@@ -124,6 +125,18 @@ public abstract class Pessoa {
 
 	public void setEndereço(Endereço endereço) {
 		this.endereço = endereço;
+	}
+	
+	public void setEndereço(String endereço) {
+		String[] endereçoArr = endereço.split("\\|");
+		this.endereço.setRua(endereçoArr[0]);
+		this.endereço.setBairro(endereçoArr[1]);
+		this.endereço.setCidade(endereçoArr[2]);
+		this.endereço.setUf(endereçoArr[3]);
+		this.endereço.setComplemento(endereçoArr[4]);
+		this.endereço.setCep(endereçoArr[5]);
+		this.endereço.setNumero(endereçoArr[6]);
+		this.endereço.setPais(endereçoArr[7]);
 	}
 
 	public int getIdPessoa() {

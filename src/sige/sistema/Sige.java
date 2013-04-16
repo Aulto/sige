@@ -38,12 +38,8 @@ public class Sige implements ISige {
 		}
 	}
 
-	public boolean autenticarSistema() throws AutenticacaoException {
-		try {
-			return Autenticacao.AdministradorExists(this.repositorio);
-		} catch (RepositorioException e) {
-			throw new AutenticacaoException();
-		}
+	public boolean autenticarSistema() throws RepositorioException {
+		return Autenticacao.AdministradorExists(this.repositorio);
 	}
 
 	@Override
@@ -62,8 +58,8 @@ public class Sige implements ISige {
 			String cidade, String uf, String complemento, String cep,
 			String numero, String pais) throws ProblemaInterno {
 		Aluno aluno = new Aluno(nome, senha, sexo, estadoCivil, dataNascimento,
-				email, telefone, celular, rua, bairro, cidade, uf, complemento,
-				cep, numero, pais);
+				email, telefone, celular, new Endereço(rua, bairro, cidade, uf,
+						complemento, cep, numero, pais));
 		try {
 			repositorio.adicionarPessoa(aluno);
 		} catch (RepositorioException e) {
@@ -86,16 +82,16 @@ public class Sige implements ISige {
 		Pessoa pessoa = null;
 		if (tipo == Professor.class) {
 			pessoa = new Professor(nome, senha, sexo, estadoCivil,
-					dataNascimento, email, telefone, celular, rua, bairro,
-					cidade, uf, complemento, cep, numero, pais);
+					dataNascimento, email, telefone, celular, new Endereço(rua,
+							bairro, cidade, uf, complemento, cep, numero, pais));
 		} else if (tipo == Administrador.class) {
 			pessoa = new Administrador(nome, senha, sexo, estadoCivil,
-					dataNascimento, email, telefone, celular, rua, bairro,
-					cidade, uf, complemento, cep, numero, pais);
+					dataNascimento, email, telefone, celular, new Endereço(rua,
+							bairro, cidade, uf, complemento, cep, numero, pais));
 		} else if (tipo == ProfessorAdministrador.class) {
 			pessoa = new ProfessorAdministrador(nome, senha, sexo, estadoCivil,
-					dataNascimento, email, telefone, celular, rua, bairro,
-					cidade, uf, complemento, cep, numero, pais);
+					dataNascimento, email, telefone, celular, new Endereço(rua,
+							bairro, cidade, uf, complemento, cep, numero, pais));
 		}
 		if (pessoa != null) {
 			try {

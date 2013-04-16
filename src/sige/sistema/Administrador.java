@@ -6,13 +6,10 @@ public class Administrador extends Pessoa implements IAdministrador {
 
 	public Administrador(String nome, String senha, String sexo,
 			String estadoCivil, String dataNascimento, String email,
-			String telefone, String celular, String rua, String bairro,
-			String cidade, String uf, String complemento, String cep,
-			String numero, String pais) {
+			String telefone, String celular, Endereço endereco) {
 
 		super(nome, senha, sexo, estadoCivil, dataNascimento, email, telefone,
-				celular, rua, bairro, cidade, uf, complemento, cep, numero,
-				pais);
+				celular, endereco);
 	}
 
 	@Override
