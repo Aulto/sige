@@ -14,7 +14,7 @@ public class ExibirPerfil extends JFrame {
 	private JPanel panelPerfil;
 	private JTextField txtBuscarAluno;
 	private JTextField txtNome;
-	private JTextField textField;
+	private JTextField txtCpf;
 	private JTextField txtRg;
 	private JTextField txtEmail;
 	private JTextField textEndereco;
@@ -29,6 +29,7 @@ public class ExibirPerfil extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+	/*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -41,13 +42,14 @@ public class ExibirPerfil extends JFrame {
 			}
 		});
 	}
+	*/
 
 	/**
 	 * Create the frame.
 	 */
 	public ExibirPerfil() {
-		setTitle("Perfil");
 		setResizable(false);
+		setTitle("Perfil");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
 		panelPerfil = new JPanel();
@@ -70,12 +72,12 @@ public class ExibirPerfil extends JFrame {
 		lblCpf.setBounds(25, 45, 60, 14);
 		panelPerfil.add(lblCpf);
 		
-		textField = new JTextField();
-		textField.setBounds(110, 45, 300, 20);
-		panelPerfil.add(textField);
-		textField.setEditable(false);
-		textField.setText("082.323.434-78");
-		textField.setColumns(10);
+		txtCpf = new JTextField();
+		txtCpf.setBounds(110, 45, 300, 20);
+		panelPerfil.add(txtCpf);
+		txtCpf.setEditable(false);
+		txtCpf.setText("082.323.434-78");
+		txtCpf.setColumns(10);
 		
 		JLabel lblRg = new JLabel("RG:");
 		lblRg.setBounds(25, 70, 60, 14);
