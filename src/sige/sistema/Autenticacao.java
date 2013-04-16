@@ -42,18 +42,20 @@ public class Autenticacao {
 		return pessoa.getClass().getSimpleName();
 	}
 
-	public static boolean isRoot(){
-		if (Autenticacao.runlevel().equals("Administrador") || Autenticacao.runlevel().equals("ProfessorAdministrador")) {
-			IAdministrador adm = (IAdministrador)pessoa;
+	public static boolean isRoot() {
+		if (Autenticacao.runlevel().equals("Administrador")
+				|| Autenticacao.runlevel().equals("ProfessorAdministrador")) {
+			IAdministrador adm = (IAdministrador) pessoa;
 			return adm.isRoot();
 		}
-		return false;		
+		return false;
 	}
-	
+
 	public static boolean isAdm() {
-		if (Autenticacao.runlevel().equals("Administrador") || Autenticacao.runlevel().equals("ProfessorAdministrador")) {
+		if (Autenticacao.runlevel().equals("Administrador")
+				|| Autenticacao.runlevel().equals("ProfessorAdministrador")) {
 			return true;
 		}
-		return false;	
+		return false;
 	}
 }

@@ -2,6 +2,7 @@ package sige.sistema;
 
 import java.util.ArrayList;
 
+import sige.repositorio.Repositorio;
 import sige.repositorio.RepositorioException;
 
 public interface ISige {
@@ -52,4 +53,6 @@ public interface ISige {
 	void removerProfessor(int id) throws AutenticacaoException, ProblemaInterno;
 	
 	void removerAdm(int id) throws AutenticacaoException, ProblemaInterno;
+	
+	Repositorio getRepositorio();
 }

@@ -385,4 +385,8 @@ public class Sige implements ISige {
 			throw new ProblemaInterno();
 		}
 	}
+
+	public Repositorio getRepositorio(){
+		return this.repositorio;
+	}
 }

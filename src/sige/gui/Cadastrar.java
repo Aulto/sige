@@ -140,7 +140,6 @@ public class Cadastrar extends JFrame {
 								"As senhas devem ser iguais");
 					}
 					if (panel.isVisible()) {
-						System.out.println("Panel visible true");
 						if (!((JCheckBox) panel.getComponent(0)).isSelected()
 								&& !((JCheckBox) panel.getComponent(1))
 										.isSelected()) {
@@ -165,7 +164,6 @@ public class Cadastrar extends JFrame {
 								.isSelected()
 								&& ((JCheckBox) panel.getComponent(1))
 										.isSelected()) {
-							System.out.println("Administrador");
 							sistema.adicionarProfessorAdm(Administrador.class,
 									  txtNome.getText(), new
 									  String(pwSenha.getPassword()), "", "", "",
@@ -181,8 +179,6 @@ public class Cadastrar extends JFrame {
 							setVisible(false);
 						}
 					} else {
-						System.out.println("Aluno");
-						System.out.println("21323");
 						sistema.adicionarAluno(txtNome.getText(), new String(
 								pwSenha.getPassword()), "", "", "", txtEmail
 								.getText(), txtTelefone.getText(), txtCelular

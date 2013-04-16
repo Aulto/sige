@@ -35,9 +35,8 @@ public class Repositorio implements IRepositorio {
 		ArrayList<Pessoa> res = new ArrayList<Pessoa>();
 		try {
 			rs = stm.executeQuery(query);
-			// String tipo = rs.getString("tipo");
-			String tipo = "Aluno";
 			while (rs.next()) {
+				String tipo = rs.getString("tipo");
 				if (tipo.equals("Aluno")) {
 					res.add(new Aluno(rs.getString("nome"), rs
 							.getString("senha"), rs.getString("sexo"), rs
