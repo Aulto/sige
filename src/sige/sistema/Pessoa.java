@@ -16,6 +16,7 @@ public abstract class Pessoa {
 	protected String email;
 	protected String telefone;
 	protected String celular;
+
 	protected Endereço endereço;
 
 	public Pessoa(String nome, String senha, String sexo, String estadoCivil,
@@ -109,6 +110,14 @@ public abstract class Pessoa {
 		this.telefone = telefone;
 	}
 
+	public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
+	
 	public Endereço getEndereço() {
 		return endereço;
 	}
