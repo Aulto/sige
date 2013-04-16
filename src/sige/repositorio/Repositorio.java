@@ -13,6 +13,7 @@ import sige.sistema.Professor;
 import sige.sistema.ProfessorAdministrador;
 
 public class Repositorio implements IRepositorio {
+	// variaveis da conexao
 	Connection conn;
 	Statement stm;
 	ResultSet rs;
