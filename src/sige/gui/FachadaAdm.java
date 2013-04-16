@@ -30,6 +30,7 @@ public class FachadaAdm extends JFrame {
 	private JTextField txtUf;
 	private JLabel lblBuscarProf;
 	private JTextField txtBuscarProf;
+	private JTextField txtBuscarAdm;
 
 	/**
 	 * Launch the application.
@@ -51,6 +52,7 @@ public class FachadaAdm extends JFrame {
 	 * Create the frame.
 	 */
 	public FachadaAdm() {
+		setTitle("SIGE");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 401);
@@ -257,16 +259,55 @@ public class FachadaAdm extends JFrame {
 		cbPorProf.setBounds(399, 11, 60, 20);
 		panelBuscaProfessor.add(cbPorProf);
 		
-		JButton btnBucarProf = new JButton("Buscar");
-		btnBucarProf.setBounds(469, 11, 80, 20);
-		panelBuscaProfessor.add(btnBucarProf);
+		cbPorProf.addItem("Nome");
+		cbPorProf.addItem("CPF");
+		
+		JButton btnBuscarProf = new JButton("Buscar");
+		btnBuscarProf.setBounds(469, 11, 80, 20);
+		panelBuscaProfessor.add(btnBuscarProf);
 		
 		JList listProf = new JList();
-		listProf.setBounds(70, 40, 450, 250);
+		listProf.setBounds(70, 40, 420, 250);
 		panelBuscaProfessor.add(listProf);
 		
 		JButton btnExibirPerfilProf = new JButton("Exibir Perfil");
 		btnExibirPerfilProf.setBounds(230, 300, 100, 20);
 		panelBuscaProfessor.add(btnExibirPerfilProf);
+		
+		JPanel panelAdm = new JPanel();
+		tabbedPane.addTab("Buscar Administrador", null, panelAdm, null);
+		panelAdm.setLayout(null);
+		
+		JLabel lblBuscarAdm = new JLabel("Buscar:");
+		lblBuscarAdm.setBounds(30, 14, 60, 14);
+		panelAdm.add(lblBuscarAdm);
+		
+		txtBuscarAdm = new JTextField();
+		txtBuscarAdm.setBounds(89, 11, 260, 20);
+		panelAdm.add(txtBuscarAdm);
+		txtBuscarAdm.setColumns(10);
+		
+		JLabel lblPorAdm = new JLabel("Por:");
+		lblPorAdm.setBounds(359, 14, 39, 14);
+		panelAdm.add(lblPorAdm);
+		
+		JComboBox cbPorAdm = new JComboBox();
+		cbPorAdm.setBounds(399, 11, 60, 20);
+		panelAdm.add(cbPorAdm);
+		
+		cbPorAdm.addItem("Nome");
+		cbPorAdm.addItem("CPF");
+		
+		JButton btnBuscarAdm = new JButton("Buscar");
+		btnBuscarAdm.setBounds(469, 11, 80, 20);
+		panelAdm.add(btnBuscarAdm);
+		
+		JList listAdm = new JList();
+		listAdm.setBounds(70, 40, 420, 250);
+		panelAdm.add(listAdm);
+		
+		JButton btnExibirPerfilAdm = new JButton("Exibir Perfil");
+		btnExibirPerfilAdm.setBounds(230, 300, 100, 20);
+		panelAdm.add(btnExibirPerfilAdm);
 	}
 }
