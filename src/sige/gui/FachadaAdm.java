@@ -15,7 +15,7 @@ import javax.swing.JList;
 public class FachadaAdm extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtBucar;
+	private JTextField txtBuscarAluno;
 	private JTextField txtNome;
 	private JTextField textField;
 	private JTextField txtRg;
@@ -28,6 +28,8 @@ public class FachadaAdm extends JFrame {
 	private JTextField txtPais;
 	private JTextField txtNumero;
 	private JTextField txtUf;
+	private JLabel lblBuscarProf;
+	private JTextField txtBuscarProf;
 
 	/**
 	 * Launch the application.
@@ -201,40 +203,70 @@ public class FachadaAdm extends JFrame {
 		tabbedPane.addTab("Buscar Aluno", null, panelBuscaAluno, null);
 		panelBuscaAluno.setLayout(null);
 		
-		JLabel label = new JLabel("Buscar:");
-		label.setBounds(30, 14, 60, 14);
-		panelBuscaAluno.add(label);
+		JLabel lblBuscarAluno = new JLabel("Buscar:");
+		lblBuscarAluno.setBounds(30, 14, 60, 14);
+		panelBuscaAluno.add(lblBuscarAluno);
 		
-		txtBucar = new JTextField();
-		txtBucar.setBounds(89, 11, 260, 20);
-		txtBucar.setColumns(10);
-		panelBuscaAluno.add(txtBucar);
+		txtBuscarAluno = new JTextField();
+		txtBuscarAluno.setBounds(89, 11, 260, 20);
+		txtBuscarAluno.setColumns(10);
+		panelBuscaAluno.add(txtBuscarAluno);
 		
-		JLabel label_1 = new JLabel("Por:");
-		label_1.setBounds(359, 14, 39, 14);
-		panelBuscaAluno.add(label_1);
+		JLabel lblPorAluno = new JLabel("Por:");
+		lblPorAluno.setBounds(359, 14, 39, 14);
+		panelBuscaAluno.add(lblPorAluno);
 		
-		JComboBox cbPor = new JComboBox();
-		cbPor.setBounds(399, 11, 60, 20);
-		panelBuscaAluno.add(cbPor);
+		JComboBox cbPorAluno = new JComboBox();
+		cbPorAluno.setBounds(399, 11, 60, 20);
+		panelBuscaAluno.add(cbPorAluno);
 		
-		cbPor.addItem("Nome");
-		cbPor.addItem("CPF");
+		cbPorAluno.addItem("Nome");
+		cbPorAluno.addItem("CPF");
 		
-		JButton button = new JButton("Buscar");
-		button.setBounds(469, 11, 80, 20);
-		panelBuscaAluno.add(button);
+		JButton btnBucarAluno = new JButton("Buscar");
+		btnBucarAluno.setBounds(469, 11, 80, 20);
+		panelBuscaAluno.add(btnBucarAluno);
 		
-		JList list = new JList();
-		list.setBounds(70, 40, 420, 250);
-		panelBuscaAluno.add(list);
+		JList listAluno = new JList();
+		listAluno.setBounds(70, 40, 420, 250);
+		panelBuscaAluno.add(listAluno);
 		
-		JButton btnExibirPerfil = new JButton("Exibir Perfil");
-		btnExibirPerfil.setBounds(230, 300, 100, 20);
-		panelBuscaAluno.add(btnExibirPerfil);
+		JButton btnExibirPerfilAluno = new JButton("Exibir Perfil");
+		btnExibirPerfilAluno.setBounds(230, 300, 100, 20);
+		panelBuscaAluno.add(btnExibirPerfilAluno);
 		
 		JPanel panelBuscaProfessor = new JPanel();
 		tabbedPane.addTab("Buscar Professor", null, panelBuscaProfessor, null);
 		panelBuscaProfessor.setLayout(null);
+		
+		lblBuscarProf = new JLabel("Buscar:");
+		lblBuscarProf.setBounds(30, 14, 60, 14);
+		panelBuscaProfessor.add(lblBuscarProf);
+		
+		txtBuscarProf = new JTextField();
+		txtBuscarProf.setText("");
+		txtBuscarProf.setBounds(89, 11, 260, 20);
+		panelBuscaProfessor.add(txtBuscarProf);
+		txtBuscarProf.setColumns(10);
+		
+		JLabel lblPorProf = new JLabel("Por");
+		lblPorProf.setBounds(359, 14, 39, 14);
+		panelBuscaProfessor.add(lblPorProf);
+		
+		JComboBox cbPorProf = new JComboBox();
+		cbPorProf.setBounds(399, 11, 60, 20);
+		panelBuscaProfessor.add(cbPorProf);
+		
+		JButton btnBucarProf = new JButton("Buscar");
+		btnBucarProf.setBounds(469, 11, 80, 20);
+		panelBuscaProfessor.add(btnBucarProf);
+		
+		JList listProf = new JList();
+		listProf.setBounds(70, 40, 450, 250);
+		panelBuscaProfessor.add(listProf);
+		
+		JButton btnExibirPerfilProf = new JButton("Exibir Perfil");
+		btnExibirPerfilProf.setBounds(230, 300, 100, 20);
+		panelBuscaProfessor.add(btnExibirPerfilProf);
 	}
 }
