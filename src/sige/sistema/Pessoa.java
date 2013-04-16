@@ -31,11 +31,6 @@ public abstract class Pessoa {
 		this.email = email;
 		this.telefone = telefone;
 		this.endereço = endereco; 
-				 /*String rua, String bairro, String cidade,
-				String uf, String complemento, String cep, String numero,
-				String pais
-				//;
-*/
 		this.idPessoa = Pessoa.numeroPessoa++;
 	}
 

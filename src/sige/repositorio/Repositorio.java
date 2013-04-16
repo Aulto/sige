@@ -82,7 +82,7 @@ public class Repositorio implements IRepositorio {
 	@Override
 	public void adicionarPessoa(Pessoa pessoa) throws RepositorioException {
 		try {
-			stm.executeUpdate("INSERT INTO pessoas (id, nome, cpf, senha, rg, sexo, estadoCivil, dataNascimento, email, telefone, endereco, tipo) VALUES"
+			stm.executeUpdate("INSERT INTO pessoas (id, nome, cpf, senha, rg, sexo, estadoCivil, dataNascimento, email, telefone, celular, endereco, tipo) VALUES"
 					+ "('"
 					+ pessoa.getIdPessoa()
 					+ "', '"
@@ -103,6 +103,8 @@ public class Repositorio implements IRepositorio {
 					+ pessoa.getEmail()
 					+ "', '"
 					+ pessoa.getTelefone()
+					+ "', '"
+					+ pessoa.getCelular()
 					+ "', '"
 					+ pessoa.getEndereço()
 					+ "', '"

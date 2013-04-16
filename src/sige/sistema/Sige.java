@@ -75,10 +75,11 @@ public class Sige implements ISige {
 			String cep, String numero, String pais)
 			throws AutenticacaoException, ProblemaInterno {
 
-		if (Autenticacao.runlevel().equals("Aluno")
-				|| Autenticacao.runlevel().equals("Professor")) {
-			throw new AutenticacaoException();
-		}
+//		if (Autenticacao.runlevel().equals("Aluno")
+//				|| Autenticacao.runlevel().equals("Professor")) {
+//			throw new AutenticacaoException();
+//		}
+		
 		Pessoa pessoa = null;
 		if (tipo == Professor.class) {
 			pessoa = new Professor(nome, senha, sexo, estadoCivil,

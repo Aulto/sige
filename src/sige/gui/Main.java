@@ -27,12 +27,12 @@ public class Main{
 				login.setVisible(true);
 			} else {
 				cadastrar.setVisible(true);
-				System.out.println("try");
 				cadastrar.primeiroCadastro();
 			}
 		} catch (RepositorioException e) {
 			JOptionPane.showMessageDialog(null, e);
 		}
+		
 		/*
 		cadastrar.setVisible(true);
 		login.setVisible(true);

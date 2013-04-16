@@ -15,28 +15,14 @@ import java.text.ParseException;
 
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Login extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtCpf;
 	private JPasswordField pwSenha;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Login frame = new Login();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -56,6 +42,14 @@ public class Login extends JFrame {
 		contentPane.add(btnEntrar);
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(Cadastrar.getFrames().length);
+				JFrame cadastrar = (JFrame) Cadastrar.getFrames()[1];
+				cadastrar.setVisible(true);
+				setVisible(false);
+			}
+		});
 		btnCadastrar.setBounds(168, 100, 100, 30);
 		contentPane.add(btnCadastrar);
 		
