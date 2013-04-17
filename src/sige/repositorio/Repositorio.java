@@ -112,7 +112,6 @@ public class Repositorio implements IRepositorio {
 					+ pessoa.getEndereço()
 					+ "', '" + pessoa.getClass().getSimpleName() + "')");
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new RepositorioException();
 		}
 	}

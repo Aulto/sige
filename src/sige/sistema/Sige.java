@@ -75,12 +75,7 @@ public class Sige implements ISige {
 			String celular, String rua, String bairro, String cidade,
 			String uf, String complemento, String cep, String numero,
 			String pais) throws AutenticacaoException, ProblemaInterno {
-
-		// if (Autenticacao.runlevel().equals("Aluno")
-		// || Autenticacao.runlevel().equals("Professor")) {
-		// throw new AutenticacaoException();
-		// }
-
+		
 		Pessoa pessoa = null;
 		if (tipo == Professor.class) {
 			pessoa = new Professor(nome, cpf, rg, senha, sexo, estadoCivil,
@@ -100,7 +95,6 @@ public class Sige implements ISige {
 			try {
 				repositorio.adicionarPessoa(pessoa);
 			} catch (RepositorioException e) {
-				e.printStackTrace();
 				throw new ProblemaInterno();
 			}
 		}
