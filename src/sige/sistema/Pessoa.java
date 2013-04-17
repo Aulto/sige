@@ -31,6 +31,7 @@ public abstract class Pessoa {
 		this.dataNascimento = dataNascimento;
 		this.email = email;
 		this.telefone = telefone;
+		this.celular = celular;
 		this.endereço = endereco;
 		this.idPessoa = Pessoa.numeroPessoa++;
 	}

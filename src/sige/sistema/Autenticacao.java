@@ -37,6 +37,10 @@ public class Autenticacao {
 			throw new RepositorioException();
 		}
 	}
+	
+	public static void deslogar(){
+		pessoa = null;
+	}
 
 	public static String runlevel() {
 		return pessoa.getClass().getSimpleName();

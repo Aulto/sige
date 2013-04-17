@@ -18,8 +18,10 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
 import sige.repositorio.RepositorioException;
+import sige.sistema.Administrador;
 import sige.sistema.Autenticacao;
 import sige.sistema.ISige;
+import sige.sistema.ProblemaInterno;
 import sige.sistema.Sige;
 
 import java.awt.event.ActionListener;
@@ -28,7 +30,7 @@ import java.awt.event.ActionEvent;
 public class Login extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtCpf;
+	private JFormattedTextField txtCpf;
 	private JPasswordField pwSenha;
 	private ISige sistema;
 
@@ -51,12 +53,29 @@ public class Login extends JFrame {
 				try {
 					if (Autenticacao.logado(txtCpf.getText(), new String(
 							pwSenha.getPassword()), sistema.getRepositorio())) {
-						System.out.println("logado com sucesso");
+						String userLevel = Autenticacao.runlevel();
+						try {
+							if (userLevel.equals("Administrador")) {
+								FachadaAdm adm = (FachadaAdm) FachadaAdm.getFrames()[2];
+								adm.setPerfil(sistema.buscarCpf(txtCpf.getText()).get(0));
+								adm.setVisible(true);
+							} else if (userLevel.equals("Professor")) {
+								
+							} else if (userLevel.equals("Aluno")) {
+								
+							} else {
+								
+							}
+							resetLogin();
+							setVisible(false);
+						} catch (ProblemaInterno e) {
+							JOptionPane.showMessageDialog(null, e);
+						}
 					} else {
-						System.out.println("Falha no login");
+						JOptionPane.showMessageDialog(null, "Senha incorreta");
 					}
 				} catch (RepositorioException e) {
-					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, e);
 					e.printStackTrace();
 				}
 			}
@@ -85,8 +104,16 @@ public class Login extends JFrame {
 		lblSenha.setBounds(44, 56, 46, 14);
 		contentPane.add(lblSenha);
 
-		txtCpf = new JTextField();
-		txtCpf.setBounds(100, 29, 150, 20);
+		MaskFormatter txtFormatCpf;
+		try {
+			txtFormatCpf = new MaskFormatter("###.###.###-##");
+			txtCpf = new JFormattedTextField(txtFormatCpf);
+			txtCpf.setSize(150, 20);
+			txtCpf.setLocation(100, 31);
+		} catch (ParseException e1) {
+			JOptionPane.showMessageDialog(null,
+					"Ocorreu um problema na formatação.");
+		}
 		contentPane.add(txtCpf);
 		txtCpf.setColumns(10);
 
@@ -95,6 +122,11 @@ public class Login extends JFrame {
 		contentPane.add(pwSenha);
 
 		init();
+	}
+	
+	private void resetLogin(){
+		txtCpf.setText("");
+		pwSenha.setText("");
 	}
 
 	private void init() {

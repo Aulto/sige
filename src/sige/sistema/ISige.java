@@ -26,15 +26,15 @@ public interface ISige {
 			String uf, String complemento, String cep, String numero,
 			String pais) throws AutenticacaoException, ProblemaInterno;
 
-	ArrayList<Pessoa> buscarAdm() throws AutenticacaoException, ProblemaInterno;
+	ArrayList<Pessoa> buscaAdm() throws AutenticacaoException, ProblemaInterno;
 
-	ArrayList<Pessoa> buscarAdmNome(String nome) throws AutenticacaoException,
+	ArrayList<Pessoa> buscaAdmNome(String nome) throws AutenticacaoException,
 			ProblemaInterno;
 
-	ArrayList<Pessoa> buscarAdmCpf(String cpf) throws AutenticacaoException,
+	ArrayList<Pessoa> buscaAdmCpf(String cpf) throws AutenticacaoException,
 			ProblemaInterno;
 
-	ArrayList<Pessoa> buscarAdmId(int id) throws AutenticacaoException,
+	ArrayList<Pessoa> buscaAdmId(int id) throws AutenticacaoException,
 			ProblemaInterno;
 
 	ArrayList<Pessoa> buscaProfessor() throws AutenticacaoException,

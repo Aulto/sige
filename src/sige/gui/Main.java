@@ -30,6 +30,7 @@ public class Main {
 				cadastrar.primeiroCadastro();
 			}
 		} catch (RepositorioException e) {
+			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, e);
 		}
 
@@ -44,7 +45,9 @@ public class Main {
 			sistema = Sige.getInstance();
 			login = new Login();
 			cadastrar = new Cadastrar();
-		} catch (Exception e) {
+			fachadaAdm = new FachadaAdm(); 
+		} catch (Exception e) {e.printStackTrace();
+		
 			JOptionPane.showMessageDialog(null, e);
 		}
 	}
