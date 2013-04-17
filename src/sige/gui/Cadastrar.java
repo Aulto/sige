@@ -4,16 +4,18 @@ import java.awt.Component;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.text.ParseException;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
-
 import sige.sistema.Administrador;
 import sige.sistema.AutenticacaoException;
 import sige.sistema.ISige;
@@ -29,8 +31,9 @@ public class Cadastrar extends JFrame {
 	private JComboBox cbUf;
 	private JButton btnCancelar;
 	private JTextField txtNome;
-	private JTextField txtCpf;
-	private JTextField txtRg;
+	private JFormattedTextField txtCpf;
+	private JFormattedTextField txtRg;
+	private JFormattedTextField txtDataNiver;
 	private JLabel lblEndereo;
 	private JTextField txtEndereco;
 	private JTextField txtEmail;
@@ -46,16 +49,17 @@ public class Cadastrar extends JFrame {
 	private JLabel lblComplemento;
 	private JTextField txtComplemento;
 	private JLabel lblCep;
-	private JTextField txtCep;
+	private JFormattedTextField txtCep;
 	private JLabel lblNumero;
 	private JTextField txtNumero;
 	private JLabel lblPas;
 	private JTextField txtPais;
 	private JLabel lblTelefone;
-	private JTextField txtTelefone;
+	private JFormattedTextField txtTelefone;
 	private JLabel lblCelular;
-	private JTextField txtCelular;
+	private JFormattedTextField txtCelular;
 	private ISige sistema;
+	private JTextField textField;
 
 	/**
 	 * Create the frame.
@@ -69,7 +73,7 @@ public class Cadastrar extends JFrame {
 		setResizable(false);
 		setTitle("Cadastrar");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 500, 325);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -80,8 +84,7 @@ public class Cadastrar extends JFrame {
 		contentPane.add(lblNome);
 
 		txtNome = new JTextField();
-		txtNome.setText("nome");
-		txtNome.setBounds(93, 10, 340, 20);
+		txtNome.setBounds(120, 10, 340, 20);
 		contentPane.add(txtNome);
 		txtNome.setColumns(10);
 
@@ -89,35 +92,47 @@ public class Cadastrar extends JFrame {
 		lblCpf.setBounds(10, 35, 46, 14);
 		contentPane.add(lblCpf);
 
-		txtCpf = new JTextField();
-		txtCpf.setText("cpf");
-		txtCpf.setBounds(93, 35, 120, 20);
+		MaskFormatter txtFormatCpf;
+		try {
+			txtFormatCpf = new MaskFormatter("###.###.###-##");
+			txtCpf = new JFormattedTextField(txtFormatCpf);
+			txtCpf.setSize(120, 20);
+			txtCpf.setLocation(120, 35);
+		} catch (ParseException e1) {
+			JOptionPane.showMessageDialog(null,
+					"Ocorreu um problema na formatação.");
+		}
 		contentPane.add(txtCpf);
 		txtCpf.setColumns(10);
 
 		JLabel lblRg = new JLabel("RG:");
-		lblRg.setBounds(223, 35, 46, 14);
+		lblRg.setBounds(250, 35, 46, 14);
 		contentPane.add(lblRg);
 
-		txtRg = new JTextField();
-		txtRg.setText("rg");
-		txtRg.setBounds(314, 35, 120, 20);
+		MaskFormatter txtFormatRg;
+		try {
+			txtFormatRg = new MaskFormatter("#.###.###");
+			txtRg = new JFormattedTextField(txtFormatRg);
+			txtRg.setSize(120, 20);
+			txtRg.setLocation(340, 35);
+		} catch (ParseException e1) {
+			JOptionPane.showMessageDialog(null,
+					"Ocorreu um problema na formatação.");
+		}
 		contentPane.add(txtRg);
 		txtRg.setColumns(10);
 
 		lblEndereo = new JLabel("Endere\u00E7o:");
-		lblEndereo.setBounds(9, 135, 60, 14);
+		lblEndereo.setBounds(10, 160, 60, 14);
 		contentPane.add(lblEndereo);
 
 		txtEndereco = new JTextField();
-		txtEndereco.setText("rua");
-		txtEndereco.setBounds(92, 135, 340, 20);
+		txtEndereco.setBounds(120, 160, 340, 20);
 		contentPane.add(txtEndereco);
 		txtEndereco.setColumns(10);
 
 		txtEmail = new JTextField();
-		txtEmail.setText("email");
-		txtEmail.setBounds(92, 110, 340, 20);
+		txtEmail.setBounds(120, 110, 340, 20);
 		contentPane.add(txtEmail);
 		txtEmail.setColumns(10);
 
@@ -125,70 +140,55 @@ public class Cadastrar extends JFrame {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					for (Component elemento : contentPane.getComponents()) {
-						if (elemento instanceof JTextField) {
-							if (((JTextField) elemento).getText().equals("")) {
+					if (!validar()) {
+						if (panel.isVisible()) {
+							if (((JCheckBox) panel.getComponent(0)).isSelected()
+									&& !((JCheckBox) panel.getComponent(1))
+											.isSelected()) {
+								sistema.adicionarProfessorAdm(Professor.class,
+										txtNome.getText(),
+										new String(pwSenha.getPassword()), "", "",
+										"", txtEmail.getText(), txtTelefone
+												.getText(), txtCelular.getText(),
+										txtEndereco.getText(), txtBairro.getText(),
+										txtCidade.getText(), cbUf.getSelectedItem()
+												.toString(), txtComplemento
+												.getText(), txtCep.getText(),
+										txtNumero.getText(), txtPais.getText());
+							} else if (!((JCheckBox) panel.getComponent(0))
+									.isSelected()
+									&& ((JCheckBox) panel.getComponent(1))
+											.isSelected()) {
+								sistema.adicionarProfessorAdm(Administrador.class,
+										txtNome.getText(),
+										new String(pwSenha.getPassword()), "", "",
+										"", txtEmail.getText(), txtTelefone
+												.getText(), txtCelular.getText(),
+										txtEndereco.getText(), txtBairro.getText(),
+										txtCidade.getText(), cbUf.getSelectedItem()
+												.toString(), txtComplemento
+												.getText(), txtCep.getText(),
+										txtNumero.getText(), txtPais.getText());
 								JOptionPane.showMessageDialog(null,
-										"Preencha todos os campos.");
-								break;
+										"Cadastro Realizado com sucesso");
+								JFrame login = (JFrame) Login.getFrames()[0];
+								login.setVisible(true);
+								setVisible(false);
 							}
-						}
-					}
-					if (!(new String(pwSenha.getPassword())).equals(new String(
-							pwRepetirSenha.getPassword()))) {
-						JOptionPane.showMessageDialog(null,
-								"As senhas devem ser iguais");
-					}
-					if (panel.isVisible()) {
-						if (!((JCheckBox) panel.getComponent(0)).isSelected()
-								&& !((JCheckBox) panel.getComponent(1))
-										.isSelected()) {
+						} else {
+							sistema.adicionarAluno(txtNome.getText(), new String(
+									pwSenha.getPassword()), "", "", "", txtEmail
+									.getText(), txtTelefone.getText(), txtCelular
+									.getText(), txtEndereco.getText(), txtBairro
+									.getText(), txtCidade.getText(), cbUf
+									.getSelectedItem().toString(), txtComplemento
+									.getText(), txtCep.getText(), txtNumero
+									.getText(), txtPais.getText());
 							JOptionPane.showMessageDialog(null,
-									"Preencha todos os campos.");
-						} else if (((JCheckBox) panel.getComponent(0))
-								.isSelected()
-								&& !((JCheckBox) panel.getComponent(1))
-										.isSelected()) {
-							System.out.println("Professor");
-							sistema.adicionarProfessorAdm(Professor.class,
-									txtNome.getText(),
-									new String(pwSenha.getPassword()), "", "",
-									"", txtEmail.getText(), txtTelefone
-											.getText(), txtCelular.getText(),
-									txtEndereco.getText(), txtBairro.getText(),
-									txtCidade.getText(), cbUf.getSelectedItem()
-											.toString(), txtComplemento
-											.getText(), txtCep.getText(),
-									txtNumero.getText(), txtPais.getText());
-						} else if (!((JCheckBox) panel.getComponent(0))
-								.isSelected()
-								&& ((JCheckBox) panel.getComponent(1))
-										.isSelected()) {
-							sistema.adicionarProfessorAdm(Administrador.class,
-									  txtNome.getText(), new
-									  String(pwSenha.getPassword()), "", "", "",
-									  txtEmail.getText(), txtTelefone.getText(),
-									  txtCelular.getText(), txtEndereco.getText(),
-									  txtBairro.getText(), txtCidade.getText(), cbUf
-									 .getSelectedItem().toString(),
-									  txtComplemento.getText(), txtCep.getText(),
-									  txtNumero.getText(), txtPais.getText());
-							JOptionPane.showMessageDialog(null, "Cadastro Realizado com sucesso");
-							JFrame login = (JFrame) Login.getFrames()[0];
-							login.setVisible(true);
-							setVisible(false);
+									"Cadastro Realizado com sucesso");
 						}
-					} else {
-						sistema.adicionarAluno(txtNome.getText(), new String(
-								pwSenha.getPassword()), "", "", "", txtEmail
-								.getText(), txtTelefone.getText(), txtCelular
-								.getText(), txtEndereco.getText(), txtBairro
-								.getText(), txtCidade.getText(), cbUf
-								.getSelectedItem().toString(), txtComplemento
-								.getText(), txtCep.getText(), txtNumero
-								.getText(), txtPais.getText());
-					}
 
+					}
 				} catch (ProblemaInterno e) {
 					JOptionPane.showMessageDialog(null, e);
 				} catch (AutenticacaoException e) {
@@ -196,7 +196,7 @@ public class Cadastrar extends JFrame {
 				}
 			}
 		});
-		btnCadastrar.setBounds(224, 237, 100, 23);
+		btnCadastrar.setBounds(250, 266, 100, 23);
 		contentPane.add(btnCadastrar);
 
 		btnCancelar = new JButton("Cancelar");
@@ -207,7 +207,7 @@ public class Cadastrar extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnCancelar.setBounds(334, 237, 100, 23);
+		btnCancelar.setBounds(360, 266, 100, 23);
 		contentPane.add(btnCancelar);
 
 		lblEmail = new JLabel("Email:");
@@ -215,22 +215,20 @@ public class Cadastrar extends JFrame {
 		contentPane.add(lblEmail);
 
 		lblBairro = new JLabel("Bairro:");
-		lblBairro.setBounds(8, 160, 46, 14);
+		lblBairro.setBounds(9, 185, 46, 14);
 		contentPane.add(lblBairro);
 
 		txtBairro = new JTextField();
-		txtBairro.setText("bair");
-		txtBairro.setBounds(92, 160, 120, 20);
+		txtBairro.setBounds(120, 185, 120, 20);
 		contentPane.add(txtBairro);
 		txtBairro.setColumns(10);
 
 		lblCidade = new JLabel("Cidade:");
-		lblCidade.setBounds(222, 160, 46, 14);
+		lblCidade.setBounds(250, 185, 46, 14);
 		contentPane.add(lblCidade);
 
 		txtCidade = new JTextField();
-		txtCidade.setText("ct");
-		txtCidade.setBounds(312, 160, 120, 20);
+		txtCidade.setBounds(340, 185, 120, 20);
 		contentPane.add(txtCidade);
 		txtCidade.setColumns(10);
 
@@ -239,19 +237,19 @@ public class Cadastrar extends JFrame {
 		contentPane.add(lblSenha);
 
 		pwSenha = new JPasswordField();
-		pwSenha.setBounds(93, 60, 120, 20);
+		pwSenha.setBounds(120, 60, 120, 20);
 		contentPane.add(pwSenha);
 
 		lblRepetirSenha = new JLabel("Repetir Senha:");
-		lblRepetirSenha.setBounds(223, 60, 100, 14);
+		lblRepetirSenha.setBounds(250, 60, 100, 14);
 		contentPane.add(lblRepetirSenha);
 
 		pwRepetirSenha = new JPasswordField();
-		pwRepetirSenha.setBounds(313, 60, 120, 20);
+		pwRepetirSenha.setBounds(340, 60, 120, 20);
 		contentPane.add(pwRepetirSenha);
 
 		cbUf = new JComboBox();
-		cbUf.setBounds(371, 210, 60, 20);
+		cbUf.setBounds(400, 235, 60, 20);
 		cbUf.addItem("AC");
 		cbUf.addItem("AL");
 		cbUf.addItem("AP");
@@ -282,46 +280,50 @@ public class Cadastrar extends JFrame {
 		contentPane.add(cbUf);
 
 		JLabel lblUf = new JLabel("UF:");
-		lblUf.setBounds(333, 210, 46, 14);
+		lblUf.setBounds(360, 235, 46, 14);
 		contentPane.add(lblUf);
 
 		txtComplemento = new JTextField();
-		txtComplemento.setText("comple");
-		txtComplemento.setBounds(92, 185, 161, 20);
+		txtComplemento.setBounds(120, 210, 161, 20);
 		contentPane.add(txtComplemento);
 		txtComplemento.setColumns(10);
 
 		lblComplemento = new JLabel("Complemento:");
-		lblComplemento.setBounds(8, 181, 82, 14);
+		lblComplemento.setBounds(9, 206, 82, 14);
 		contentPane.add(lblComplemento);
 
 		lblCep = new JLabel("Cep:");
-		lblCep.setBounds(8, 210, 46, 14);
+		lblCep.setBounds(9, 235, 46, 14);
 		contentPane.add(lblCep);
 
-		txtCep = new JTextField();
-		txtCep.setText("asd");
-		txtCep.setBounds(91, 210, 120, 20);
+		MaskFormatter txtFormatCep;
+		try {
+			txtFormatCep = new MaskFormatter("#####-###");
+			txtCep = new JFormattedTextField(txtFormatCep);
+			txtCep.setSize(120, 20);
+			txtCep.setLocation(120, 235);
+		} catch (ParseException e1) {
+			JOptionPane.showMessageDialog(null,
+					"Ocorreu um problema na formatação.");
+		}
 		contentPane.add(txtCep);
 		txtCep.setColumns(10);
 
 		lblNumero = new JLabel("Numero:");
-		lblNumero.setBounds(221, 210, 53, 14);
+		lblNumero.setBounds(250, 235, 53, 14);
 		contentPane.add(lblNumero);
 
 		txtNumero = new JTextField();
-		txtNumero.setText("numero");
-		txtNumero.setBounds(277, 210, 45, 20);
+		txtNumero.setBounds(310, 235, 45, 20);
 		contentPane.add(txtNumero);
 		txtNumero.setColumns(10);
 
 		lblPas = new JLabel("Pa\u00EDs:");
-		lblPas.setBounds(263, 185, 46, 14);
+		lblPas.setBounds(290, 210, 46, 14);
 		contentPane.add(lblPas);
 
 		txtPais = new JTextField();
-		txtPais.setText("pa\u00EDs");
-		txtPais.setBounds(293, 185, 138, 20);
+		txtPais.setBounds(320, 210, 140, 20);
 		contentPane.add(txtPais);
 		txtPais.setColumns(10);
 
@@ -329,24 +331,36 @@ public class Cadastrar extends JFrame {
 		lblTelefone.setBounds(10, 85, 80, 14);
 		contentPane.add(lblTelefone);
 
-		txtTelefone = new JTextField();
-		txtTelefone.setText("tel");
-		txtTelefone.setBounds(93, 85, 120, 20);
+		MaskFormatter txtFormatNumero;
+		try {
+			txtFormatNumero = new MaskFormatter("(##)####-####");
+			txtTelefone = new JFormattedTextField(txtFormatNumero);
+			txtTelefone.setSize(120, 20);
+			txtTelefone.setLocation(340, 85);
+		} catch (ParseException e1) {
+			JOptionPane.showMessageDialog(null,
+					"Ocorreu um problema na formatação.");
+		}
 		contentPane.add(txtTelefone);
 		txtTelefone.setColumns(10);
 
 		lblCelular = new JLabel("Celular:");
-		lblCelular.setBounds(223, 85, 46, 14);
+		lblCelular.setBounds(250, 85, 46, 14);
 		contentPane.add(lblCelular);
-
-		txtCelular = new JTextField();
-		txtCelular.setText("cel");
-		txtCelular.setBounds(314, 85, 119, 20);
+		try {
+			txtFormatNumero = new MaskFormatter("(##)####-####");
+			txtCelular = new JFormattedTextField(txtFormatNumero);
+			txtCelular.setSize(120, 20);
+			txtCelular.setLocation(120, 85);
+		} catch (ParseException e1) {
+			JOptionPane.showMessageDialog(null,
+					"Ocorreu um problema na formatação.");
+		}
 		contentPane.add(txtCelular);
 		txtCelular.setColumns(10);
 
 		panel = new JPanel();
-		panel.setBounds(10, 237, 203, 23);
+		panel.setBounds(27, 266, 203, 23);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		panel.setVisible(false);
@@ -358,6 +372,68 @@ public class Cadastrar extends JFrame {
 		JCheckBox chckbxAdministrador = new JCheckBox("Administrador");
 		chckbxAdministrador.setBounds(90, 0, 120, 23);
 		panel.add(chckbxAdministrador);
+
+		JLabel lblDataDeNascimento = new JLabel("Data de Nascimento:");
+		lblDataDeNascimento.setBounds(10, 135, 109, 14);
+		contentPane.add(lblDataDeNascimento);
+
+		MaskFormatter txtFormatDataNiver;
+		try {
+			txtFormatDataNiver = new MaskFormatter("##/##/####");
+			txtDataNiver = new JFormattedTextField(txtFormatDataNiver);
+			txtDataNiver.setSize(120, 20);
+			txtDataNiver.setLocation(120, 135);
+		} catch (ParseException e1) {
+			JOptionPane.showMessageDialog(null,
+					"Ocorreu um problema na formatação.");
+		}
+		contentPane.add(txtDataNiver);
+		txtDataNiver.setColumns(10);
+
+		JLabel lblSexo = new JLabel("Sexo:");
+		lblSexo.setBounds(250, 135, 46, 14);
+		contentPane.add(lblSexo);
+
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(340, 135, 120, 20);
+		contentPane.add(comboBox);
+
+		comboBox.addItem("Masculino");
+		comboBox.addItem("Feminino");
+	}
+
+	public boolean validar() {
+		for (Component elemento : contentPane.getComponents()) {
+			if (elemento instanceof JTextField) {
+				if (((JTextField) elemento).getText().equals("")) {
+					JOptionPane.showMessageDialog(null,
+							"Preencha todos os campos.");
+					return false;
+				}
+			}
+		}
+		if (!(new String(pwSenha.getPassword())).equals(new String(
+				pwRepetirSenha.getPassword()))) {
+			JOptionPane.showMessageDialog(null, "As senhas devem ser iguais");
+			return false;
+		}
+		if (txtCelular.getText().equals("") && txtCep.getText().equals("")
+				&& txtCpf.getText().equals("")
+				&& txtDataNiver.getText().equals("")
+				&& txtRg.getText().equals("")
+				&& txtTelefone.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Preencha todos os campos.");
+			return false;
+		}
+		if (panel.isVisible()) {
+			if (!((JCheckBox) panel.getComponent(0)).isSelected()
+					&& !((JCheckBox) panel.getComponent(1)).isSelected()) {
+				JOptionPane
+						.showMessageDialog(null, "Preencha todos os campos.");
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public void primeiroCadastro() {
