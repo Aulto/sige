@@ -64,8 +64,12 @@ public class Endereço {
 
 	public static Endereço getEndereço(String strEndereço) {
 		String[] endereçoArr = strEndereço.split("\\|");
-		return new Endereço(endereçoArr[0], endereçoArr[1], endereçoArr[2],
-				endereçoArr[3], endereçoArr[4], endereçoArr[5], endereçoArr[6],
-				endereçoArr[7]);
+		if (endereçoArr.length == 8) {
+			return new Endereço(endereçoArr[0], endereçoArr[1], endereçoArr[2],
+					endereçoArr[3], endereçoArr[4], endereçoArr[5],
+					endereçoArr[6], endereçoArr[7]);
+		} else {
+			return null;
+		}
 	}
 }
