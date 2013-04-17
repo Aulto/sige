@@ -206,7 +206,6 @@ public class Cadastrar extends JFrame {
 
 					}
 				} catch (ProblemaInterno e) {
-					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, e);
 				} catch (AutenticacaoException e) {
 					JOptionPane.showMessageDialog(null, e);

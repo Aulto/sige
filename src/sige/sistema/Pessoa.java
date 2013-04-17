@@ -18,9 +18,9 @@ public abstract class Pessoa {
 	protected String celular;
 	protected Endereço endereço;
 
-	public Pessoa(String nome, String cpf, String rg, String senha, String sexo, String estadoCivil,
-			String dataNascimento, String email, String telefone,
-			String celular, Endereço endereco) {
+	public Pessoa(String nome, String cpf, String rg, String senha,
+			String sexo, String estadoCivil, String dataNascimento,
+			String email, String telefone, String celular, Endereço endereco) {
 
 		this.nome = nome;
 		this.cpf = cpf;
@@ -31,7 +31,7 @@ public abstract class Pessoa {
 		this.dataNascimento = dataNascimento;
 		this.email = email;
 		this.telefone = telefone;
-		this.endereço = endereco; 
+		this.endereço = endereco;
 		this.idPessoa = Pessoa.numeroPessoa++;
 	}
 
@@ -114,7 +114,7 @@ public abstract class Pessoa {
 	public void setCelular(String celular) {
 		this.celular = celular;
 	}
-	
+
 	public Endereço getEndereço() {
 		return endereço;
 	}
@@ -122,7 +122,7 @@ public abstract class Pessoa {
 	public void setEndereço(Endereço endereço) {
 		this.endereço = endereço;
 	}
-	
+
 	public void setEndereço(String endereço) {
 		String[] endereçoArr = endereço.split("\\|");
 		this.endereço.setRua(endereçoArr[0]);

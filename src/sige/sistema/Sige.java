@@ -100,6 +100,7 @@ public class Sige implements ISige {
 			try {
 				repositorio.adicionarPessoa(pessoa);
 			} catch (RepositorioException e) {
+				e.printStackTrace();
 				throw new ProblemaInterno();
 			}
 		}

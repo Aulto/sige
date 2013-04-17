@@ -1,18 +1,18 @@
 package sige.sistema;
 
 public class Aluno extends Pessoa {
-	
+
 	private static int alunoMatricula = 1000000;
-	
+
 	protected int matricula;
-	
+
 	public Aluno(String nome, String cpf, String rg, String senha, String sexo,
 			String estadoCivil, String dataNascimento, String email,
 			String telefone, String celular, Endereço endereco) {
-			
-		super(nome, cpf, rg, senha, sexo, estadoCivil, dataNascimento, email, telefone,
-				celular, endereco);
-		
+
+		super(nome, cpf, rg, senha, sexo, estadoCivil, dataNascimento, email,
+				telefone, celular, endereco);
+
 		this.matricula = Aluno.alunoMatricula++;
 	}
 }

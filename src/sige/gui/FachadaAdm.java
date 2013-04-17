@@ -248,33 +248,34 @@ public class FachadaAdm extends JFrame {
 		btnBucarAluno.setBounds(469, 11, 80, 20);
 		panelBuscaAluno.add(btnBucarAluno);
 
-		
 		String[] o = new String[30];
 		for (int i = 0; i < 30; i++) {
 			o[i] = " " + i;
 		}
-		
+
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(70, 40, 420, 250);
 		panelBuscaAluno.add(scrollPane);
-		
+
 		JList listAluno = new JList(o);
 		listAluno.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listAluno.setBounds(70, 40, 420, 250);
-		//panelBuscaAluno.add(listAluno);
-		
+		// panelBuscaAluno.add(listAluno);
+
 		scrollPane.setViewportView(listAluno);
-		
+
 		JButton btnExibirPerfilAluno = new JButton("Exibir Perfil");
 		btnExibirPerfilAluno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JList cp = (JList) panelBuscaAluno.getComponentAt(70, 40).getComponentAt(70, 40).getComponentAt(70, 40);
-								
+				JList cp = (JList) panelBuscaAluno.getComponentAt(70, 40)
+						.getComponentAt(70, 40).getComponentAt(70, 40);
+
 				if (!cp.isSelectionEmpty()) {
 					String item = cp.getSelectedValue().toString();
 					txtBuscarAluno.setText(item);
-					
+
 				}
 			}
 		});

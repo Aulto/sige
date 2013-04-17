@@ -3,9 +3,9 @@ package sige.sistema;
 import java.util.ArrayList;
 
 public class Materia {
-	
+
 	private static int numeroMaterias = 0;
-	
+
 	private final int idMateria;
 	private String nome;
 	private int idProfessor;
@@ -13,8 +13,8 @@ public class Materia {
 	private ArrayList<Atividade> atividades;
 	private ArrayList<Integer> idAlunosPendentes;
 	private ArrayList<Integer> idAluno;
-	
-	public Materia(String nome, int idProfessor){
+
+	public Materia(String nome, int idProfessor) {
 		this.setNome(nome);
 		this.setIdProfessor(idProfessor);
 		this.idMateria = Materia.numeroMaterias++;
@@ -23,12 +23,12 @@ public class Materia {
 		this.idAlunosPendentes = new ArrayList<Integer>();
 		this.idAluno = new ArrayList<Integer>();
 	}
-	
-	public void adicionarAluno(int id){
+
+	public void adicionarAluno(int id) {
 		this.idAlunosPendentes.add(id);
 	}
-	
-	public boolean buscarAlunosPendentes(int id){
+
+	public boolean buscarAlunosPendentes(int id) {
 		boolean resutado = false;
 		for (Integer elemento : this.idAlunosPendentes) {
 			if (elemento == id) {
@@ -37,7 +37,7 @@ public class Materia {
 			}
 		}
 		return resutado;
-	}		
+	}
 
 	public int getIdMateria() {
 		return idMateria;
