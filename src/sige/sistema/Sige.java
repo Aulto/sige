@@ -52,14 +52,15 @@ public class Sige implements ISige {
 	}
 
 	@Override
-	public void adicionarAluno(String nome, String senha, String sexo,
-			String estadoCivil, String dataNascimento, String email,
-			String telefone, String celular, String rua, String bairro,
-			String cidade, String uf, String complemento, String cep,
-			String numero, String pais) throws ProblemaInterno {
-		Aluno aluno = new Aluno(nome, senha, sexo, estadoCivil, dataNascimento,
-				email, telefone, celular, new Endereço(rua, bairro, cidade, uf,
-						complemento, cep, numero, pais));
+	public void adicionarAluno(String nome, String cpf, String rg,
+			String senha, String sexo, String estadoCivil,
+			String dataNascimento, String email, String telefone,
+			String celular, String rua, String bairro, String cidade,
+			String uf, String complemento, String cep, String numero,
+			String pais) throws ProblemaInterno {
+		Aluno aluno = new Aluno(nome, cpf, rg, senha, sexo, estadoCivil,
+				dataNascimento, email, telefone, celular, new Endereço(rua,
+						bairro, cidade, uf, complemento, cep, numero, pais));
 		try {
 			repositorio.adicionarPessoa(aluno);
 		} catch (RepositorioException e) {
@@ -68,31 +69,32 @@ public class Sige implements ISige {
 	}
 
 	@Override
-	public void adicionarProfessorAdm(Class<?> tipo, String nome, String senha,
-			String sexo, String estadoCivil, String dataNascimento,
-			String email, String telefone, String celular, String rua,
-			String bairro, String cidade, String uf, String complemento,
-			String cep, String numero, String pais)
-			throws AutenticacaoException, ProblemaInterno {
+	public void adicionarProfessorAdm(Class<?> tipo, String nome, String cpf,
+			String rg, String senha, String sexo, String estadoCivil,
+			String dataNascimento, String email, String telefone,
+			String celular, String rua, String bairro, String cidade,
+			String uf, String complemento, String cep, String numero,
+			String pais) throws AutenticacaoException, ProblemaInterno {
 
-//		if (Autenticacao.runlevel().equals("Aluno")
-//				|| Autenticacao.runlevel().equals("Professor")) {
-//			throw new AutenticacaoException();
-//		}
-		
+		// if (Autenticacao.runlevel().equals("Aluno")
+		// || Autenticacao.runlevel().equals("Professor")) {
+		// throw new AutenticacaoException();
+		// }
+
 		Pessoa pessoa = null;
 		if (tipo == Professor.class) {
-			pessoa = new Professor(nome, senha, sexo, estadoCivil,
+			pessoa = new Professor(nome, cpf, rg, senha, sexo, estadoCivil,
 					dataNascimento, email, telefone, celular, new Endereço(rua,
 							bairro, cidade, uf, complemento, cep, numero, pais));
 		} else if (tipo == Administrador.class) {
-			pessoa = new Administrador(nome, senha, sexo, estadoCivil,
+			pessoa = new Administrador(nome, cpf, rg, senha, sexo, estadoCivil,
 					dataNascimento, email, telefone, celular, new Endereço(rua,
 							bairro, cidade, uf, complemento, cep, numero, pais));
 		} else if (tipo == ProfessorAdministrador.class) {
-			pessoa = new ProfessorAdministrador(nome, senha, sexo, estadoCivil,
-					dataNascimento, email, telefone, celular, new Endereço(rua,
-							bairro, cidade, uf, complemento, cep, numero, pais));
+			pessoa = new ProfessorAdministrador(nome, cpf, rg, senha, sexo,
+					estadoCivil, dataNascimento, email, telefone, celular,
+					new Endereço(rua, bairro, cidade, uf, complemento, cep,
+							numero, pais));
 		}
 		if (pessoa != null) {
 			try {
@@ -386,7 +388,7 @@ public class Sige implements ISige {
 		}
 	}
 
-	public Repositorio getRepositorio(){
+	public Repositorio getRepositorio() {
 		return this.repositorio;
 	}
 }

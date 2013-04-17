@@ -16,14 +16,15 @@ public abstract class Pessoa {
 	protected String email;
 	protected String telefone;
 	protected String celular;
-
 	protected Endereço endereço;
 
-	public Pessoa(String nome, String senha, String sexo, String estadoCivil,
+	public Pessoa(String nome, String cpf, String rg, String senha, String sexo, String estadoCivil,
 			String dataNascimento, String email, String telefone,
 			String celular, Endereço endereco) {
 
 		this.nome = nome;
+		this.cpf = cpf;
+		this.rg = rg;
 		this.senha = senha;
 		this.sexo = sexo;
 		this.estadoCivil = estadoCivil;

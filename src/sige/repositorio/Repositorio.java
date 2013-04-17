@@ -38,15 +38,18 @@ public class Repositorio implements IRepositorio {
 			while (rs.next()) {
 				String tipo = rs.getString("tipo");
 				if (tipo.equals("Aluno")) {
-					res.add(new Aluno(rs.getString("nome"), rs
-							.getString("senha"), rs.getString("sexo"), rs
-							.getString("estadoCivil"), rs
-							.getString("dataNascimento"),
-							rs.getString("email"), rs.getString("telefone"), rs
+					res.add(new Aluno(rs.getString("nome"),
+							rs.getString("cpf"), rs.getString("rg"), rs
+									.getString("senha"), rs.getString("sexo"),
+							rs.getString("estadoCivil"), rs
+									.getString("dataNascimento"), rs
+									.getString("email"), rs
+									.getString("telefone"), rs
 									.getString("celular"), Endereço
 									.getEndereço(rs.getString("endereco"))));
 				} else if (tipo.equals("Professor")) {
-					res.add(new Professor(rs.getString("nome"), rs
+					res.add(new Professor(rs.getString("nome"),
+							rs.getString("cpf"), rs.getString("rg"), rs
 							.getString("senha"), rs.getString("sexo"), rs
 							.getString("estadoCivil"), rs
 							.getString("dataNascimento"),
@@ -54,7 +57,8 @@ public class Repositorio implements IRepositorio {
 									.getString("celular"), Endereço
 									.getEndereço(rs.getString("endereco"))));
 				} else if (tipo.equals("Administrador")) {
-					res.add(new Administrador(rs.getString("nome"), rs
+					res.add(new Administrador(rs.getString("nome"),
+							rs.getString("cpf"), rs.getString("rg"), rs
 							.getString("senha"), rs.getString("sexo"), rs
 							.getString("estadoCivil"), rs
 							.getString("dataNascimento"),
@@ -62,7 +66,8 @@ public class Repositorio implements IRepositorio {
 									.getString("celular"), Endereço
 									.getEndereço(rs.getString("endereco"))));
 				} else if (tipo.equals("ProfessorAdministrador")) {
-					res.add(new ProfessorAdministrador(rs.getString("nome"), rs
+					res.add(new ProfessorAdministrador(rs.getString("nome"),
+							rs.getString("cpf"), rs.getString("rg"), rs
 							.getString("senha"), rs.getString("sexo"), rs
 							.getString("estadoCivil"), rs
 							.getString("dataNascimento"),
@@ -73,7 +78,6 @@ public class Repositorio implements IRepositorio {
 			}
 			return res;
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new RepositorioException();
 		}
 	}
@@ -106,8 +110,7 @@ public class Repositorio implements IRepositorio {
 					+ pessoa.getCelular()
 					+ "', '"
 					+ pessoa.getEndereço()
-					+ "', '"
-					+ pessoa.getClass().getSimpleName() + "')");
+					+ "', '" + pessoa.getClass().getSimpleName() + "')");
 		} catch (SQLException e) {
 			throw new RepositorioException();
 		}

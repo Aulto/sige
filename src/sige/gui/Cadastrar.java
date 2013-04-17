@@ -22,6 +22,7 @@ import sige.sistema.ISige;
 import sige.sistema.InicializacaoSistemaException;
 import sige.sistema.ProblemaInterno;
 import sige.sistema.Professor;
+import sige.sistema.ProfessorAdministrador;
 import sige.sistema.Sige;
 
 public class Cadastrar extends JFrame {
@@ -60,6 +61,7 @@ public class Cadastrar extends JFrame {
 	private JFormattedTextField txtCelular;
 	private ISige sistema;
 	private JTextField textField;
+	private JComboBox cbSexo;
 
 	/**
 	 * Create the frame.
@@ -140,34 +142,44 @@ public class Cadastrar extends JFrame {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					if (!validar()) {
+					if (validar()) {
 						if (panel.isVisible()) {
-							if (((JCheckBox) panel.getComponent(0)).isSelected()
-									&& !((JCheckBox) panel.getComponent(1))
-											.isSelected()) {
+							if (tipo() == Professor.class) {
 								sistema.adicionarProfessorAdm(Professor.class,
-										txtNome.getText(),
-										new String(pwSenha.getPassword()), "", "",
-										"", txtEmail.getText(), txtTelefone
-												.getText(), txtCelular.getText(),
-										txtEndereco.getText(), txtBairro.getText(),
-										txtCidade.getText(), cbUf.getSelectedItem()
-												.toString(), txtComplemento
-												.getText(), txtCep.getText(),
+										txtNome.getText(), txtCpf.getText(),
+										txtRg.getText(),
+										new String(pwSenha.getPassword()),
+										cbSexo.getSelectedItem().toString(),
+										"", txtDataNiver.getText(), txtEmail
+												.getText(), txtTelefone
+												.getText(), txtCelular
+												.getText(), txtEndereco
+												.getText(),
+										txtBairro.getText(), txtCidade
+												.getText(), cbUf
+												.getSelectedItem().toString(),
+										txtComplemento.getText(), txtCep
+												.getText(),
 										txtNumero.getText(), txtPais.getText());
 							} else if (!((JCheckBox) panel.getComponent(0))
 									.isSelected()
 									&& ((JCheckBox) panel.getComponent(1))
 											.isSelected()) {
-								sistema.adicionarProfessorAdm(Administrador.class,
-										txtNome.getText(),
-										new String(pwSenha.getPassword()), "", "",
-										"", txtEmail.getText(), txtTelefone
-												.getText(), txtCelular.getText(),
-										txtEndereco.getText(), txtBairro.getText(),
-										txtCidade.getText(), cbUf.getSelectedItem()
-												.toString(), txtComplemento
-												.getText(), txtCep.getText(),
+								sistema.adicionarProfessorAdm(
+										Administrador.class, txtNome.getText(),
+										txtCpf.getText(), txtRg.getText(),
+										new String(pwSenha.getPassword()),
+										cbSexo.getSelectedItem().toString(),
+										"", txtDataNiver.getText(), txtEmail
+												.getText(), txtTelefone
+												.getText(), txtCelular
+												.getText(), txtEndereco
+												.getText(),
+										txtBairro.getText(), txtCidade
+												.getText(), cbUf
+												.getSelectedItem().toString(),
+										txtComplemento.getText(), txtCep
+												.getText(),
 										txtNumero.getText(), txtPais.getText());
 								JOptionPane.showMessageDialog(null,
 										"Cadastro Realizado com sucesso");
@@ -176,20 +188,25 @@ public class Cadastrar extends JFrame {
 								setVisible(false);
 							}
 						} else {
-							sistema.adicionarAluno(txtNome.getText(), new String(
-									pwSenha.getPassword()), "", "", "", txtEmail
-									.getText(), txtTelefone.getText(), txtCelular
-									.getText(), txtEndereco.getText(), txtBairro
-									.getText(), txtCidade.getText(), cbUf
-									.getSelectedItem().toString(), txtComplemento
-									.getText(), txtCep.getText(), txtNumero
-									.getText(), txtPais.getText());
+							sistema.adicionarAluno(txtNome.getText(), txtCpf
+									.getText(), txtRg.getText(), new String(
+									pwSenha.getPassword()), cbSexo
+									.getSelectedItem().toString(), "",
+									txtDataNiver.getText(), txtEmail.getText(),
+									txtTelefone.getText(),
+									txtCelular.getText(),
+									txtEndereco.getText(), txtBairro.getText(),
+									txtCidade.getText(), cbUf.getSelectedItem()
+											.toString(), txtComplemento
+											.getText(), txtCep.getText(),
+									txtNumero.getText(), txtPais.getText());
 							JOptionPane.showMessageDialog(null,
 									"Cadastro Realizado com sucesso");
 						}
 
 					}
 				} catch (ProblemaInterno e) {
+					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, e);
 				} catch (AutenticacaoException e) {
 					JOptionPane.showMessageDialog(null, e);
@@ -394,12 +411,24 @@ public class Cadastrar extends JFrame {
 		lblSexo.setBounds(250, 135, 46, 14);
 		contentPane.add(lblSexo);
 
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(340, 135, 120, 20);
-		contentPane.add(comboBox);
+		cbSexo = new JComboBox();
+		cbSexo.setBounds(340, 135, 120, 20);
+		contentPane.add(cbSexo);
 
-		comboBox.addItem("Masculino");
-		comboBox.addItem("Feminino");
+		cbSexo.addItem("Masculino");
+		cbSexo.addItem("Feminino");
+	}
+
+	public Class<?> tipo() {
+		if (((JCheckBox) panel.getComponent(0)).isSelected()
+				&& !((JCheckBox) panel.getComponent(1)).isSelected()) {
+			return Professor.class;
+		} else if (!((JCheckBox) panel.getComponent(0)).isSelected()
+				&& ((JCheckBox) panel.getComponent(1)).isSelected()) {
+			return Administrador.class;
+		} else {
+			return ProfessorAdministrador.class;
+		}
 	}
 
 	public boolean validar() {

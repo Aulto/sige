@@ -4,11 +4,11 @@ public class Administrador extends Pessoa implements IAdministrador {
 
 	public boolean root;
 
-	public Administrador(String nome, String senha, String sexo,
+	public Administrador(String nome, String cpf, String rg, String senha, String sexo,
 			String estadoCivil, String dataNascimento, String email,
 			String telefone, String celular, Endereço endereco) {
 
-		super(nome, senha, sexo, estadoCivil, dataNascimento, email, telefone,
+		super(nome, cpf, rg, senha, sexo, estadoCivil, dataNascimento, email, telefone,
 				celular, endereco);
 	}
 
