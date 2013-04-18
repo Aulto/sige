@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import sige.repositorio.RepositorioException;
 import sige.sistema.AutenticacaoException;
 import sige.sistema.ISige;
+import sige.sistema.ProblemaInterno;
 import sige.sistema.Sige;
 
 public class Main {
@@ -34,7 +35,7 @@ public class Main {
 				cadastrar.primeiroCadastro();
 				Main.historico = login;
 			}
-		} catch (RepositorioException e) {
+		} catch (ProblemaInterno e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, e);
 		}
