@@ -54,28 +54,8 @@ public class FachadaAdm extends JFrame {
 	private JTextField txtCelular;
 	private JTextField txtDataNascimento;
 	private ISige sistema;
-<<<<<<< HEAD
-	private JScrollPane scrollAdm;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FachadaAdm frame = new FachadaAdm();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-=======
 	private JPanel panelBuscaProfessor;
 	private JPanel panelBuscaAdm;
->>>>>>> f073f2a0bac6b80a88fa5f502f4992a3843fae9d
 
 	/**
 	 * Create the frame.
@@ -441,14 +421,10 @@ public class FachadaAdm extends JFrame {
 		btnExibirPerfilAdm.setBounds(300, 300, 100, 20);
 		panelBuscaAdm.add(btnExibirPerfilAdm);
 
-		scrollAdm = new JScrollPane();
+		JScrollPane scrollAdm = new JScrollPane();
 		scrollAdm.setBounds(70, 40, 420, 250);
 		panelBuscaAdm.add(scrollAdm);
 		scrollAdm
-<<<<<<< HEAD
-				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);		
-
-=======
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		JList listAdm = new JList(preencher("", "", "Administrador"));
@@ -460,7 +436,6 @@ public class FachadaAdm extends JFrame {
 		btnCadastrarAdm.setBounds(170, 300, 100, 20);
 		panelBuscaAdm.add(btnCadastrarAdm);
 		
->>>>>>> f073f2a0bac6b80a88fa5f502f4992a3843fae9d
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 594, 20);
 		contentPane.add(menuBar);
@@ -486,8 +461,7 @@ public class FachadaAdm extends JFrame {
 		});
 		mnSistema.add(mntmSair);
 	}
-	
-	
+
 	public ArrayList<Pessoa> pesquisar(String chave, String filtro, String tipo) {
 		ArrayList<Pessoa> res = new ArrayList<Pessoa>();
 		try {
@@ -533,27 +507,6 @@ public class FachadaAdm extends JFrame {
 			JOptionPane.showMessageDialog(null, e);
 		}
 		return res;
-	}
-	
-	public void listarAdms(){
-		String[] nomes;
-		try {
-			nomes = new String[sistema.buscaAdm().size()];
-			int i = 0;
-			for (Pessoa p : sistema.buscaAdm()) {
-				nomes[i] = p.getNome();
-				i++;
-			}
-			JList listAdm = new JList(nomes);
-			//JList listAdm = new JList(preencher("", "", "Administrador"));
-			listAdm.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			listAdm.setBounds(70, 40, 420, 250);
-			// panelBuscaAluno.add(listAluno);
-			scrollAdm.setViewportView(listAdm);
-		} catch (AutenticacaoException | ProblemaInterno e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 	}
 
 	public void setPerfil(Pessoa pessoa) {

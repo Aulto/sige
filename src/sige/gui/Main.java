@@ -52,10 +52,7 @@ public class Main {
 			fachadaAdm = new FachadaAdm();
 			exibirPerfil = new ExibirPerfil();
 		} catch (Exception e) {e.printStackTrace();
-<<<<<<< HEAD
-=======
 			e.printStackTrace();
->>>>>>> f073f2a0bac6b80a88fa5f502f4992a3843fae9d
 			JOptionPane.showMessageDialog(null, e);
 		}
 	}
