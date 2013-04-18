@@ -389,4 +389,24 @@ public class Sige implements ISige {
 	public Repositorio getRepositorio() {
 		return this.repositorio;
 	}
+
+	@Override
+	public ArrayList<Pessoa> buscaAlunoCpf(String cpf)
+			throws AutenticacaoException, ProblemaInterno {
+		if (Autenticacao.runlevel().equals("Aluno")
+				|| Autenticacao.runlevel().equals("Professor")) {
+			throw new AutenticacaoException();
+		}
+		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
+		try {
+			for (Pessoa elemento : repositorio.buscarPessoaCpf(cpf)) {
+				if (elemento instanceof Aluno) {
+					pessoas.add(elemento);
+				}
+			}
+			return pessoas;
+		} catch (RepositorioException e) {
+			throw new ProblemaInterno();
+		}
+	}
 }

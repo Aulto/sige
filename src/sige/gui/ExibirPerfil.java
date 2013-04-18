@@ -222,7 +222,8 @@ public class ExibirPerfil extends JFrame {
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				Main.historico.setVisible(true);
+				Main.historico.setEnabled(true);
+				((IFachadas)Main.historico).carregarListas();
 			}
 		});
 		btnVoltar.setBounds(460, 295, 100, 23);

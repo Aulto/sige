@@ -58,6 +58,7 @@ public class Login extends JFrame {
 							if (userLevel.equals("Administrador")) {
 								FachadaAdm adm = (FachadaAdm) FachadaAdm.getFrames()[2];
 								adm.setPerfil(sistema.buscarCpf(txtCpf.getText()).get(0));
+								adm.carregarListas();
 								adm.setVisible(true);
 							} else if (userLevel.equals("Professor")) {
 								

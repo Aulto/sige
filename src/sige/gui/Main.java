@@ -32,6 +32,7 @@ public class Main {
 			} else {
 				cadastrar.setVisible(true);
 				cadastrar.primeiroCadastro();
+				Main.historico = login;
 			}
 		} catch (RepositorioException e) {
 			e.printStackTrace();

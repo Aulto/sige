@@ -54,6 +54,9 @@ public interface ISige {
 
 	ArrayList<Pessoa> buscaAlunoNome(String nome) throws AutenticacaoException,
 			ProblemaInterno;
+	
+	ArrayList<Pessoa> buscaAlunoCpf(String cpf)
+			throws AutenticacaoException, ProblemaInterno;
 
 	ArrayList<Pessoa> buscaAlunoId(int id) throws AutenticacaoException,
 			ProblemaInterno;

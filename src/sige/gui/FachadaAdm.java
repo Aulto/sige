@@ -5,7 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 import javax.swing.JCheckBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -16,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.text.ParseException;
 import java.util.ArrayList;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
@@ -24,12 +27,13 @@ import sige.sistema.ISige;
 import sige.sistema.InicializacaoSistemaException;
 import sige.sistema.Pessoa;
 import sige.sistema.Sige;
-
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
-public class FachadaAdm extends JFrame {
+public class FachadaAdm extends JFrame implements IFachadas {
 
 	private JPanel contentPane;
 	private JPanel panelBuscaAluno;
@@ -56,6 +60,19 @@ public class FachadaAdm extends JFrame {
 	private ISige sistema;
 	private JPanel panelBuscaProfessor;
 	private JPanel panelBuscaAdm;
+	private JComboBox cbPorAdm;
+	private JComboBox cbPorProf;
+	private JComboBox cbPorAluno;
+	private ArrayList<Pessoa> listaBuscaAluno;
+	private ArrayList<Pessoa> listaBuscaProf;
+	private ArrayList<Pessoa> listaBuscaAdm;
+	private JList listAdm;
+	private JList listProf;
+	private JList listAluno;
+	private JFormattedTextField txtCpfAdm;
+	private JFormattedTextField txtCpfAluno;
+	private JFormattedTextField txtCpfProf;
+	private MaskFormatter txtFormatCpf;
 
 	/**
 	 * Create the frame.
@@ -261,7 +278,41 @@ public class FachadaAdm extends JFrame {
 		lblPorAluno.setBounds(359, 14, 39, 14);
 		panelBuscaAluno.add(lblPorAluno);
 
-		JComboBox cbPorAluno = new JComboBox();
+		try {
+			txtFormatCpf = new MaskFormatter("###.###.###-##");
+			txtCpfAluno = new JFormattedTextField(txtFormatCpf);
+			txtCpfAluno.setEnabled(false);
+			txtCpfAluno.setSize(260, 20);
+			txtCpfAluno.setLocation(89, 11);
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(null,
+					"Ocorreu um problema na formatação.");
+		}
+		panelBuscaAluno.add(txtCpfAluno);
+		txtCpfAluno.setColumns(10);
+
+		cbPorAluno = new JComboBox();
+		cbPorAluno.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (cbPorAluno.getSelectedItem().toString().equals("CPF")) {
+					txtCpfAluno.setText("");
+					txtCpfAluno.setEnabled(true);
+					txtCpfAluno.setVisible(true);
+					txtCpfAluno.setEditable(true);
+					txtBuscarAluno.setEnabled(false);
+					txtBuscarAluno.setVisible(false);
+					txtBuscarAluno.setEditable(false);
+				} else {
+					txtCpfAluno.setEnabled(false);
+					txtCpfAluno.setVisible(false);
+					txtCpfAluno.setEditable(false);
+					txtBuscarAluno.setText("");
+					txtBuscarAluno.setEnabled(true);
+					txtBuscarAluno.setVisible(true);
+					txtBuscarAluno.setEditable(true);
+				}
+			}
+		});
 		cbPorAluno.setBounds(399, 11, 60, 20);
 		panelBuscaAluno.add(cbPorAluno);
 
@@ -271,9 +322,10 @@ public class FachadaAdm extends JFrame {
 		JButton btnBucarAluno = new JButton("Buscar");
 		btnBucarAluno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JComboBox cp = (JComboBox) panelBuscaAluno.getComponentAt(399,
-						11);
-				String item = cp.getSelectedItem().toString();
+				listAluno.setListData(preencher(txtBuscarAluno.getText(),
+						cbPorAluno.getSelectedItem().toString(), "Aluno"));
+				txtCpfAluno.setText("");
+				txtBuscarAluno.setText("");
 			}
 		});
 		btnBucarAluno.setBounds(469, 11, 80, 20);
@@ -284,8 +336,8 @@ public class FachadaAdm extends JFrame {
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollAluno.setBounds(70, 40, 420, 250);
 		panelBuscaAluno.add(scrollAluno);
-		
-		JList listAluno = new JList(preencher("", "", "Aluno"));
+
+		listAluno = new JList();
 		listAluno.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listAluno.setBounds(70, 40, 420, 250);
 
@@ -299,17 +351,26 @@ public class FachadaAdm extends JFrame {
 				if (!cp.isSelectionEmpty()) {
 					ExibirPerfil ep = (ExibirPerfil) JFrame.getFrames()[3];
 					int item = cp.getSelectedIndex();
-					ep.carregarPerfil(pesquisar("", "", "Aluno").get(item));
+					ep.carregarPerfil(listaBuscaAluno.get(item));
 					ep.setVisible(true);
 					Main.historico = (JFrame) JFrame.getFrames()[2];
-					setVisible(false);
+					setEnabled(false);
 				}
 			}
 		});
 		btnExibirPerfilAluno.setBounds(300, 300, 100, 20);
 		panelBuscaAluno.add(btnExibirPerfilAluno);
-		
+
 		JButton btnCadastrarAluno = new JButton("Cadastrar");
+		btnCadastrarAluno.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setEnabled(false);
+				Cadastrar ep = (Cadastrar) JFrame.getFrames()[1];
+				Main.historico = (JFrame) JFrame.getFrames()[2];
+				ep.getPanel().setVisible(false);
+				ep.setVisible(true);
+			}
+		});
 		btnCadastrarAluno.setBounds(170, 300, 100, 20);
 		panelBuscaAluno.add(btnCadastrarAluno);
 
@@ -331,7 +392,41 @@ public class FachadaAdm extends JFrame {
 		lblPorProf.setBounds(359, 14, 39, 14);
 		panelBuscaProfessor.add(lblPorProf);
 
-		JComboBox cbPorProf = new JComboBox();
+		try {
+			txtFormatCpf = new MaskFormatter("###.###.###-##");
+			txtCpfProf = new JFormattedTextField(txtFormatCpf);
+			txtCpfProf.setEnabled(false);
+			txtCpfProf.setSize(260, 20);
+			txtCpfProf.setLocation(89, 11);
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(null,
+					"Ocorreu um problema na formatação.");
+		}
+		panelBuscaProfessor.add(txtCpfProf);
+		txtCpfProf.setColumns(10);
+
+		cbPorProf = new JComboBox();
+		cbPorProf.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if (cbPorProf.getSelectedItem().toString().equals("CPF")) {
+					txtCpfProf.setText("");
+					txtCpfProf.setEnabled(true);
+					txtCpfProf.setVisible(true);
+					txtCpfProf.setEditable(true);
+					txtBuscarProf.setEnabled(false);
+					txtBuscarProf.setVisible(false);
+					txtBuscarProf.setEditable(false);
+				} else {
+					txtCpfProf.setEnabled(false);
+					txtCpfProf.setVisible(false);
+					txtCpfProf.setEditable(false);
+					txtBuscarProf.setText("");
+					txtBuscarProf.setEnabled(true);
+					txtBuscarProf.setVisible(true);
+					txtBuscarProf.setEditable(true);
+				}
+			}
+		});
 		cbPorProf.setBounds(399, 11, 60, 20);
 		panelBuscaProfessor.add(cbPorProf);
 
@@ -339,39 +434,61 @@ public class FachadaAdm extends JFrame {
 		cbPorProf.addItem("CPF");
 
 		JButton btnBuscarProf = new JButton("Buscar");
+		btnBuscarProf.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				listProf.setListData(preencher(txtBuscarProf.getText(),
+						cbPorProf.getSelectedItem().toString(), "Professor"));
+				txtCpfProf.setText("");
+				txtBuscarProf.setText("");
+			}
+		});
 		btnBuscarProf.setBounds(469, 11, 80, 20);
 		panelBuscaProfessor.add(btnBuscarProf);
 
 		JButton btnExibirPerfilProf = new JButton("Exibir Perfil");
+		btnExibirPerfilProf.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JList cp = (JList) panelBuscaProfessor.getComponentAt(70, 40)
+						.getComponentAt(70, 40).getComponentAt(70, 40);
+				if (!cp.isSelectionEmpty()) {
+					txtBuscarProf.setText(cp.getSelectedValue().toString());
+					ExibirPerfil ep = (ExibirPerfil) JFrame.getFrames()[3];
+					int item = cp.getSelectedIndex();
+					ep.carregarPerfil(listaBuscaProf.get(item));
+					ep.setVisible(true);
+					Main.historico = (JFrame) JFrame.getFrames()[2];
+					setEnabled(false);
+				}
+			}
+		});
 		btnExibirPerfilProf.setBounds(300, 300, 100, 20);
 		panelBuscaProfessor.add(btnExibirPerfilProf);
 
 		JScrollPane scrollProf = new JScrollPane();
-		scrollProf.setBounds(70, 40, 420, 250);
 		panelBuscaProfessor.add(scrollProf);
-		scrollProf.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollProf
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollProf.setBounds(70, 40, 420, 250);
 
-		JList listProf = new JList(preencher("", "", "Professor"));
+		listProf = new JList();
 		listProf.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listProf.setBounds(70, 40, 420, 250);
 
 		scrollProf.setViewportView(listProf);
-		
+
 		JButton btnCadastrarProfessor = new JButton("Cadastrar");
 		btnCadastrarProfessor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JList cp = (JList) panelBuscaProfessor.getComponentAt(70, 40)
-						.getComponentAt(70, 40).getComponentAt(70, 40);
-				if (!cp.isSelectionEmpty()) {
-					ExibirPerfil ep = (ExibirPerfil) JFrame.getFrames()[3];
-					int item = cp.getSelectedIndex();
-					ep.carregarPerfil(pesquisar("", "", "Professor").get(item));
-					ep.setVisible(true);
-					Main.historico = (JFrame) JFrame.getFrames()[2];
-					setVisible(false);
-				}
+				setVisible(false);
+				Cadastrar ep = (Cadastrar) JFrame.getFrames()[1];
+				Main.historico = (JFrame) JFrame.getFrames()[2];
+				ep.getPanel().setVisible(true);
+				((JCheckBox) ep.getPanel().getComponent(0)).setSelected(true);
+				ep.getPanel().getComponent(0).setEnabled(false);
+				ep.setVisible(true);
 			}
 		});
+
 		btnCadastrarProfessor.setBounds(170, 300, 100, 20);
 		panelBuscaProfessor.add(btnCadastrarProfessor);
 
@@ -392,7 +509,41 @@ public class FachadaAdm extends JFrame {
 		lblPorAdm.setBounds(359, 14, 39, 14);
 		panelBuscaAdm.add(lblPorAdm);
 
-		JComboBox cbPorAdm = new JComboBox();
+		try {
+			txtFormatCpf = new MaskFormatter("###.###.###-##");
+			txtCpfAdm = new JFormattedTextField(txtFormatCpf);
+			txtCpfAdm.setEnabled(false);
+			txtCpfAdm.setSize(260, 20);
+			txtCpfAdm.setLocation(89, 11);
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(null,
+					"Ocorreu um problema na formatação.");
+		}
+		panelBuscaAdm.add(txtCpfAdm);
+		txtCpfAdm.setColumns(10);
+
+		cbPorAdm = new JComboBox();
+		cbPorAdm.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if (cbPorAdm.getSelectedItem().toString().equals("CPF")) {
+					txtCpfAdm.setText("");
+					txtCpfAdm.setEnabled(true);
+					txtCpfAdm.setVisible(true);
+					txtCpfAdm.setEditable(true);
+					txtBuscarAdm.setEnabled(false);
+					txtBuscarAdm.setVisible(false);
+					txtBuscarAdm.setEditable(false);
+				} else {
+					txtCpfAdm.setEnabled(false);
+					txtCpfAdm.setVisible(false);
+					txtCpfAdm.setEditable(false);
+					txtBuscarAdm.setText("");
+					txtBuscarAdm.setEnabled(true);
+					txtBuscarAdm.setVisible(true);
+					txtBuscarAdm.setEditable(true);
+				}
+			}
+		});
 		cbPorAdm.setBounds(399, 11, 60, 20);
 		panelBuscaAdm.add(cbPorAdm);
 
@@ -400,6 +551,19 @@ public class FachadaAdm extends JFrame {
 		cbPorAdm.addItem("CPF");
 
 		JButton btnBuscarAdm = new JButton("Buscar");
+		btnBuscarAdm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (cbPorAdm.getSelectedItem().toString().equals("CPF")) {
+					listAdm.setListData(preencher(txtCpfAdm.getText(), cbPorAdm
+							.getSelectedItem().toString(), "Administrador"));
+				} else {
+					listAdm.setListData(preencher(txtBuscarAdm.getText(), cbPorAdm
+							.getSelectedItem().toString(), "Administrador"));
+				}
+				txtCpfAdm.setText("");
+				txtBuscarAdm.setText("");
+			}
+		});
 		btnBuscarAdm.setBounds(469, 11, 80, 20);
 		panelBuscaAdm.add(btnBuscarAdm);
 
@@ -411,10 +575,10 @@ public class FachadaAdm extends JFrame {
 				if (!cp.isSelectionEmpty()) {
 					ExibirPerfil ep = (ExibirPerfil) JFrame.getFrames()[3];
 					int item = cp.getSelectedIndex();
-					ep.carregarPerfil(pesquisar("", "", "Administrador").get(item));
+					ep.carregarPerfil(listaBuscaAdm.get(item));
 					ep.setVisible(true);
 					Main.historico = (JFrame) JFrame.getFrames()[2];
-					setVisible(false);
+					setEnabled(false);
 				}
 			}
 		});
@@ -426,16 +590,27 @@ public class FachadaAdm extends JFrame {
 		panelBuscaAdm.add(scrollAdm);
 		scrollAdm
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		
-		JList listAdm = new JList(preencher("", "", "Administrador"));
+
+		listAdm = new JList();
 		listAdm.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listAdm.setBounds(70, 40, 420, 250);
 		scrollAdm.setViewportView(listAdm);
-		
+
 		JButton btnCadastrarAdm = new JButton("Cadastrar");
+		btnCadastrarAdm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				Cadastrar ep = (Cadastrar) JFrame.getFrames()[1];
+				Main.historico = (JFrame) JFrame.getFrames()[2];
+				ep.getPanel().setVisible(true);
+				((JCheckBox) ep.getPanel().getComponent(1)).setSelected(true);
+				ep.getPanel().getComponent(1).setEnabled(false);
+				ep.setVisible(true);
+			}
+		});
 		btnCadastrarAdm.setBounds(170, 300, 100, 20);
 		panelBuscaAdm.add(btnCadastrarAdm);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 594, 20);
 		contentPane.add(menuBar);
@@ -482,25 +657,35 @@ public class FachadaAdm extends JFrame {
 					} else {
 						res = sistema.buscaAdmCpf(chave);
 					}
-				} break;
+				}
+					break;
 				case "Professor": {
 					if (filtro.equals("Nome")) {
 						res = sistema.buscaProfessorNome(chave);
 					} else {
 						res = sistema.buscaProfessorCpf(chave);
 					}
-				} break;
+				}
+					break;
 				case "Aluno": {
 					if (filtro.equals("Nome")) {
 						res = sistema.buscaAlunoNome(chave);
 					} else {
-						res = sistema.buscaAlunoNome(chave);
+						res = sistema.buscaAlunoCpf(chave);
 					}
-				} break;
+				}
+					break;
 				default:
 					res = null;
 					break;
 				}
+			}
+			if (tipo.equals("Professor")) {
+				listaBuscaProf = res;
+			} else if (tipo.equals("Aluno")) {
+				listaBuscaAluno = res;
+			} else {
+				listaBuscaAdm = res;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -529,10 +714,16 @@ public class FachadaAdm extends JFrame {
 	}
 
 	public String[] preencher(String chave, String filtro, String tipo) {
-		String[] lista = new String[pesquisar("", "", tipo).size()];
+		String[] lista = new String[pesquisar(chave, filtro, tipo).size()];
 		for (int i = 0; i < pesquisar(chave, filtro, tipo).size(); i++) {
 			lista[i] = pesquisar(chave, filtro, tipo).get(i).getNome();
 		}
 		return lista;
-	}	
+	}
+
+	public void carregarListas() {
+		listAdm.setListData(preencher("", "", "Administrador"));
+		listProf.setListData(preencher("", "", "Professor"));
+		listAluno.setListData(preencher("", "", "Aluno"));
+	}
 }

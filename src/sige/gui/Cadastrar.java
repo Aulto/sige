@@ -205,6 +205,10 @@ public class Cadastrar extends JFrame {
 					resetar();
 					setVisible(false);
 					Main.historico.setVisible(true);
+					if (Main.historico.getClass() != Login.class) {
+						Main.historico.setEnabled(true);
+						((IFachadas)Main.historico).carregarListas();
+					}
 				} catch (ProblemaInterno e) {
 					JOptionPane.showMessageDialog(null, e);
 				} catch (AutenticacaoException e) {
@@ -218,7 +222,12 @@ public class Cadastrar extends JFrame {
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				resetar();
 				Main.historico.setVisible(true);
+				if (Main.historico.getClass() != Login.class) {
+					Main.historico.setEnabled(true);
+					((IFachadas)Main.historico).carregarListas();
+				}
 				setVisible(false);				
 			}
 		});
