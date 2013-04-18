@@ -1,5 +1,6 @@
 package sige.gui;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import sige.repositorio.RepositorioException;
@@ -13,9 +14,11 @@ public class Main {
 	private FachadaAluno fachadaAluno;
 	private FachadaProfessor fachadaProf;
 	private FachadaProfessorAdm fachadaProfAdm;
+	private ExibirPerfil exibirPerfil;
 	private Cadastrar cadastrar;
 	private Login login;
 	private ISige sistema;
+	public static JFrame historico;
 
 	public Main() {
 		init();
@@ -25,6 +28,7 @@ public class Main {
 		try {
 			if (sistema.autenticarSistema()) {
 				login.setVisible(true);
+				Main.historico = login;
 			} else {
 				cadastrar.setVisible(true);
 				cadastrar.primeiroCadastro();
@@ -45,8 +49,13 @@ public class Main {
 			sistema = Sige.getInstance();
 			login = new Login();
 			cadastrar = new Cadastrar();
-			fachadaAdm = new FachadaAdm(); 
+			fachadaAdm = new FachadaAdm();
+			exibirPerfil = new ExibirPerfil();
 		} catch (Exception e) {e.printStackTrace();
+<<<<<<< HEAD
+=======
+			e.printStackTrace();
+>>>>>>> f073f2a0bac6b80a88fa5f502f4992a3843fae9d
 			JOptionPane.showMessageDialog(null, e);
 		}
 	}

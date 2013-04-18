@@ -188,10 +188,11 @@ public class Sige implements ISige {
 	@Override
 	public ArrayList<Pessoa> buscaProfessor() throws AutenticacaoException,
 			ProblemaInterno {
+		/*
 		if (Autenticacao.runlevel().equals("Aluno")
 				|| Autenticacao.runlevel().equals("Professor")) {
 			throw new AutenticacaoException();
-		}
+		}*/
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
 		try {
 			for (Pessoa elemento : repositorio.recuperarPessoas()) {
@@ -272,9 +273,10 @@ public class Sige implements ISige {
 	@Override
 	public ArrayList<Pessoa> buscaAluno() throws AutenticacaoException,
 			ProblemaInterno {
+		/*
 		if (Autenticacao.runlevel().equals("Aluno")) {
 			throw new AutenticacaoException();
-		}
+		}*/
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
 		try {
 			for (Pessoa elemento : repositorio.recuperarPessoas()) {
