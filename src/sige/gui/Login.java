@@ -51,7 +51,7 @@ public class Login extends JFrame {
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					if (Autenticacao.logado(txtCpf.getText(), new String(
+					if (Autenticacao.login(txtCpf.getText(), new String(
 							pwSenha.getPassword()), sistema.getRepositorio())) {
 						String userLevel = Autenticacao.runlevel();
 						try {
