@@ -1,7 +1,5 @@
 package sige.gui;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -33,8 +31,13 @@ import javax.swing.JMenu;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class FachadaAdm extends JFrame implements IFachadas {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPanel panelBuscaAluno;
 	private JTextField txtBuscarAluno;
@@ -291,7 +294,7 @@ public class FachadaAdm extends JFrame implements IFachadas {
 		panelBuscaAluno.add(txtCpfAluno);
 		txtCpfAluno.setColumns(10);
 
-		cbPorAluno = new JComboBox();
+		cbPorAluno = new JComboBox<String>();
 		cbPorAluno.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (cbPorAluno.getSelectedItem().toString().equals("CPF")) {
@@ -322,8 +325,13 @@ public class FachadaAdm extends JFrame implements IFachadas {
 		JButton btnBucarAluno = new JButton("Buscar");
 		btnBucarAluno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				listAluno.setListData(preencher(txtBuscarAluno.getText(),
-						cbPorAluno.getSelectedItem().toString(), "Aluno"));
+				if (cbPorAluno.getSelectedItem().toString().equals("CPF")) {
+					listAluno.setListData(preencher(txtCpfAluno.getText(), cbPorAluno
+							.getSelectedItem().toString(), "Aluno"));
+				} else {
+					listAluno.setListData(preencher(txtBuscarAluno.getText(), cbPorAluno
+							.getSelectedItem().toString(), "Aluno"));
+				}
 				txtCpfAluno.setText("");
 				txtBuscarAluno.setText("");
 			}
@@ -436,8 +444,13 @@ public class FachadaAdm extends JFrame implements IFachadas {
 		JButton btnBuscarProf = new JButton("Buscar");
 		btnBuscarProf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				listProf.setListData(preencher(txtBuscarProf.getText(),
-						cbPorProf.getSelectedItem().toString(), "Professor"));
+				if (cbPorProf.getSelectedItem().toString().equals("CPF")) {
+					listProf.setListData(preencher(txtCpfProf.getText(), cbPorProf
+							.getSelectedItem().toString(), "Professor"));
+				} else {
+					listProf.setListData(preencher(txtBuscarProf.getText(), cbPorProf
+							.getSelectedItem().toString(), "Professor"));
+				}
 				txtCpfProf.setText("");
 				txtBuscarProf.setText("");
 			}
@@ -451,7 +464,6 @@ public class FachadaAdm extends JFrame implements IFachadas {
 				JList cp = (JList) panelBuscaProfessor.getComponentAt(70, 40)
 						.getComponentAt(70, 40).getComponentAt(70, 40);
 				if (!cp.isSelectionEmpty()) {
-					txtBuscarProf.setText(cp.getSelectedValue().toString());
 					ExibirPerfil ep = (ExibirPerfil) JFrame.getFrames()[3];
 					int item = cp.getSelectedIndex();
 					ep.carregarPerfil(listaBuscaProf.get(item));

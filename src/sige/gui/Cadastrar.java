@@ -27,9 +27,13 @@ import sige.sistema.Sige;
 
 public class Cadastrar extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPanel panel;
-	private JComboBox cbUf;
+	private JComboBox<String> cbUf;
 	private JButton btnCancelar;
 	private JTextField txtNome;
 	private JFormattedTextField txtCpf;
@@ -60,8 +64,7 @@ public class Cadastrar extends JFrame {
 	private JLabel lblCelular;
 	private JFormattedTextField txtTelefone;
 	private ISige sistema;
-	private JTextField textField;
-	public JComboBox cbSexo;
+	public JComboBox<String> cbSexo;
 
 	/**
 	 * Create the frame.
@@ -161,10 +164,7 @@ public class Cadastrar extends JFrame {
 										txtComplemento.getText(), txtCep
 												.getText(),
 										txtNumero.getText(), txtPais.getText());
-							} else if (!((JCheckBox) panel.getComponent(0))
-									.isSelected()
-									&& ((JCheckBox) panel.getComponent(1))
-											.isSelected()) {
+							} else if (tipo() == Administrador.class) {
 								sistema.adicionarProfessorAdm(
 										Administrador.class, txtNome.getText(),
 										txtCpf.getText(), txtRg.getText(),
@@ -181,10 +181,27 @@ public class Cadastrar extends JFrame {
 										txtComplemento.getText(), txtCep
 												.getText(),
 										txtNumero.getText(), txtPais.getText());
-								JFrame login = (JFrame) Login.getFrames()[0];
-								login.setVisible(true);
-								setVisible(false);
+							} else {
+								sistema.adicionarProfessorAdm(
+										ProfessorAdministrador.class, txtNome.getText(),
+										txtCpf.getText(), txtRg.getText(),
+										new String(pwSenha.getPassword()),
+										cbSexo.getSelectedItem().toString(),
+										"", txtDataNiver.getText(), txtEmail
+												.getText(), txtCelular
+												.getText(), txtTelefone
+												.getText(), txtEndereco
+												.getText(),
+										txtBairro.getText(), txtCidade
+												.getText(), cbUf
+												.getSelectedItem().toString(),
+										txtComplemento.getText(), txtCep
+												.getText(),
+										txtNumero.getText(), txtPais.getText());
 							}
+							JFrame login = (JFrame) Login.getFrames()[0];
+							login.setVisible(true);
+							setVisible(false);
 						} else {
 							sistema.adicionarAluno(txtNome.getText(), txtCpf
 									.getText(), txtRg.getText(), new String(
@@ -199,12 +216,12 @@ public class Cadastrar extends JFrame {
 											.getText(), txtCep.getText(),
 									txtNumero.getText(), txtPais.getText());
 						}
+						JOptionPane.showMessageDialog(null,
+								"Cadastro Realizado com sucesso");
+						resetar();
+						setVisible(false);
+						Main.historico.setVisible(true);
 					}
-					JOptionPane.showMessageDialog(null,
-							"Cadastro Realizado com sucesso");
-					resetar();
-					setVisible(false);
-					Main.historico.setVisible(true);
 					if (Main.historico.getClass() != Login.class) {
 						Main.historico.setEnabled(true);
 						((IFachadas)Main.historico).carregarListas();
@@ -272,7 +289,7 @@ public class Cadastrar extends JFrame {
 		pwRepetirSenha.setBounds(340, 60, 120, 20);
 		contentPane.add(pwRepetirSenha);
 
-		cbUf = new JComboBox();
+		cbUf = new JComboBox<String>();
 		cbUf.setBounds(400, 235, 60, 20);
 		cbUf.addItem("AC");
 		cbUf.addItem("AL");
@@ -418,7 +435,7 @@ public class Cadastrar extends JFrame {
 		lblSexo.setBounds(250, 135, 46, 14);
 		contentPane.add(lblSexo);
 
-		cbSexo = new JComboBox();
+		cbSexo = new JComboBox<String>();
 		cbSexo.setBounds(340, 135, 120, 20);
 		contentPane.add(cbSexo);
 
@@ -457,11 +474,11 @@ public class Cadastrar extends JFrame {
 			JOptionPane.showMessageDialog(null, "As senhas devem ser iguais");
 			return false;
 		}
-		if (txtTelefone.getText().equals("") && txtCep.getText().equals("")
-				&& txtCpf.getText().equals("")
-				&& txtDataNiver.getText().equals("")
-				&& txtRg.getText().equals("")
-				&& txtCelular.getText().equals("")) {
+		if (txtTelefone.getText().equals("(  )    -    ") && txtCep.getText().equals("     -   ")
+				&& txtCpf.getText().equals("   .   .   -  ")
+				&& txtDataNiver.getText().equals("  /  /    ")
+				&& txtRg.getText().equals(" .   .")
+				&& txtCelular.getText().equals("(  )    -    ")) {
 			JOptionPane.showMessageDialog(null, "Preencha todos os campos.");
 			return false;
 		}

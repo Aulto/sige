@@ -2,19 +2,21 @@ package sige.gui;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
-import sige.repositorio.RepositorioException;
-import sige.sistema.AutenticacaoException;
 import sige.sistema.ISige;
 import sige.sistema.ProblemaInterno;
 import sige.sistema.Sige;
 
 public class Main {
 
+	@SuppressWarnings("unused")
 	private FachadaAdm fachadaAdm;
+	@SuppressWarnings("unused")
 	private FachadaAluno fachadaAluno;
+	@SuppressWarnings("unused")
 	private FachadaProfessor fachadaProf;
+	@SuppressWarnings("unused")
 	private FachadaProfessorAdm fachadaProfAdm;
+	@SuppressWarnings("unused")
 	private ExibirPerfil exibirPerfil;
 	private Cadastrar cadastrar;
 	private Login login;
@@ -39,11 +41,6 @@ public class Main {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, e);
 		}
-
-		/*
-		 * cadastrar.setVisible(true); login.setVisible(true);
-		 * fachadaAdm.setVisible(true);
-		 */
 	}
 
 	private void init() {

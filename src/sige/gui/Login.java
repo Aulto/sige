@@ -1,8 +1,5 @@
 package sige.gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -13,22 +10,21 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.text.ParseException;
-
-import javax.swing.JTextField;
 import javax.swing.JPasswordField;
-
 import sige.repositorio.RepositorioException;
-import sige.sistema.Administrador;
 import sige.sistema.Autenticacao;
 import sige.sistema.ISige;
 import sige.sistema.ProblemaInterno;
 import sige.sistema.Sige;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class Login extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JFormattedTextField txtCpf;
 	private JPasswordField pwSenha;

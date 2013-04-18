@@ -398,8 +398,7 @@ public class Sige implements ISige {
 	@Override
 	public ArrayList<Pessoa> buscarAlunoCpf(String cpf)
 			throws AutenticacaoException, ProblemaInterno {
-		if (Autenticacao.runlevel().equals("Aluno")
-				|| Autenticacao.runlevel().equals("Professor")) {
+		if (Autenticacao.runlevel().equals("Aluno")) {
 			throw new AutenticacaoException();
 		}
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
