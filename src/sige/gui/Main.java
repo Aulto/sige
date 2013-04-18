@@ -47,7 +47,6 @@ public class Main {
 			cadastrar = new Cadastrar();
 			fachadaAdm = new FachadaAdm(); 
 		} catch (Exception e) {e.printStackTrace();
-		
 			JOptionPane.showMessageDialog(null, e);
 		}
 	}

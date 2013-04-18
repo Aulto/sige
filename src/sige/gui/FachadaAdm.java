@@ -67,6 +67,7 @@ public class FachadaAdm extends JFrame {
 	private JTextField txtCelular;
 	private JTextField txtDataNascimento;
 	private ISige sistema;
+	private JScrollPane scrollAdm;
 
 	/**
 	 * Launch the application.
@@ -414,35 +415,11 @@ public class FachadaAdm extends JFrame {
 		btnExibirPerfilAdm.setBounds(230, 300, 100, 20);
 		panelAdm.add(btnExibirPerfilAdm);
 
-		JScrollPane scrollAdm = new JScrollPane();
+		scrollAdm = new JScrollPane();
 		scrollAdm.setBounds(70, 40, 420, 250);
 		panelAdm.add(scrollAdm);
 		scrollAdm
-				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		String[] a = new String[2];
-		a[0] = "pq nao pega";
-		a[1] = "qualquer coisa pow";
-		
-		String[] nomes;
-		try {
-			nomes = new String[sistema.buscaAdm().size()];
-			int i = 0;
-			for (Pessoa p : sistema.buscaAdm()) {
-				nomes[i] = p.getNome();
-				i++;
-			}
-			JList listAdm = new JList(nomes);
-			//JList listAdm = new JList(preencher("", "", "Administrador"));
-			listAdm.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			listAdm.setBounds(70, 40, 420, 250);
-			// panelBuscaAluno.add(listAluno);
-			scrollAdm.setViewportView(listAdm);
-		} catch (AutenticacaoException | ProblemaInterno e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);		
 
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 594, 20);
@@ -469,7 +446,8 @@ public class FachadaAdm extends JFrame {
 		});
 		mnSistema.add(mntmSair);
 	}
-
+	
+	
 	public ArrayList<Pessoa> pesquisar(String chave, String filtro, String tipo) {
 		ArrayList<Pessoa> res = new ArrayList<Pessoa>();
 		try {
@@ -494,6 +472,27 @@ public class FachadaAdm extends JFrame {
 			JOptionPane.showMessageDialog(null, e);
 		}
 		return res;
+	}
+	
+	public void listarAdms(){
+		String[] nomes;
+		try {
+			nomes = new String[sistema.buscaAdm().size()];
+			int i = 0;
+			for (Pessoa p : sistema.buscaAdm()) {
+				nomes[i] = p.getNome();
+				i++;
+			}
+			JList listAdm = new JList(nomes);
+			//JList listAdm = new JList(preencher("", "", "Administrador"));
+			listAdm.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			listAdm.setBounds(70, 40, 420, 250);
+			// panelBuscaAluno.add(listAluno);
+			scrollAdm.setViewportView(listAdm);
+		} catch (AutenticacaoException | ProblemaInterno e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	public void setPerfil(Pessoa pessoa) {
