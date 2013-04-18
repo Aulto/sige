@@ -223,6 +223,7 @@ public class ExibirPerfil extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				Main.historico.setEnabled(true);
+				Main.historico.setVisible(true);
 				((IFachadas)Main.historico).carregarListas();
 			}
 		});
