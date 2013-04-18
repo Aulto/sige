@@ -157,7 +157,7 @@ public class Repositorio implements IRepositorio {
 	@Override
 	public ArrayList<Pessoa> buscarPessoaNome(String nome)
 			throws RepositorioException {
-		return buscarSQL("SELECT * FROM pessoas WHERE nome LIKE '*" + nome + "*'");
+		return buscarSQL("SELECT * FROM pessoas WHERE nome LIKE '%" + nome + "%'");
 	}
 
 	@Override
