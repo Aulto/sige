@@ -13,12 +13,40 @@ import sige.sistema.Pessoa;
 import sige.sistema.Professor;
 import sige.sistema.ProfessorAdministrador;
 
+/**
+ * Implementação do repositório utilizando o Driver JDBC para se conectar a um
+ * servidor MySQL
+ * 
+ */
 public class Repositorio implements IRepositorio {
-	// variaveis da conexao
+	/**
+	 * Variável de conexão
+	 */
 	Connection conn;
+	/**
+	 * Variável que armazena as consultas SQL
+	 */
 	Statement stm;
+	/**
+	 * Variável que armazena os resultados retornados pelas consultas
+	 */
 	ResultSet rs;
 
+	/**
+	 * Construtor do repositório
+	 * 
+	 * @param host
+	 *            host que aponta para o servidor MySQL (ex:
+	 *            jdbc:mysql://localhost:3306/sige, onde <i>sige</i> é o banco
+	 *            de dados
+	 * @param user
+	 *            usuário de login no servidor
+	 * @param pass
+	 *            senha do usuário
+	 * @throws RepositorioException
+	 *             lançado quando há algum problema na conexão com o banco de
+	 *             dados
+	 */
 	public Repositorio(String host, String user, String pass)
 			throws RepositorioException {
 		try {
@@ -30,6 +58,18 @@ public class Repositorio implements IRepositorio {
 		}
 	}
 
+	/**
+	 * Fazer busca por pessoas no banco de dados utilizando um filtro numa
+	 * consulta Esta função é privativa e utilizada apenas por outros métodos
+	 * para formatar os resultados da busca
+	 * 
+	 * @param query
+	 *            consulta SQL que filtra os resultados
+	 * @return retorna uma ArrayList de Pessoa com os resultados da busca
+	 * @throws RepositorioException
+	 *             lançado quando há um erro de conexão ou na consulta SQL
+	 *             enviada
+	 */
 	private ArrayList<Pessoa> buscarSQL(String query)
 			throws RepositorioException {
 		ArrayList<Pessoa> res = new ArrayList<Pessoa>();
@@ -157,7 +197,8 @@ public class Repositorio implements IRepositorio {
 	@Override
 	public ArrayList<Pessoa> buscarPessoaNome(String nome)
 			throws RepositorioException {
-		return buscarSQL("SELECT * FROM pessoas WHERE nome LIKE '%" + nome + "%'");
+		return buscarSQL("SELECT * FROM pessoas WHERE nome LIKE '%" + nome
+				+ "%'");
 	}
 
 	@Override
