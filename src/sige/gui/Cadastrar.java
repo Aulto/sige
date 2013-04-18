@@ -61,7 +61,7 @@ public class Cadastrar extends JFrame {
 	private JFormattedTextField txtTelefone;
 	private ISige sistema;
 	private JTextField textField;
-	private JComboBox cbSexo;
+	public JComboBox cbSexo;
 
 	/**
 	 * Create the frame.
@@ -203,6 +203,8 @@ public class Cadastrar extends JFrame {
 					JOptionPane.showMessageDialog(null,
 							"Cadastro Realizado com sucesso");
 					resetar();
+					setVisible(false);
+					Main.historico.setVisible(true);
 				} catch (ProblemaInterno e) {
 					JOptionPane.showMessageDialog(null, e);
 				} catch (AutenticacaoException e) {
@@ -216,9 +218,8 @@ public class Cadastrar extends JFrame {
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JFrame login = (JFrame) Login.getFrames()[0];
-				login.setVisible(true);
-				setVisible(false);
+				Main.historico.setVisible(true);
+				setVisible(false);				
 			}
 		});
 		btnCancelar.setBounds(360, 266, 100, 23);
@@ -415,7 +416,7 @@ public class Cadastrar extends JFrame {
 		cbSexo.addItem("Masculino");
 		cbSexo.addItem("Feminino");
 	}
-
+	
 	public Class<?> tipo() {
 		if (((JCheckBox) panel.getComponent(0)).isSelected()
 				&& !((JCheckBox) panel.getComponent(1)).isSelected()) {
@@ -426,6 +427,10 @@ public class Cadastrar extends JFrame {
 		} else {
 			return ProfessorAdministrador.class;
 		}
+	}
+
+	public JPanel getPanel() {
+		return panel;
 	}
 
 	public boolean validar() {

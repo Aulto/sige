@@ -1,13 +1,11 @@
 package sige.gui;
 
-import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.ComboBoxEditor;
-import javax.swing.JFormattedTextField.AbstractFormatter;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -16,30 +14,19 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JList;
-import javax.swing.JViewport;
-import javax.swing.ListModel;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Stack;
-
 import javax.swing.ListSelectionModel;
-import javax.swing.JScrollBar;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.JFormattedTextField;
-
 import sige.sistema.Autenticacao;
-import sige.sistema.AutenticacaoException;
 import sige.sistema.ISige;
 import sige.sistema.InicializacaoSistemaException;
 import sige.sistema.Pessoa;
-import sige.sistema.ProblemaInterno;
 import sige.sistema.Sige;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 import javax.swing.JMenu;
 
 public class FachadaAdm extends JFrame {
@@ -67,22 +54,8 @@ public class FachadaAdm extends JFrame {
 	private JTextField txtCelular;
 	private JTextField txtDataNascimento;
 	private ISige sistema;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FachadaAdm frame = new FachadaAdm();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JPanel panelBuscaProfessor;
+	private JPanel panelBuscaAdm;
 
 	/**
 	 * Create the frame.
@@ -301,7 +274,6 @@ public class FachadaAdm extends JFrame {
 				JComboBox cp = (JComboBox) panelBuscaAluno.getComponentAt(399,
 						11);
 				String item = cp.getSelectedItem().toString();
-
 			}
 		});
 		btnBucarAluno.setBounds(469, 11, 80, 20);
@@ -313,10 +285,9 @@ public class FachadaAdm extends JFrame {
 		scrollAluno.setBounds(70, 40, 420, 250);
 		panelBuscaAluno.add(scrollAluno);
 		
-		JList listAluno = new JList();
+		JList listAluno = new JList(preencher("", "", "Aluno"));
 		listAluno.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listAluno.setBounds(70, 40, 420, 250);
-		// panelBuscaAluno.add(listAluno);
 
 		scrollAluno.setViewportView(listAluno);
 
@@ -325,18 +296,24 @@ public class FachadaAdm extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				JList cp = (JList) panelBuscaAluno.getComponentAt(70, 40)
 						.getComponentAt(70, 40).getComponentAt(70, 40);
-
 				if (!cp.isSelectionEmpty()) {
-					String item = cp.getSelectedValue().toString();
-					txtBuscarAluno.setText(item);
-
+					ExibirPerfil ep = (ExibirPerfil) JFrame.getFrames()[3];
+					int item = cp.getSelectedIndex();
+					ep.carregarPerfil(pesquisar("", "", "Aluno").get(item));
+					ep.setVisible(true);
+					Main.historico = (JFrame) JFrame.getFrames()[2];
+					setVisible(false);
 				}
 			}
 		});
-		btnExibirPerfilAluno.setBounds(230, 300, 100, 20);
+		btnExibirPerfilAluno.setBounds(300, 300, 100, 20);
 		panelBuscaAluno.add(btnExibirPerfilAluno);
+		
+		JButton btnCadastrarAluno = new JButton("Cadastrar");
+		btnCadastrarAluno.setBounds(170, 300, 100, 20);
+		panelBuscaAluno.add(btnCadastrarAluno);
 
-		JPanel panelBuscaProfessor = new JPanel();
+		panelBuscaProfessor = new JPanel();
 		tabbedPane.addTab("Buscar Professor", null, panelBuscaProfessor, null);
 		panelBuscaProfessor.setLayout(null);
 
@@ -366,84 +343,99 @@ public class FachadaAdm extends JFrame {
 		panelBuscaProfessor.add(btnBuscarProf);
 
 		JButton btnExibirPerfilProf = new JButton("Exibir Perfil");
-		btnExibirPerfilProf.setBounds(230, 300, 100, 20);
+		btnExibirPerfilProf.setBounds(300, 300, 100, 20);
 		panelBuscaProfessor.add(btnExibirPerfilProf);
 
 		JScrollPane scrollProf = new JScrollPane();
 		scrollProf.setBounds(70, 40, 420, 250);
 		panelBuscaProfessor.add(scrollProf);
-		scrollProf
-				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollProf.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-		JList listProf = new JList();
+		JList listProf = new JList(preencher("", "", "Professor"));
 		listProf.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listProf.setBounds(70, 40, 420, 250);
-		// panelBuscaAluno.add(listAluno);
 
 		scrollProf.setViewportView(listProf);
+		
+		JButton btnCadastrarProfessor = new JButton("Cadastrar");
+		btnCadastrarProfessor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JList cp = (JList) panelBuscaProfessor.getComponentAt(70, 40)
+						.getComponentAt(70, 40).getComponentAt(70, 40);
+				if (!cp.isSelectionEmpty()) {
+					ExibirPerfil ep = (ExibirPerfil) JFrame.getFrames()[3];
+					int item = cp.getSelectedIndex();
+					ep.carregarPerfil(pesquisar("", "", "Professor").get(item));
+					ep.setVisible(true);
+					Main.historico = (JFrame) JFrame.getFrames()[2];
+					setVisible(false);
+				}
+			}
+		});
+		btnCadastrarProfessor.setBounds(170, 300, 100, 20);
+		panelBuscaProfessor.add(btnCadastrarProfessor);
 
-		JPanel panelAdm = new JPanel();
-		tabbedPane.addTab("Buscar Administrador", null, panelAdm, null);
-		panelAdm.setLayout(null);
+		panelBuscaAdm = new JPanel();
+		tabbedPane.addTab("Buscar Administrador", null, panelBuscaAdm, null);
+		panelBuscaAdm.setLayout(null);
 
 		JLabel lblBuscarAdm = new JLabel("Buscar:");
 		lblBuscarAdm.setBounds(30, 14, 60, 14);
-		panelAdm.add(lblBuscarAdm);
+		panelBuscaAdm.add(lblBuscarAdm);
 
 		txtBuscarAdm = new JTextField();
 		txtBuscarAdm.setBounds(89, 11, 260, 20);
-		panelAdm.add(txtBuscarAdm);
+		panelBuscaAdm.add(txtBuscarAdm);
 		txtBuscarAdm.setColumns(10);
 
 		JLabel lblPorAdm = new JLabel("Por:");
 		lblPorAdm.setBounds(359, 14, 39, 14);
-		panelAdm.add(lblPorAdm);
+		panelBuscaAdm.add(lblPorAdm);
 
 		JComboBox cbPorAdm = new JComboBox();
 		cbPorAdm.setBounds(399, 11, 60, 20);
-		panelAdm.add(cbPorAdm);
+		panelBuscaAdm.add(cbPorAdm);
 
 		cbPorAdm.addItem("Nome");
 		cbPorAdm.addItem("CPF");
 
 		JButton btnBuscarAdm = new JButton("Buscar");
 		btnBuscarAdm.setBounds(469, 11, 80, 20);
-		panelAdm.add(btnBuscarAdm);
+		panelBuscaAdm.add(btnBuscarAdm);
 
 		JButton btnExibirPerfilAdm = new JButton("Exibir Perfil");
-		btnExibirPerfilAdm.setBounds(230, 300, 100, 20);
-		panelAdm.add(btnExibirPerfilAdm);
+		btnExibirPerfilAdm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JList cp = (JList) panelBuscaAdm.getComponentAt(70, 40)
+						.getComponentAt(70, 40).getComponentAt(70, 40);
+				if (!cp.isSelectionEmpty()) {
+					ExibirPerfil ep = (ExibirPerfil) JFrame.getFrames()[3];
+					int item = cp.getSelectedIndex();
+					ep.carregarPerfil(pesquisar("", "", "Administrador").get(item));
+					ep.setVisible(true);
+					Main.historico = (JFrame) JFrame.getFrames()[2];
+					setVisible(false);
+				}
+			}
+		});
+		btnExibirPerfilAdm.setBounds(300, 300, 100, 20);
+		panelBuscaAdm.add(btnExibirPerfilAdm);
 
 		JScrollPane scrollAdm = new JScrollPane();
 		scrollAdm.setBounds(70, 40, 420, 250);
-		panelAdm.add(scrollAdm);
+		panelBuscaAdm.add(scrollAdm);
 		scrollAdm
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		String[] a = new String[2];
-		a[0] = "pq nao pega";
-		a[1] = "qualquer coisa pow";
 		
-		String[] nomes;
-		try {
-			nomes = new String[sistema.buscaAdm().size()];
-			int i = 0;
-			for (Pessoa p : sistema.buscaAdm()) {
-				nomes[i] = p.getNome();
-				i++;
-			}
-			JList listAdm = new JList(nomes);
-			//JList listAdm = new JList(preencher("", "", "Administrador"));
-			listAdm.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			listAdm.setBounds(70, 40, 420, 250);
-			// panelBuscaAluno.add(listAluno);
-			scrollAdm.setViewportView(listAdm);
-		} catch (AutenticacaoException | ProblemaInterno e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		JList listAdm = new JList(preencher("", "", "Administrador"));
+		listAdm.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listAdm.setBounds(70, 40, 420, 250);
+		scrollAdm.setViewportView(listAdm);
 		
+		JButton btnCadastrarAdm = new JButton("Cadastrar");
+		btnCadastrarAdm.setBounds(170, 300, 100, 20);
+		panelBuscaAdm.add(btnCadastrarAdm);
 		
-
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 594, 20);
 		contentPane.add(menuBar);
@@ -474,7 +466,14 @@ public class FachadaAdm extends JFrame {
 		ArrayList<Pessoa> res = new ArrayList<Pessoa>();
 		try {
 			if (chave.equals("")) {
-				res = sistema.buscaAdm();
+				res = sistema.buscaAluno();
+				if (tipo.equals("Administrador")) {
+					res = sistema.buscaAdm();
+				} else if (tipo.equals("Aluno")) {
+					res = sistema.buscaAluno();
+				} else {
+					res = sistema.buscaProfessor();
+				}
 			} else {
 				switch (tipo) {
 				case "Administrador": {
@@ -483,14 +482,28 @@ public class FachadaAdm extends JFrame {
 					} else {
 						res = sistema.buscaAdmCpf(chave);
 					}
-				}
-					break;
+				} break;
+				case "Professor": {
+					if (filtro.equals("Nome")) {
+						res = sistema.buscaProfessorNome(chave);
+					} else {
+						res = sistema.buscaProfessorCpf(chave);
+					}
+				} break;
+				case "Aluno": {
+					if (filtro.equals("Nome")) {
+						res = sistema.buscaAlunoNome(chave);
+					} else {
+						res = sistema.buscaAlunoNome(chave);
+					}
+				} break;
 				default:
 					res = null;
 					break;
 				}
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, e);
 		}
 		return res;
@@ -516,9 +529,9 @@ public class FachadaAdm extends JFrame {
 	}
 
 	public String[] preencher(String chave, String filtro, String tipo) {
-		String[] lista = new String[pesquisar("", "", "Administrador").size()];
+		String[] lista = new String[pesquisar("", "", tipo).size()];
 		for (int i = 0; i < pesquisar(chave, filtro, tipo).size(); i++) {
-			lista[i] = i + "";
+			lista[i] = pesquisar(chave, filtro, tipo).get(i).getNome();
 		}
 		return lista;
 	}	

@@ -69,10 +69,12 @@ public class Login extends JFrame {
 							resetLogin();
 							setVisible(false);
 						} catch (ProblemaInterno e) {
+							e.printStackTrace();
 							JOptionPane.showMessageDialog(null, e);
 						}
 					} else {
-						JOptionPane.showMessageDialog(null, "Senha incorreta");
+						pwSenha.setText("");
+						JOptionPane.showMessageDialog(null, "Senha ou usuario invalido.");
 					}
 				} catch (RepositorioException e) {
 					JOptionPane.showMessageDialog(null, e);
@@ -89,6 +91,7 @@ public class Login extends JFrame {
 				JFrame cadastrar = (JFrame) Cadastrar.getFrames()[1];
 				cadastrar.setVisible(true);
 				setVisible(false);
+				Main.historico = (JFrame) JFrame.getFrames()[0];
 			}
 		});
 		btnCadastrar.setBounds(168, 100, 100, 30);
@@ -110,7 +113,8 @@ public class Login extends JFrame {
 			txtCpf = new JFormattedTextField(txtFormatCpf);
 			txtCpf.setSize(150, 20);
 			txtCpf.setLocation(100, 31);
-		} catch (ParseException e1) {
+		} catch (ParseException e) {
+			e.printStackTrace();
 			JOptionPane.showMessageDialog(null,
 					"Ocorreu um problema na formatação.");
 		}
@@ -133,6 +137,7 @@ public class Login extends JFrame {
 		try {
 			sistema = Sige.getInstance();
 		} catch (Exception e) {
+			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, e);
 		}
 	}
