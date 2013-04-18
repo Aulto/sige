@@ -183,8 +183,9 @@ public class Cadastrar extends JFrame {
 										txtNumero.getText(), txtPais.getText());
 							} else {
 								sistema.adicionarProfessorAdm(
-										ProfessorAdministrador.class, txtNome.getText(),
-										txtCpf.getText(), txtRg.getText(),
+										ProfessorAdministrador.class, txtNome
+												.getText(), txtCpf.getText(),
+										txtRg.getText(),
 										new String(pwSenha.getPassword()),
 										cbSexo.getSelectedItem().toString(),
 										"", txtDataNiver.getText(), txtEmail
@@ -209,8 +210,8 @@ public class Cadastrar extends JFrame {
 									.getSelectedItem().toString(), "",
 									txtDataNiver.getText(), txtEmail.getText(),
 									txtCelular.getText(),
-									txtTelefone.getText(),
-									txtEndereco.getText(), txtBairro.getText(),
+									txtTelefone.getText(), txtEndereco
+											.getText(), txtBairro.getText(),
 									txtCidade.getText(), cbUf.getSelectedItem()
 											.toString(), txtComplemento
 											.getText(), txtCep.getText(),
@@ -224,7 +225,7 @@ public class Cadastrar extends JFrame {
 					}
 					if (Main.historico.getClass() != Login.class) {
 						Main.historico.setEnabled(true);
-						((IFachadas)Main.historico).carregarListas();
+						((IFachadas) Main.historico).carregarListas();
 					}
 				} catch (ProblemaInterno e) {
 					JOptionPane.showMessageDialog(null, e);
@@ -243,9 +244,9 @@ public class Cadastrar extends JFrame {
 				Main.historico.setVisible(true);
 				if (Main.historico.getClass() != Login.class) {
 					Main.historico.setEnabled(true);
-					((IFachadas)Main.historico).carregarListas();
+					((IFachadas) Main.historico).carregarListas();
 				}
-				setVisible(false);				
+				setVisible(false);
 			}
 		});
 		btnCancelar.setBounds(360, 266, 100, 23);
@@ -442,7 +443,7 @@ public class Cadastrar extends JFrame {
 		cbSexo.addItem("Masculino");
 		cbSexo.addItem("Feminino");
 	}
-	
+
 	public Class<?> tipo() {
 		if (((JCheckBox) panel.getComponent(0)).isSelected()
 				&& !((JCheckBox) panel.getComponent(1)).isSelected()) {
@@ -474,7 +475,8 @@ public class Cadastrar extends JFrame {
 			JOptionPane.showMessageDialog(null, "As senhas devem ser iguais");
 			return false;
 		}
-		if (txtTelefone.getText().equals("(  )    -    ") && txtCep.getText().equals("     -   ")
+		if (txtTelefone.getText().equals("(  )    -    ")
+				&& txtCep.getText().equals("     -   ")
 				&& txtCpf.getText().equals("   .   .   -  ")
 				&& txtDataNiver.getText().equals("  /  /    ")
 				&& txtRg.getText().equals(" .   .")

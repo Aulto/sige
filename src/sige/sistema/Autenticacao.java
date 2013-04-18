@@ -81,8 +81,8 @@ public class Autenticacao {
 
 	/**
 	 * Verificar se o usuário logado é o root (principal administrador)
-	 * @return
-	 * 		retorna true caso seja root, false caso contrário
+	 * 
+	 * @return retorna true caso seja root, false caso contrário
 	 */
 	public static boolean isRoot() {
 		if (Autenticacao.runlevel().equals("Administrador")
@@ -95,8 +95,8 @@ public class Autenticacao {
 
 	/**
 	 * Verificar se o usuário logado é um administrador
-	 * @return
-	 * 		retorna true caso seja administrador, false caso contrário
+	 * 
+	 * @return retorna true caso seja administrador, false caso contrário
 	 */
 	public static boolean isAdm() {
 		if (Autenticacao.runlevel().equals("Administrador")

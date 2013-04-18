@@ -700,7 +700,7 @@ public class FachadaAdm extends JFrame implements IFachadas {
 				listaBuscaAdm = res;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 			JOptionPane.showMessageDialog(null, e);
 		}
 		return res;

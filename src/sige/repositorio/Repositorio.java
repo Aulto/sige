@@ -334,7 +334,7 @@ public class Repositorio implements IRepositorio {
 			}
 			return res;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 			return null;
 		}
 	}

@@ -11,7 +11,7 @@ public class FachadaAluno extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	
+
 	/**
 	 * Create the frame.
 	 */

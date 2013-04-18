@@ -38,7 +38,7 @@ public class Main {
 				Main.historico = login;
 			}
 		} catch (ProblemaInterno e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 			JOptionPane.showMessageDialog(null, e);
 		}
 	}
@@ -50,8 +50,8 @@ public class Main {
 			cadastrar = new Cadastrar();
 			fachadaAdm = new FachadaAdm();
 			exibirPerfil = new ExibirPerfil();
-		} catch (Exception e) {e.printStackTrace();
-			e.printStackTrace();
+		} catch (Exception e) {
+			// e.printStackTrace();
 			JOptionPane.showMessageDialog(null, e);
 		}
 	}

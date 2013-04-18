@@ -39,9 +39,9 @@ public class Sige implements ISige {
 	}
 
 	public boolean autenticarSistema() throws ProblemaInterno {
-		try{
-		return Autenticacao.AdministradorExists(this.repositorio);
-		} catch (RepositorioException e){
+		try {
+			return Autenticacao.AdministradorExists(this.repositorio);
+		} catch (RepositorioException e) {
 			throw new ProblemaInterno();
 		}
 	}
@@ -315,8 +315,8 @@ public class Sige implements ISige {
 	}
 
 	@Override
-	public ArrayList<Pessoa> buscarAlunoId(int id) throws AutenticacaoException,
-			ProblemaInterno {
+	public ArrayList<Pessoa> buscarAlunoId(int id)
+			throws AutenticacaoException, ProblemaInterno {
 		if (Autenticacao.runlevel().equals("Aluno")) {
 			throw new AutenticacaoException();
 		}
