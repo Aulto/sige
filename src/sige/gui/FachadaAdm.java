@@ -641,37 +641,37 @@ public class FachadaAdm extends JFrame implements IFachadas {
 		ArrayList<Pessoa> res = new ArrayList<Pessoa>();
 		try {
 			if (chave.equals("")) {
-				res = sistema.buscaAluno();
+				res = sistema.buscarAluno();
 				if (tipo.equals("Administrador")) {
-					res = sistema.buscaAdm();
+					res = sistema.buscarAdm();
 				} else if (tipo.equals("Aluno")) {
-					res = sistema.buscaAluno();
+					res = sistema.buscarAluno();
 				} else {
-					res = sistema.buscaProfessor();
+					res = sistema.buscarProfessor();
 				}
 			} else {
 				switch (tipo) {
 				case "Administrador": {
 					if (filtro.equals("Nome")) {
-						res = sistema.buscaAdmNome(chave);
+						res = sistema.buscarAdmNome(chave);
 					} else {
-						res = sistema.buscaAdmCpf(chave);
+						res = sistema.buscarAdmCpf(chave);
 					}
 				}
 					break;
 				case "Professor": {
 					if (filtro.equals("Nome")) {
-						res = sistema.buscaProfessorNome(chave);
+						res = sistema.buscarProfessorNome(chave);
 					} else {
-						res = sistema.buscaProfessorCpf(chave);
+						res = sistema.buscarProfessorCpf(chave);
 					}
 				}
 					break;
 				case "Aluno": {
 					if (filtro.equals("Nome")) {
-						res = sistema.buscaAlunoNome(chave);
+						res = sistema.buscarAlunoNome(chave);
 					} else {
-						res = sistema.buscaAlunoCpf(chave);
+						res = sistema.buscarAlunoCpf(chave);
 					}
 				}
 					break;
