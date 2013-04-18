@@ -4,11 +4,31 @@ import java.util.ArrayList;
 
 import sige.repositorio.*;
 
+/**
+ * 
+ * @author Danilo Monteiro
+ * @author Giovanni Paolo
+ * @author Luiz Daniel
+ * 
+ */
 public class Sige implements ISige {
 
+	/**
+	 * Repositório de dados
+	 */
 	private Repositorio repositorio;
+
+	/**
+	 * Instância do sistema
+	 */
 	private static ISige instance;
 
+	/**
+	 * Construtor do sistema
+	 * 
+	 * @throws InicializacaoSistemaException
+	 *             Lançado quando há um problema a inicialização do sistema
+	 */
 	public Sige() throws InicializacaoSistemaException {
 		try {
 			this.repositorio = new Repositorio(
@@ -18,6 +38,14 @@ public class Sige implements ISige {
 		}
 	}
 
+	/**
+	 * Recuperar a instância sistema
+	 * 
+	 * @return retorna a instância incializada caso haja uma, ou cria uma
+	 *         instância e retorna, caso contrário
+	 * @throws InicializacaoSistemaException
+	 *             lançado quando há algum erro na inicialização do sistema
+	 */
 	public static ISige getInstance() throws InicializacaoSistemaException {
 		if (Sige.instance == null) {
 			try {

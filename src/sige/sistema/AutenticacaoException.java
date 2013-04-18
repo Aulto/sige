@@ -1,5 +1,12 @@
 package sige.sistema;
 
+/**
+ * 
+ * @author Danilo Monteiro
+ * @author Giovanni Paolo
+ * @author Luiz Daniel
+ * 
+ */
 public class AutenticacaoException extends Exception {
 
 	/**

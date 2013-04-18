@@ -4,6 +4,13 @@ import java.util.ArrayList;
 
 import sige.sistema.*;
 
+/**
+ * 
+ * @author Danilo Monteiro
+ * @author Giovanni Paolo
+ * @author Luiz Daniel
+ * 
+ */
 public interface IRepositorio {
 	/**
 	 * Adicionar Pessoa no repositorio

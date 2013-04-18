@@ -5,6 +5,13 @@ import java.util.ArrayList;
 import sige.repositorio.Repositorio;
 import sige.repositorio.RepositorioException;
 
+/**
+ * 
+ * @author Danilo Monteiro
+ * @author Giovanni Paolo
+ * @author Luiz Daniel
+ * 
+ */
 public class Autenticacao {
 
 	private static Pessoa pessoa;

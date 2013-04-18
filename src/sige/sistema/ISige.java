@@ -4,6 +4,13 @@ import java.util.ArrayList;
 
 import sige.repositorio.Repositorio;
 
+/**
+ * 
+ * @author Danilo Monteiro
+ * @author Giovanni Paolo
+ * @author Luiz Daniel
+ * 
+ */
 public interface ISige {
 
 	/**

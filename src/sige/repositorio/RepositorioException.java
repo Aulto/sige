@@ -1,5 +1,12 @@
 package sige.repositorio;
 
+/**
+ * 
+ * @author Danilo Monteiro
+ * @author Giovanni Paolo
+ * @author Luiz Daniel
+ *
+ */
 public class RepositorioException extends Exception {
 
 	/**

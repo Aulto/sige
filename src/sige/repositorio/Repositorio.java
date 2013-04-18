@@ -17,6 +17,10 @@ import sige.sistema.ProfessorAdministrador;
  * Implementação do repositório utilizando o Driver JDBC para se conectar a um
  * servidor MySQL
  * 
+ * @author Danilo Monteiro
+ * @author Giovanni Paolo
+ * @author Luiz Daniel
+ * 
  */
 public class Repositorio implements IRepositorio {
 	/**
