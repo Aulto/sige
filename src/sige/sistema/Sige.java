@@ -91,7 +91,7 @@ public class Sige implements ISige {
 			String uf, String complemento, String cep, String numero,
 			String pais) throws ProblemaInterno {
 		Aluno aluno = new Aluno(nome, cpf, rg, senha, sexo, estadoCivil,
-				dataNascimento, email, telefone, celular, new Endereço(rua,
+				dataNascimento, email, telefone, celular, new Endereco(rua,
 						bairro, cidade, uf, complemento, cep, numero, pais));
 		try {
 			repositorio.adicionarPessoa(aluno);
@@ -111,16 +111,16 @@ public class Sige implements ISige {
 		Pessoa pessoa = null;
 		if (tipo == Professor.class) {
 			pessoa = new Professor(nome, cpf, rg, senha, sexo, estadoCivil,
-					dataNascimento, email, telefone, celular, new Endereço(rua,
+					dataNascimento, email, telefone, celular, new Endereco(rua,
 							bairro, cidade, uf, complemento, cep, numero, pais));
 		} else if (tipo == Administrador.class) {
 			pessoa = new Administrador(nome, cpf, rg, senha, sexo, estadoCivil,
-					dataNascimento, email, telefone, celular, new Endereço(rua,
+					dataNascimento, email, telefone, celular, new Endereco(rua,
 							bairro, cidade, uf, complemento, cep, numero, pais));
 		} else if (tipo == ProfessorAdministrador.class) {
 			pessoa = new ProfessorAdministrador(nome, cpf, rg, senha, sexo,
 					estadoCivil, dataNascimento, email, telefone, celular,
-					new Endereço(rua, bairro, cidade, uf, complemento, cep,
+					new Endereco(rua, bairro, cidade, uf, complemento, cep,
 							numero, pais));
 		}
 		if (pessoa != null) {

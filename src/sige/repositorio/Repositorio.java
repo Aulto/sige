@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import sige.sistema.Administrador;
 import sige.sistema.Aluno;
 import sige.sistema.Atividade;
-import sige.sistema.Endereço;
+import sige.sistema.Endereco;
 import sige.sistema.Materia;
 import sige.sistema.Pergunta;
 import sige.sistema.Pessoa;
@@ -89,7 +89,7 @@ public class Repositorio implements IRepositorio {
 									.getString("dataNascimento"), rs
 									.getString("email"), rs
 									.getString("telefone"), rs
-									.getString("celular"), Endereço
+									.getString("celular"), Endereco
 									.getEndereço(rs.getString("endereco"))));
 				} else if (tipo.equals("Professor")) {
 					res.add(new Professor(rs.getString("nome"), rs
@@ -98,7 +98,7 @@ public class Repositorio implements IRepositorio {
 							.getString("estadoCivil"), rs
 							.getString("dataNascimento"),
 							rs.getString("email"), rs.getString("telefone"), rs
-									.getString("celular"), Endereço
+									.getString("celular"), Endereco
 									.getEndereço(rs.getString("endereco"))));
 				} else if (tipo.equals("Administrador")) {
 					res.add(new Administrador(rs.getString("nome"), rs
@@ -107,7 +107,7 @@ public class Repositorio implements IRepositorio {
 							.getString("estadoCivil"), rs
 							.getString("dataNascimento"),
 							rs.getString("email"), rs.getString("telefone"), rs
-									.getString("celular"), Endereço
+									.getString("celular"), Endereco
 									.getEndereço(rs.getString("endereco"))));
 				} else if (tipo.equals("ProfessorAdministrador")) {
 					res.add(new ProfessorAdministrador(rs.getString("nome"), rs
@@ -116,7 +116,7 @@ public class Repositorio implements IRepositorio {
 							.getString("estadoCivil"), rs
 							.getString("dataNascimento"),
 							rs.getString("email"), rs.getString("telefone"), rs
-									.getString("celular"), Endereço
+									.getString("celular"), Endereco
 									.getEndereço(rs.getString("endereco"))));
 				}
 			}

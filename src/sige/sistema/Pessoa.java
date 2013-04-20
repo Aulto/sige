@@ -16,11 +16,11 @@ public abstract class Pessoa {
 	protected String email;
 	protected String telefone;
 	protected String celular;
-	protected Endereço endereço;
+	protected Endereco endereço;
 
 	public Pessoa(String nome, String cpf, String rg, String senha,
 			String sexo, String estadoCivil, String dataNascimento,
-			String email, String telefone, String celular, Endereço endereco) {
+			String email, String telefone, String celular, Endereco endereco) {
 
 		this.nome = nome;
 		this.cpf = cpf;
@@ -116,11 +116,11 @@ public abstract class Pessoa {
 		this.celular = celular;
 	}
 
-	public Endereço getEndereço() {
+	public Endereco getEndereço() {
 		return endereço;
 	}
 
-	public void setEndereço(Endereço endereço) {
+	public void setEndereço(Endereco endereço) {
 		this.endereço = endereço;
 	}
 
