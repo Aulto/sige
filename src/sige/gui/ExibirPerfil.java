@@ -1,8 +1,5 @@
 package sige.gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -15,8 +12,13 @@ import sige.sistema.Pessoa;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("unused")
 public class ExibirPerfil extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel panelPerfil;
 	private JTextField txtBuscarAluno;
 	private JTextField txtNome;
@@ -163,72 +165,74 @@ public class ExibirPerfil extends JFrame {
 		JLabel lblUf = new JLabel("UF:");
 		lblUf.setBounds(280, 270, 46, 14);
 		panelPerfil.add(lblUf);
-		
+
 		txtUf = new JTextField();
 		txtUf.setEditable(false);
 		txtUf.setBounds(330, 270, 120, 20);
 		panelPerfil.add(txtUf);
 		txtUf.setColumns(10);
-		
+
 		JLabel lblTelefone = new JLabel("Telefone:");
 		lblTelefone.setBounds(25, 120, 60, 14);
 		panelPerfil.add(lblTelefone);
-		
+
 		JLabel lblCelular = new JLabel("Celular:");
 		lblCelular.setBounds(280, 120, 46, 14);
 		panelPerfil.add(lblCelular);
-		
+
 		JLabel lblDataDeNascimento = new JLabel("Data de Nascimento:");
 		lblDataDeNascimento.setBounds(25, 145, 120, 14);
 		panelPerfil.add(lblDataDeNascimento);
-		
+
 		JLabel lblSexo = new JLabel("Sexo:");
 		lblSexo.setBounds(280, 145, 46, 14);
 		panelPerfil.add(lblSexo);
-		
+
 		txtTelefone = new JTextField();
 		txtTelefone.setEditable(false);
 		txtTelefone.setBounds(150, 120, 120, 20);
 		panelPerfil.add(txtTelefone);
 		txtTelefone.setColumns(10);
-		
+
 		txtCelular = new JTextField();
 		txtCelular.setEditable(false);
 		txtCelular.setColumns(10);
 		txtCelular.setBounds(330, 120, 120, 20);
 		panelPerfil.add(txtCelular);
-		
+
 		txtDataNascimento = new JTextField();
 		txtDataNascimento.setEditable(false);
 		txtDataNascimento.setColumns(10);
 		txtDataNascimento.setBounds(150, 145, 120, 20);
 		panelPerfil.add(txtDataNascimento);
-		
+
 		txtSexo = new JTextField();
 		txtSexo.setEditable(false);
 		txtSexo.setColumns(10);
 		txtSexo.setBounds(330, 145, 120, 20);
 		panelPerfil.add(txtSexo);
-		
+
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.setBounds(460, 40, 100, 20);
 		panelPerfil.add(btnEditar);
-		
+
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.setBounds(460, 70, 100, 20);
 		panelPerfil.add(btnExcluir);
-		
+
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
+				Main.historico.setEnabled(true);
 				Main.historico.setVisible(true);
+				((IFachadas) Main.historico).carregarListas();
 			}
 		});
 		btnVoltar.setBounds(460, 295, 100, 23);
 		panelPerfil.add(btnVoltar);
 	}
-	
+
 	public void carregarPerfil(Pessoa pessoa) {
 		txtNome.setText(pessoa.getNome());
 		txtCpf.setText(pessoa.getCpf());

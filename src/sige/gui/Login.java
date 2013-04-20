@@ -1,8 +1,5 @@
 package sige.gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -13,22 +10,21 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.text.ParseException;
-
-import javax.swing.JTextField;
 import javax.swing.JPasswordField;
-
 import sige.repositorio.RepositorioException;
-import sige.sistema.Administrador;
 import sige.sistema.Autenticacao;
 import sige.sistema.ISige;
 import sige.sistema.ProblemaInterno;
 import sige.sistema.Sige;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class Login extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JFormattedTextField txtCpf;
 	private JPasswordField pwSenha;
@@ -51,34 +47,39 @@ public class Login extends JFrame {
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					if (Autenticacao.logado(txtCpf.getText(), new String(
-							pwSenha.getPassword()), sistema.getRepositorio())) {
+					if (Autenticacao.login(txtCpf.getText(),
+							new String(pwSenha.getPassword()),
+							sistema.getRepositorio())) {
 						String userLevel = Autenticacao.runlevel();
 						try {
 							if (userLevel.equals("Administrador")) {
-								FachadaAdm adm = (FachadaAdm) FachadaAdm.getFrames()[2];
-								adm.setPerfil(sistema.buscarCpf(txtCpf.getText()).get(0));
+								FachadaAdm adm = (FachadaAdm) FachadaAdm
+										.getFrames()[2];
+								adm.setPerfil(sistema.buscarCpf(
+										txtCpf.getText()).get(0));
+								adm.carregarListas();
 								adm.setVisible(true);
 							} else if (userLevel.equals("Professor")) {
-								
+
 							} else if (userLevel.equals("Aluno")) {
-								
+
 							} else {
-								
+
 							}
 							resetLogin();
 							setVisible(false);
 						} catch (ProblemaInterno e) {
-							e.printStackTrace();
+							// e.printStackTrace();
 							JOptionPane.showMessageDialog(null, e);
 						}
 					} else {
 						pwSenha.setText("");
-						JOptionPane.showMessageDialog(null, "Senha ou usuario invalido.");
+						JOptionPane.showMessageDialog(null,
+								"Senha ou usuario invalido.");
 					}
 				} catch (RepositorioException e) {
 					JOptionPane.showMessageDialog(null, e);
-					e.printStackTrace();
+					// e.printStackTrace();
 				}
 			}
 		});
@@ -114,7 +115,7 @@ public class Login extends JFrame {
 			txtCpf.setSize(150, 20);
 			txtCpf.setLocation(100, 31);
 		} catch (ParseException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 			JOptionPane.showMessageDialog(null,
 					"Ocorreu um problema na formatação.");
 		}
@@ -127,8 +128,8 @@ public class Login extends JFrame {
 
 		init();
 	}
-	
-	private void resetLogin(){
+
+	private void resetLogin() {
 		txtCpf.setText("");
 		pwSenha.setText("");
 	}
@@ -137,7 +138,7 @@ public class Login extends JFrame {
 		try {
 			sistema = Sige.getInstance();
 		} catch (Exception e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 			JOptionPane.showMessageDialog(null, e);
 		}
 	}

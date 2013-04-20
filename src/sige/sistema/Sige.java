@@ -4,11 +4,31 @@ import java.util.ArrayList;
 
 import sige.repositorio.*;
 
+/**
+ * 
+ * @author Danilo Monteiro
+ * @author Giovanni Paolo
+ * @author Luiz Daniel
+ * 
+ */
 public class Sige implements ISige {
 
+	/**
+	 * Repositório de dados
+	 */
 	private Repositorio repositorio;
+
+	/**
+	 * Instância do sistema
+	 */
 	private static ISige instance;
 
+	/**
+	 * Construtor do sistema
+	 * 
+	 * @throws InicializacaoSistemaException
+	 *             Lançado quando há um problema a inicialização do sistema
+	 */
 	public Sige() throws InicializacaoSistemaException {
 		try {
 			this.repositorio = new Repositorio(
@@ -18,6 +38,14 @@ public class Sige implements ISige {
 		}
 	}
 
+	/**
+	 * Recuperar a instância sistema
+	 * 
+	 * @return retorna a instância incializada caso haja uma, ou cria uma
+	 *         instância e retorna, caso contrário
+	 * @throws InicializacaoSistemaException
+	 *             lançado quando há algum erro na inicialização do sistema
+	 */
 	public static ISige getInstance() throws InicializacaoSistemaException {
 		if (Sige.instance == null) {
 			try {
@@ -38,8 +66,12 @@ public class Sige implements ISige {
 		}
 	}
 
-	public boolean autenticarSistema() throws RepositorioException {
-		return Autenticacao.AdministradorExists(this.repositorio);
+	public boolean autenticarSistema() throws ProblemaInterno {
+		try {
+			return Autenticacao.AdministradorExists(this.repositorio);
+		} catch (RepositorioException e) {
+			throw new ProblemaInterno();
+		}
 	}
 
 	@Override
@@ -75,7 +107,7 @@ public class Sige implements ISige {
 			String celular, String rua, String bairro, String cidade,
 			String uf, String complemento, String cep, String numero,
 			String pais) throws AutenticacaoException, ProblemaInterno {
-		
+
 		Pessoa pessoa = null;
 		if (tipo == Professor.class) {
 			pessoa = new Professor(nome, cpf, rg, senha, sexo, estadoCivil,
@@ -101,13 +133,14 @@ public class Sige implements ISige {
 	}
 
 	@Override
-	public ArrayList<Pessoa> buscaAdm() throws AutenticacaoException,
+	public ArrayList<Pessoa> buscarAdm() throws AutenticacaoException,
 			ProblemaInterno {
 
-		/*if (Autenticacao.runlevel().equals("Aluno")
-				|| Autenticacao.runlevel().equals("Professor")) {
-			throw new AutenticacaoException();
-		}*/
+		/*
+		 * if (Autenticacao.runlevel().equals("Aluno") ||
+		 * Autenticacao.runlevel().equals("Professor")) { throw new
+		 * AutenticacaoException(); }
+		 */
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
 		try {
 			for (Pessoa elemento : repositorio.recuperarPessoas()) {
@@ -123,7 +156,7 @@ public class Sige implements ISige {
 	}
 
 	@Override
-	public ArrayList<Pessoa> buscaAdmNome(String nome)
+	public ArrayList<Pessoa> buscarAdmNome(String nome)
 			throws AutenticacaoException, ProblemaInterno {
 		if (Autenticacao.runlevel().equals("Aluno")
 				|| Autenticacao.runlevel().equals("Professor")) {
@@ -144,7 +177,7 @@ public class Sige implements ISige {
 	}
 
 	@Override
-	public ArrayList<Pessoa> buscaAdmCpf(String cpf)
+	public ArrayList<Pessoa> buscarAdmCpf(String cpf)
 			throws AutenticacaoException, ProblemaInterno {
 		if (Autenticacao.runlevel().equals("Aluno")
 				|| Autenticacao.runlevel().equals("Professor")) {
@@ -165,7 +198,7 @@ public class Sige implements ISige {
 	}
 
 	@Override
-	public ArrayList<Pessoa> buscaAdmId(int id) throws AutenticacaoException,
+	public ArrayList<Pessoa> buscarAdmId(int id) throws AutenticacaoException,
 			ProblemaInterno {
 		if (Autenticacao.runlevel().equals("Aluno")
 				|| Autenticacao.runlevel().equals("Professor")) {
@@ -186,13 +219,13 @@ public class Sige implements ISige {
 	}
 
 	@Override
-	public ArrayList<Pessoa> buscaProfessor() throws AutenticacaoException,
+	public ArrayList<Pessoa> buscarProfessor() throws AutenticacaoException,
 			ProblemaInterno {
 		/*
-		if (Autenticacao.runlevel().equals("Aluno")
-				|| Autenticacao.runlevel().equals("Professor")) {
-			throw new AutenticacaoException();
-		}*/
+		 * if (Autenticacao.runlevel().equals("Aluno") ||
+		 * Autenticacao.runlevel().equals("Professor")) { throw new
+		 * AutenticacaoException(); }
+		 */
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
 		try {
 			for (Pessoa elemento : repositorio.recuperarPessoas()) {
@@ -208,7 +241,7 @@ public class Sige implements ISige {
 	}
 
 	@Override
-	public ArrayList<Pessoa> buscaProfessorNome(String nome)
+	public ArrayList<Pessoa> buscarProfessorNome(String nome)
 			throws AutenticacaoException, ProblemaInterno {
 		if (Autenticacao.runlevel().equals("Aluno")
 				|| Autenticacao.runlevel().equals("Professor")) {
@@ -229,7 +262,7 @@ public class Sige implements ISige {
 	}
 
 	@Override
-	public ArrayList<Pessoa> buscaProfessorCpf(String cpf)
+	public ArrayList<Pessoa> buscarProfessorCpf(String cpf)
 			throws AutenticacaoException, ProblemaInterno {
 		if (Autenticacao.runlevel().equals("Aluno")
 				|| Autenticacao.runlevel().equals("Professor")) {
@@ -250,7 +283,7 @@ public class Sige implements ISige {
 	}
 
 	@Override
-	public ArrayList<Pessoa> buscaProfessorId(int id)
+	public ArrayList<Pessoa> buscarProfessorId(int id)
 			throws AutenticacaoException, ProblemaInterno {
 		if (Autenticacao.runlevel().equals("Aluno")
 				|| Autenticacao.runlevel().equals("Professor")) {
@@ -271,12 +304,12 @@ public class Sige implements ISige {
 	}
 
 	@Override
-	public ArrayList<Pessoa> buscaAluno() throws AutenticacaoException,
+	public ArrayList<Pessoa> buscarAluno() throws AutenticacaoException,
 			ProblemaInterno {
 		/*
-		if (Autenticacao.runlevel().equals("Aluno")) {
-			throw new AutenticacaoException();
-		}*/
+		 * if (Autenticacao.runlevel().equals("Aluno")) { throw new
+		 * AutenticacaoException(); }
+		 */
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
 		try {
 			for (Pessoa elemento : repositorio.recuperarPessoas()) {
@@ -291,7 +324,7 @@ public class Sige implements ISige {
 	}
 
 	@Override
-	public ArrayList<Pessoa> buscaAlunoNome(String nome)
+	public ArrayList<Pessoa> buscarAlunoNome(String nome)
 			throws AutenticacaoException, ProblemaInterno {
 		if (Autenticacao.runlevel().equals("Aluno")) {
 			throw new AutenticacaoException();
@@ -310,8 +343,8 @@ public class Sige implements ISige {
 	}
 
 	@Override
-	public ArrayList<Pessoa> buscaAlunoId(int id) throws AutenticacaoException,
-			ProblemaInterno {
+	public ArrayList<Pessoa> buscarAlunoId(int id)
+			throws AutenticacaoException, ProblemaInterno {
 		if (Autenticacao.runlevel().equals("Aluno")) {
 			throw new AutenticacaoException();
 		}
@@ -388,5 +421,24 @@ public class Sige implements ISige {
 
 	public Repositorio getRepositorio() {
 		return this.repositorio;
+	}
+
+	@Override
+	public ArrayList<Pessoa> buscarAlunoCpf(String cpf)
+			throws AutenticacaoException, ProblemaInterno {
+		if (Autenticacao.runlevel().equals("Aluno")) {
+			throw new AutenticacaoException();
+		}
+		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
+		try {
+			for (Pessoa elemento : repositorio.buscarPessoaCpf(cpf)) {
+				if (elemento instanceof Aluno) {
+					pessoas.add(elemento);
+				}
+			}
+			return pessoas;
+		} catch (RepositorioException e) {
+			throw new ProblemaInterno();
+		}
 	}
 }
