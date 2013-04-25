@@ -1,7 +1,19 @@
 package sige.sistema;
 
+/**
+ * 
+ * @author Danilo Monteiro
+ * @author Giovanni Paolo
+ * @author Luiz Daniel
+ * 
+ * Professor e Administrador do sistema
+ *
+ */
 public class ProfessorAdministrador extends Professor implements IAdministrador {
 
+	/**
+	 * Root
+	 */
 	public boolean root;
 
 	public ProfessorAdministrador(String nome, String cpf, String rg,

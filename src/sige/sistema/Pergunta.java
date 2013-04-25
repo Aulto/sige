@@ -3,8 +3,23 @@ package sige.sistema;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * 
+ * @author Danilo Monteiro
+ * @author Giovanni Paolo
+ * @author Luiz Daniel
+ * 
+ *         Perguntas que compõem uma atividade
+ * 
+ */
 public class Pergunta {
+	/**
+	 * Enunciado da pegunta
+	 */
 	String pergunta;
+	/**
+	 * Alternativas (a primeira sempre é a correta)
+	 */
 	String[] alternativas;
 
 	public Pergunta(String pergunta, String[] alternativas) {
@@ -12,7 +27,32 @@ public class Pergunta {
 		this.alternativas = alternativas;
 	}
 
-	// perguntas delimitadas por | no parametro str
+	/**
+	 * Retornar pergunta serializada em String no formato "pergunta,a,b,c,d,e"
+	 */
+	@Override
+	public String toString() {
+		String res = "";
+		res += this.pergunta + ",";
+		for (int i = 0; i < alternativas.length; i++) {
+			if (alternativas[i] != null) {
+				res += "" + alternativas[i] + "";
+			}
+			if (i != alternativas.length - 1) {
+				res += ",";
+			}
+		}
+		return res;
+	}
+
+	/**
+	 * Retorna um objeto do tipo Pergunta a partir de uma String com perguntas
+	 * (serializadas em string) e delimitadas por |
+	 * 
+	 * @param str
+	 *            String delimitada por |
+	 * @return ArrayList de Pergunta
+	 */
 	public static ArrayList<Pergunta> stringToPerguntas(String str) {
 		String[] perguntas = str.split("\\|");
 		ArrayList<Pergunta> res = new ArrayList<Pergunta>();
@@ -28,22 +68,6 @@ public class Pergunta {
 			res.add(new Pergunta(pergunta, alternativas));
 		}
 
-		return res;
-	}
-
-	// retornar pergunta em formato string "pergunta,a,b,c,d,e"
-	@Override
-	public String toString() {
-		String res = "";
-		res += this.pergunta + ",";
-		for (int i = 0; i < alternativas.length; i++) {
-			if (alternativas[i] != null) {
-				res += "" + alternativas[i] + "";
-			}
-			if (i != alternativas.length - 1) {
-				res += ",";
-			}
-		}
 		return res;
 	}
 }

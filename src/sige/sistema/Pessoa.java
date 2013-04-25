@@ -1,21 +1,69 @@
 package sige.sistema;
 
+/**
+ * 
+ * @author Danilo Monteiro
+ * @author Giovanni Paolo
+ * @author Luiz Daniel
+ * 
+ *         Classe abstrata que representa a pessoa
+ * 
+ */
 public abstract class Pessoa {
 
+	/**
+	 * Contador de instâncias
+	 */
 	private static int numeroPessoa = 0;
 
+	/**
+	 * Id da pessoa
+	 */
 	public final int idPessoa;
 
+	/**
+	 * Nome
+	 */
 	protected String nome;
+	/**
+	 * CPF
+	 */
 	protected String cpf;
+	/**
+	 * Senha
+	 */
 	protected String senha;
+	/**
+	 * Registro Geral
+	 */
 	protected String rg;
+	/**
+	 * Sexo
+	 */
 	protected String sexo;
+	/**
+	 * Estado Civil
+	 */
 	protected String estadoCivil;
+	/**
+	 * Data de nascimento
+	 */
 	protected String dataNascimento;
+	/**
+	 * Email de registro
+	 */
 	protected String email;
+	/**
+	 * Número de telefone
+	 */
 	protected String telefone;
+	/**
+	 * Número de celular
+	 */
 	protected String celular;
+	/**
+	 * Endereço
+	 */
 	protected Endereco endereço;
 
 	public Pessoa(String nome, String cpf, String rg, String senha,
@@ -124,6 +172,12 @@ public abstract class Pessoa {
 		this.endereço = endereço;
 	}
 
+	/**
+	 * Definir endereço a partir de um Endereço serializado em String
+	 * 
+	 * @param endereço
+	 *            endereço em forma de string
+	 */
 	public void setEndereço(String endereço) {
 		String[] endereçoArr = endereço.split("\\|");
 		this.endereço.setRua(endereçoArr[0]);

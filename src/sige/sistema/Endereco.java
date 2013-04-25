@@ -1,14 +1,46 @@
 package sige.sistema;
 
+/**
+ * @author Danilo Monteiro
+ * @author Giovanni Paolo
+ * @author Luiz Daniel
+ * 
+ *         Endereço: classe com atributos do endereço
+ * 
+ */
 public class Endereco {
 
+	/**
+	 * Rua, logradouro
+	 */
 	protected String rua;
+	/**
+	 * Bairro
+	 */
 	protected String bairro;
+	/**
+	 * Cidade
+	 */
 	protected String cidade;
+	/**
+	 * Unidade Federativa
+	 */
 	protected String uf;
+	/**
+	 * Complemento do endereço
+	 */
 	protected String complemento;
+	/**
+	 * CEP da rua
+	 */
 	protected String cep;
+	/**
+	 * Número da residência
+	 */
 	protected String numero;
+	/**
+	 * País
+	 */
 	protected String pais;
 
 	public Endereco(String rua, String bairro, String cidade, String uf,
@@ -87,6 +119,9 @@ public class Endereco {
 		this.pais = pais;
 	}
 
+	/**
+	 * Retornar o endereço em forma de String, delimitado por |
+	 */
 	@Override
 	public String toString() {
 		return this.rua + "|" + this.bairro + "|" + this.cidade + "|" + this.uf
@@ -94,6 +129,14 @@ public class Endereco {
 				+ "|" + this.pais;
 	}
 
+	/**
+	 * Método estático para criar uma instância de Endereco a partir de uma
+	 * String (delimitada por |)
+	 * 
+	 * @param strEndereço
+	 *            endereço serializado com |
+	 * @return retorna objeto do tipo Endereco
+	 */
 	public static Endereco getEndereço(String strEndereço) {
 		String[] endereçoArr = strEndereço.split("\\|");
 		if (endereçoArr.length == 8) {

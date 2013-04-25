@@ -1,5 +1,12 @@
 package sige.sistema;
 
+/**
+ * @author Danilo Monteiro
+ * @author Giovanni Paolo
+ * @author Luiz Daniel
+ * 
+ *         Aluno: usuário com o nível mais baixo no sistema
+ */
 public class Aluno extends Pessoa {
 
 	private static int alunoMatricula = 1000000;

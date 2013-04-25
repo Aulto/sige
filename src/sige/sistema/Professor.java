@@ -2,8 +2,20 @@ package sige.sistema;
 
 import java.util.ArrayList;
 
+/**
+ * 
+ * @author Danilo Monteiro
+ * @author Giovanni Paolo
+ * @author Luiz Daniel
+ * 
+ *         Professor
+ * 
+ */
 public class Professor extends Pessoa {
 
+	/**
+	 * Ids das matérias as quais o professor leciona
+	 */
 	ArrayList<Integer> idMaterias;
 
 	public Professor(String nome, String cpf, String rg, String senha,
@@ -16,6 +28,9 @@ public class Professor extends Pessoa {
 		this.idMaterias = new ArrayList<>();
 	}
 
+	/**
+	 * Adicionar matéria (id) à lista de matérias que o professor leciona
+	 */
 	public void adicionarMateria(Materia materia) {
 		this.idMaterias.add(materia.getIdMateria());
 	}

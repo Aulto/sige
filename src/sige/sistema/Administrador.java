@@ -1,5 +1,14 @@
 package sige.sistema;
 
+/**
+ * 
+ * @author Danilo Monteiro
+ * @author Giovanni Paolo
+ * @author Luiz Daniel
+ * 
+ *         Administrador do sistema: responsável pelo gerenciamento dos alunos e
+ *         professores
+ */
 public class Administrador extends Pessoa implements IAdministrador {
 
 	public boolean root;
