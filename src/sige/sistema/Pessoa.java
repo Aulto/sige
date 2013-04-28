@@ -66,10 +66,10 @@ public abstract class Pessoa {
 	 */
 	protected Endereco endereço;
 
-	public Pessoa(String nome, String cpf, String rg, String senha,
+	public Pessoa(int id, String nome, String cpf, String rg, String senha,
 			String sexo, String estadoCivil, String dataNascimento,
 			String email, String telefone, String celular, Endereco endereco) {
-
+		this.idPessoa = id;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.rg = rg;
@@ -81,7 +81,7 @@ public abstract class Pessoa {
 		this.telefone = telefone;
 		this.celular = celular;
 		this.endereço = endereco;
-		this.idPessoa = Pessoa.numeroPessoa++;
+//		this.idPessoa = Pessoa.numeroPessoa++;
 	}
 
 	public String getNome() {

@@ -112,4 +112,8 @@ public class Autenticacao {
 		}
 		return false;
 	}
+	
+	public static int getId(){
+		return pessoa.idPessoa;
+	}
 }

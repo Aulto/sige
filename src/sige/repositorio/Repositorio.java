@@ -82,38 +82,39 @@ public class Repositorio implements IRepositorio {
 			while (rs.next()) {
 				String tipo = rs.getString("tipo");
 				if (tipo.equals("Aluno")) {
-					res.add(new Aluno(rs.getString("nome"),
-							rs.getString("cpf"), rs.getString("rg"), rs
-									.getString("senha"), rs.getString("sexo"),
-							rs.getString("estadoCivil"), rs
+					res.add(new Aluno(rs.getInt("id"), rs.getString("nome"), rs
+							.getString("cpf"), rs.getString("rg"), rs
+							.getString("senha"), rs.getString("sexo"), rs
+							.getString("estadoCivil"), rs
+							.getString("dataNascimento"),
+							rs.getString("email"), rs.getString("telefone"), rs
+									.getString("celular"), Endereco
+									.getEndereço(rs.getString("endereco"))));
+				} else if (tipo.equals("Professor")) {
+					res.add(new Professor(rs.getInt("id"),
+							rs.getString("nome"), rs.getString("cpf"), rs
+									.getString("rg"), rs.getString("senha"), rs
+									.getString("sexo"), rs
+									.getString("estadoCivil"), rs
 									.getString("dataNascimento"), rs
 									.getString("email"), rs
 									.getString("telefone"), rs
 									.getString("celular"), Endereco
 									.getEndereço(rs.getString("endereco"))));
-				} else if (tipo.equals("Professor")) {
-					res.add(new Professor(rs.getString("nome"), rs
-							.getString("cpf"), rs.getString("rg"), rs
-							.getString("senha"), rs.getString("sexo"), rs
-							.getString("estadoCivil"), rs
-							.getString("dataNascimento"),
-							rs.getString("email"), rs.getString("telefone"), rs
-									.getString("celular"), Endereco
-									.getEndereço(rs.getString("endereco"))));
 				} else if (tipo.equals("Administrador")) {
-					res.add(new Administrador(rs.getString("nome"), rs
-							.getString("cpf"), rs.getString("rg"), rs
-							.getString("senha"), rs.getString("sexo"), rs
-							.getString("estadoCivil"), rs
+					res.add(new Administrador(rs.getInt("id"), rs
+							.getString("nome"), rs.getString("cpf"), rs
+							.getString("rg"), rs.getString("senha"), rs
+							.getString("sexo"), rs.getString("estadoCivil"), rs
 							.getString("dataNascimento"),
 							rs.getString("email"), rs.getString("telefone"), rs
 									.getString("celular"), Endereco
 									.getEndereço(rs.getString("endereco"))));
 				} else if (tipo.equals("ProfessorAdministrador")) {
-					res.add(new ProfessorAdministrador(rs.getString("nome"), rs
-							.getString("cpf"), rs.getString("rg"), rs
-							.getString("senha"), rs.getString("sexo"), rs
-							.getString("estadoCivil"), rs
+					res.add(new ProfessorAdministrador(rs.getInt("id"), rs
+							.getString("nome"), rs.getString("cpf"), rs
+							.getString("rg"), rs.getString("senha"), rs
+							.getString("sexo"), rs.getString("estadoCivil"), rs
 							.getString("dataNascimento"),
 							rs.getString("email"), rs.getString("telefone"), rs
 									.getString("celular"), Endereco
@@ -249,11 +250,13 @@ public class Repositorio implements IRepositorio {
 	@Override
 	public ArrayList<Materia> recuperarMaterias() throws RepositorioException {
 		ArrayList<Materia> res = new ArrayList<Materia>();
+		String[] idAlunos;
 		try {
 			rs = stm.executeQuery("SELECT * FROM materias");
 			while (rs.next()) {
+				idAlunos = rs.getString("idAlunos").split("\\|");
 				res.add(new Materia(rs.getString("nome"), rs
-						.getInt("idProfessor")));
+						.getInt("idProfessor"), idAlunos));
 			}
 			return res;
 		} catch (SQLException e) {
@@ -353,6 +356,10 @@ public class Repositorio implements IRepositorio {
 			}
 		}
 		return res;
+	}
+
+	public int proximoId() throws RepositorioException {
+		return buscarSQL("SELECT * FROM pessoas ORDER BY id DESC").get(0).getIdPessoa();
 	}
 
 }

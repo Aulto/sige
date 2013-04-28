@@ -202,4 +202,6 @@ public interface IRepositorio {
 	 *             lançado quando há problemas na conexão com o repositório
 	 */
 	ArrayList<Atividade> buscarAtividadeId(int id) throws RepositorioException;
+	
+	int proximoId() throws RepositorioException;
 }

@@ -3,6 +3,7 @@ package sige.sistema;
 import java.util.ArrayList;
 
 import sige.repositorio.Repositorio;
+import sige.repositorio.RepositorioException;
 
 /**
  * 
@@ -51,7 +52,7 @@ public interface ISige {
 	 * @throws ProblemaInterno
 	 *             lançado quando há um erro no sistema
 	 */
-	void adicionarAluno(String nome, String cpf, String rg, String senha,
+	void adicionarAluno(int id, String nome, String cpf, String rg, String senha,
 			String sexo, String estadoCivil, String dataNascimento,
 			String email, String telefone, String celular, String rua,
 			String bairro, String cidade, String uf, String complemento,
@@ -66,7 +67,7 @@ public interface ISige {
 	 * @throws ProblemaInterno
 	 *             lançado quando há um problema no sistema
 	 */
-	void adicionarProfessorAdm(Class<?> tipo, String nome, String cpf,
+	void adicionarProfessorAdm(Class<?> tipo, int id, String nome, String cpf,
 			String rg, String senha, String sexo, String estadoCivil,
 			String dataNascimento, String email, String telefone,
 			String celular, String rua, String bairro, String cidade,
@@ -287,4 +288,10 @@ public interface ISige {
 	 * @return retorna o Repositório instanciado na classe
 	 */
 	Repositorio getRepositorio();
+	
+	ArrayList<Materia> recuperarMateriasAluno(int id) throws ProblemaInterno;
+	
+	int proximoId();
+
+	Materia buscarMateriaNome(String nome) throws ProblemaInterno;
 }

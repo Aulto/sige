@@ -46,16 +46,24 @@ public class Materia {
 	/**
 	 * Id dos alunos cujo ingresso na matéria já foi aprovado por um professor
 	 */
-	private ArrayList<Integer> idAluno;
+	private ArrayList<String> idAlunos;
+	
+	private ArrayList<String> idAlunosToArrayList(String[] idAlunos){
+		ArrayList<String> res = new ArrayList<String>();
+		for (int i = 0; i < idAlunos.length; i++) {
+			res.add(idAlunos[i]);
+		}
+		return res;
+	}
 
-	public Materia(String nome, int idProfessor) {
+	public Materia(String nome, int idProfessor, String[] idAlunos) {
 		this.setNome(nome);
 		this.setIdProfessor(idProfessor);
 		this.idMateria = Materia.numeroMaterias++;
 		this.notas = new ArrayList<Nota>();
 		this.atividades = new ArrayList<Atividade>();
 		this.idAlunosPendentes = new ArrayList<Integer>();
-		this.idAluno = new ArrayList<Integer>();
+		this.idAlunos = idAlunosToArrayList(idAlunos);
 	}
 
 	/**
@@ -84,8 +92,16 @@ public class Materia {
 		return idAlunosPendentes;
 	}
 
-	public ArrayList<Integer> getIdAluno() {
-		return idAluno;
+	public ArrayList<String> getIdAluno() {
+		return idAlunos;
+	}
+	
+	public boolean alunoCadastrado(int id){
+		for (String i : this.getIdAluno()) {
+			if(i.equals(id+""))
+				return true;
+		}
+		return false;
 	}
 
 	public int getIdProfessor() {

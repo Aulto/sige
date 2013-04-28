@@ -13,11 +13,11 @@ public class Administrador extends Pessoa implements IAdministrador {
 
 	public boolean root;
 
-	public Administrador(String nome, String cpf, String rg, String senha,
+	public Administrador(int id, String nome, String cpf, String rg, String senha,
 			String sexo, String estadoCivil, String dataNascimento,
 			String email, String telefone, String celular, Endereco endereco) {
 
-		super(nome, cpf, rg, senha, sexo, estadoCivil, dataNascimento, email,
+		super(id, nome, cpf, rg, senha, sexo, estadoCivil, dataNascimento, email,
 				telefone, celular, endereco);
 	}
 

@@ -9,11 +9,13 @@ import javax.swing.text.MaskFormatter;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Frame;
 import java.text.ParseException;
 import javax.swing.JPasswordField;
 import sige.repositorio.RepositorioException;
 import sige.sistema.Autenticacao;
 import sige.sistema.ISige;
+import sige.sistema.InicializacaoSistemaException;
 import sige.sistema.ProblemaInterno;
 import sige.sistema.Sige;
 import java.awt.event.ActionListener;
@@ -29,6 +31,7 @@ public class Login extends JFrame {
 	private JFormattedTextField txtCpf;
 	private JPasswordField pwSenha;
 	private ISige sistema;
+	private static Login instance;
 
 	/**
 	 * Create the frame.
@@ -53,16 +56,18 @@ public class Login extends JFrame {
 						String userLevel = Autenticacao.runlevel();
 						try {
 							if (userLevel.equals("Administrador")) {
-								FachadaAdm adm = (FachadaAdm) FachadaAdm
-										.getFrames()[2];
+								FachadaAdm adm = FachadaAdm.getInstance();
 								adm.setPerfil(sistema.buscarCpf(
 										txtCpf.getText()).get(0));
 								adm.carregarListas();
 								adm.setVisible(true);
 							} else if (userLevel.equals("Professor")) {
-
+								
 							} else if (userLevel.equals("Aluno")) {
-
+								FachadaAluno aluno = FachadaAluno.getInstance();
+								aluno.setPerfil(sistema.buscarCpf(txtCpf.getText()).get(0));
+								aluno.carregarListas();
+								aluno.setVisible(true);
 							} else {
 
 							}
@@ -70,6 +75,9 @@ public class Login extends JFrame {
 							setVisible(false);
 						} catch (ProblemaInterno e) {
 							// e.printStackTrace();
+							JOptionPane.showMessageDialog(null, e);
+						} catch (InicializacaoSistemaException e) {
+//							e.printStackTrace();
 							JOptionPane.showMessageDialog(null, e);
 						}
 					} else {

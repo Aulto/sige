@@ -77,6 +77,8 @@ public class FachadaAdm extends JFrame implements IFachadas {
 	private JFormattedTextField txtCpfProf;
 	private MaskFormatter txtFormatCpf;
 
+	private static FachadaAdm instance;
+
 	/**
 	 * Create the frame.
 	 */
@@ -326,11 +328,11 @@ public class FachadaAdm extends JFrame implements IFachadas {
 		btnBucarAluno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (cbPorAluno.getSelectedItem().toString().equals("CPF")) {
-					listAluno.setListData(preencher(txtCpfAluno.getText(), cbPorAluno
-							.getSelectedItem().toString(), "Aluno"));
+					listAluno.setListData(preencher(txtCpfAluno.getText(),
+							cbPorAluno.getSelectedItem().toString(), "Aluno"));
 				} else {
-					listAluno.setListData(preencher(txtBuscarAluno.getText(), cbPorAluno
-							.getSelectedItem().toString(), "Aluno"));
+					listAluno.setListData(preencher(txtBuscarAluno.getText(),
+							cbPorAluno.getSelectedItem().toString(), "Aluno"));
 				}
 				txtCpfAluno.setText("");
 				txtBuscarAluno.setText("");
@@ -445,11 +447,11 @@ public class FachadaAdm extends JFrame implements IFachadas {
 		btnBuscarProf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (cbPorProf.getSelectedItem().toString().equals("CPF")) {
-					listProf.setListData(preencher(txtCpfProf.getText(), cbPorProf
-							.getSelectedItem().toString(), "Professor"));
+					listProf.setListData(preencher(txtCpfProf.getText(),
+							cbPorProf.getSelectedItem().toString(), "Professor"));
 				} else {
-					listProf.setListData(preencher(txtBuscarProf.getText(), cbPorProf
-							.getSelectedItem().toString(), "Professor"));
+					listProf.setListData(preencher(txtBuscarProf.getText(),
+							cbPorProf.getSelectedItem().toString(), "Professor"));
 				}
 				txtCpfProf.setText("");
 				txtBuscarProf.setText("");
@@ -569,8 +571,9 @@ public class FachadaAdm extends JFrame implements IFachadas {
 					listAdm.setListData(preencher(txtCpfAdm.getText(), cbPorAdm
 							.getSelectedItem().toString(), "Administrador"));
 				} else {
-					listAdm.setListData(preencher(txtBuscarAdm.getText(), cbPorAdm
-							.getSelectedItem().toString(), "Administrador"));
+					listAdm.setListData(preencher(txtBuscarAdm.getText(),
+							cbPorAdm.getSelectedItem().toString(),
+							"Administrador"));
 				}
 				txtCpfAdm.setText("");
 				txtBuscarAdm.setText("");
@@ -737,5 +740,12 @@ public class FachadaAdm extends JFrame implements IFachadas {
 		listAdm.setListData(preencher("", "", "Administrador"));
 		listProf.setListData(preencher("", "", "Professor"));
 		listAluno.setListData(preencher("", "", "Aluno"));
+	}
+
+	public static FachadaAdm getInstance() {
+		if (FachadaAdm.instance == null) {
+			FachadaAdm.instance = new FachadaAdm();
+		}
+		return FachadaAdm.instance;
 	}
 }

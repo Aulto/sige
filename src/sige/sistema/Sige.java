@@ -84,13 +84,13 @@ public class Sige implements ISige {
 	}
 
 	@Override
-	public void adicionarAluno(String nome, String cpf, String rg,
+	public void adicionarAluno(int id, String nome, String cpf, String rg,
 			String senha, String sexo, String estadoCivil,
 			String dataNascimento, String email, String telefone,
 			String celular, String rua, String bairro, String cidade,
 			String uf, String complemento, String cep, String numero,
 			String pais) throws ProblemaInterno {
-		Aluno aluno = new Aluno(nome, cpf, rg, senha, sexo, estadoCivil,
+		Aluno aluno = new Aluno(id, nome, cpf, rg, senha, sexo, estadoCivil,
 				dataNascimento, email, telefone, celular, new Endereco(rua,
 						bairro, cidade, uf, complemento, cep, numero, pais));
 		try {
@@ -101,7 +101,7 @@ public class Sige implements ISige {
 	}
 
 	@Override
-	public void adicionarProfessorAdm(Class<?> tipo, String nome, String cpf,
+	public void adicionarProfessorAdm(Class<?> tipo, int id, String nome, String cpf,
 			String rg, String senha, String sexo, String estadoCivil,
 			String dataNascimento, String email, String telefone,
 			String celular, String rua, String bairro, String cidade,
@@ -110,15 +110,15 @@ public class Sige implements ISige {
 
 		Pessoa pessoa = null;
 		if (tipo == Professor.class) {
-			pessoa = new Professor(nome, cpf, rg, senha, sexo, estadoCivil,
+			pessoa = new Professor(id, nome, cpf, rg, senha, sexo, estadoCivil,
 					dataNascimento, email, telefone, celular, new Endereco(rua,
 							bairro, cidade, uf, complemento, cep, numero, pais));
 		} else if (tipo == Administrador.class) {
-			pessoa = new Administrador(nome, cpf, rg, senha, sexo, estadoCivil,
+			pessoa = new Administrador(id, nome, cpf, rg, senha, sexo, estadoCivil,
 					dataNascimento, email, telefone, celular, new Endereco(rua,
 							bairro, cidade, uf, complemento, cep, numero, pais));
 		} else if (tipo == ProfessorAdministrador.class) {
-			pessoa = new ProfessorAdministrador(nome, cpf, rg, senha, sexo,
+			pessoa = new ProfessorAdministrador(id, nome, cpf, rg, senha, sexo,
 					estadoCivil, dataNascimento, email, telefone, celular,
 					new Endereco(rua, bairro, cidade, uf, complemento, cep,
 							numero, pais));
@@ -287,7 +287,8 @@ public class Sige implements ISige {
 			throws AutenticacaoException, ProblemaInterno {
 		if (Autenticacao.runlevel().equals("Aluno")
 				|| Autenticacao.runlevel().equals("Professor")) {
-			throw new AutenticacaoException();
+//			throw new AutenticacaoException();
+//			alunos podem executar esta acao
 		}
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
 		try {
@@ -440,5 +441,48 @@ public class Sige implements ISige {
 		} catch (RepositorioException e) {
 			throw new ProblemaInterno();
 		}
+	}
+
+	
+	@Override
+	public ArrayList<Materia> recuperarMateriasAluno(int id) throws ProblemaInterno {
+		try {
+			ArrayList<Materia> res = repositorio.recuperarMaterias();
+			for (int i = 0; i < res.size(); i++) {
+				if(!res.get(i).alunoCadastrado(id))
+					res.remove(i);
+			}
+			return res;
+		} catch (RepositorioException e) {
+			throw new ProblemaInterno();
+		}
+	}
+
+	public int proximoId(){
+		try {
+			return repositorio.proximoId();
+		} catch (RepositorioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	public ArrayList<Materia> recuperarMaterias() throws ProblemaInterno{
+		try {
+			return repositorio.recuperarMaterias();
+		} catch (RepositorioException e) {
+			throw new ProblemaInterno();
+		}
+	}
+
+	@Override
+	public Materia buscarMateriaNome(String nome) throws ProblemaInterno {
+		ArrayList<Materia> res = recuperarMaterias();
+		for (Materia materia : res) {
+			if(materia.getNome().equals(nome))
+				return materia;
+		}
+		return null;
 	}
 }

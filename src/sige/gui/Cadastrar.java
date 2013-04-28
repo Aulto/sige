@@ -148,7 +148,7 @@ public class Cadastrar extends JFrame {
 					if (validar()) {
 						if (panel.isVisible()) {
 							if (tipo() == Professor.class) {
-								sistema.adicionarProfessorAdm(Professor.class,
+								sistema.adicionarProfessorAdm(Professor.class, sistema.proximoId(),
 										txtNome.getText(), txtCpf.getText(),
 										txtRg.getText(),
 										new String(pwSenha.getPassword()),
@@ -166,7 +166,7 @@ public class Cadastrar extends JFrame {
 										txtNumero.getText(), txtPais.getText());
 							} else if (tipo() == Administrador.class) {
 								sistema.adicionarProfessorAdm(
-										Administrador.class, txtNome.getText(),
+										Administrador.class, sistema.proximoId(), txtNome.getText(),
 										txtCpf.getText(), txtRg.getText(),
 										new String(pwSenha.getPassword()),
 										cbSexo.getSelectedItem().toString(),
@@ -183,7 +183,7 @@ public class Cadastrar extends JFrame {
 										txtNumero.getText(), txtPais.getText());
 							} else {
 								sistema.adicionarProfessorAdm(
-										ProfessorAdministrador.class, txtNome
+										ProfessorAdministrador.class, sistema.proximoId(), txtNome
 												.getText(), txtCpf.getText(),
 										txtRg.getText(),
 										new String(pwSenha.getPassword()),
@@ -204,7 +204,7 @@ public class Cadastrar extends JFrame {
 							login.setVisible(true);
 							setVisible(false);
 						} else {
-							sistema.adicionarAluno(txtNome.getText(), txtCpf
+							sistema.adicionarAluno(sistema.proximoId(), txtNome.getText(), txtCpf
 									.getText(), txtRg.getText(), new String(
 									pwSenha.getPassword()), cbSexo
 									.getSelectedItem().toString(), "",
